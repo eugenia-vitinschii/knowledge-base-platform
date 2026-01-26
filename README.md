@@ -2,13 +2,20 @@
 ---
 #### ⚙️ Internal knowledge base platform with role-based access.
 ---
-#### Project setup
-```sh
+#### Project setup /, /backend, /frontend
+```
 npm install
 ```
 
 #### Compile and Hot-Reload for Development
 
-```sh
+```
 npm run dev
+```
+
+#####  /backend create .env (example)
+```
+PORT=4000
+SECRET=your_jwt_secret
+MONGO_URI=mongodb+srv://tester:CH2vaGB6mgHoIRWx@knowledge-base.lakfycb.mongodb.net/?appName=knowledge-base
 ```
