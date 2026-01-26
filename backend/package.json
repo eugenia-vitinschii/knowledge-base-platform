@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "dev": "tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "Eugenia Vitinschii",
@@ -23,8 +23,7 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.10",
-    "nodemon": "^3.1.11",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }

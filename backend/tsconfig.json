@@ -6,7 +6,7 @@
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
-
+    "moduleResolution": "node",
     // "types": [],
     // "sourceMap": true,
     // "declaration": true,
@@ -19,5 +19,6 @@
     // "noUncheckedSideEffectImports": true,
     // "moduleDetection": "force",
     // "skipLibCheck": true,
-  }
+  },
+    "include": ["src"]
 }
