@@ -3,6 +3,7 @@ import cors from 'cors'
 
 import userRoutes from "./routes/user.routes"
 import authRoutes from "./routes/auth.routes"
+import articleRoutes from './routes/article.routes'
 export const app = express()
 
 
@@ -11,7 +12,7 @@ app.use(express.json())
 
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
-
+app.use('/api/article', articleRoutes)
 app.get('/', (_req, res) => {
    res.json({ status: 'ok' })
 })
