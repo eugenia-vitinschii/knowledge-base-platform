@@ -6,6 +6,6 @@ import { z } from "zod"
 export const CreateUserDto = z.object({
    name: z.string().min(5),
    email: z.string().email(),
-   password: z.string().min(6),
-   role: z.nativeEnum(Role)
+   password: z.string().min(4),
+   role: z.nativeEnum(Role).default(Role.VIEWER)
 })
