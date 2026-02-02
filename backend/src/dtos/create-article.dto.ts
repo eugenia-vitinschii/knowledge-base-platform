@@ -1,13 +1,14 @@
 //create article dto
 
 import { ArcticleType, ArticleCategory, ArticleDifficulty } from "../common/enums/article.enums"
+import { z } from "zod"
 
-export interface CreateArticleDto {
-   title: string
-   content: string
-   difficulty: ArticleDifficulty
-   tags?: string[]
-   category: ArticleCategory
-   subcategory?: string
-   type: ArcticleType
-}
+export const CreateArticleDto = z.object({
+   title: z.string().min(7),
+   content: z.string().min(20),
+   difficulty: z.nativeEnum(ArticleDifficulty),
+   tags: z.array(z.string()).optional(),
+   category: z.nativeEnum(ArticleCategory),
+   subcategory: z.string().optional(),
+   type: z.nativeEnum(ArcticleType),
+});
