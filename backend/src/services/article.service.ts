@@ -6,20 +6,28 @@ import { UpdateArticleDto } from "../dtos/update-article.dto";
 import { ArticleModel } from "../models/article.model";
 import { Role } from '../common/enums/role.enum'
 import { Types } from "mongoose";
+import z from "zod";
+import { ForbiddenError, NotFoundError } from "../common/errors";
+import { IArticle } from "../models/article.model";
 
+
+type CreateArticleInput = z.infer<typeof CreateArticleDto>
+type UpdateArticleInput = z.infer<typeof UpdateArticleDto>
 
 class ArticleService {
    /* CREATE */
-   async create(dto: CreateArticleDto, authorId: string) {
-      const slug = this.generateSlug(dto.title)
+   async create(data: CreateArticleInput, authorId: string) {
+      const slug = this.generateSlug(data.title)
 
       const article = await ArticleModel.create({
-         ...dto,
+         ...data,
          slug,
          author: new Types.ObjectId(authorId),
          status: ArticleStatus.DRAFT
       })
-      return article
+
+      if (!article) throw new NotFoundError("Article not found")
+
    }
    /* FIND */
    async findAllPublished() {
@@ -33,41 +41,52 @@ class ArticleService {
       return await ArticleModel.findById(id)
    }
    /* UPDATE*/
-   async updateContent(articleId: string, userId: string, dto: UpdateArticleDto, role: Role) {
+   async updateContent(articleId: string, userId: string, data: UpdateArticleInput, role: Role) {
       const article = await ArticleModel.findById(articleId)
 
-      if (!article) throw new Error('Article nor exist!')
+      if (!article) throw new NotFoundError('Article nor exist!')
 
       this.checkArticleOwnership(article, userId, role)
 
-      if (dto.title && dto.title !== article.title) {
-         article.slug = this.generateSlug(dto.title)
+      if (data.title && data.title !== article.title) {
+         article.slug = this.generateSlug(data.title)
       }
 
-      Object.assign(article, dto)
+      Object.assign(article, data)
 
       return article.save()
    }
 
    async updateStatus(articleId: string, status: ArticleStatus) {
-      return ArticleModel.findByIdAndUpdate(articleId, { status }, { new: true })
+      const article = await ArticleModel.findById(articleId)
+
+      if (!article) {
+         throw new NotFoundError("Article not found")
+      }
+      article.status = status
+      return article.save()
    }
    /* DELETE*/
    async delete(id: string) {
-      return await ArticleModel.findByIdAndDelete(id)
+      const article = await ArticleModel.findByIdAndDelete(id)
+
+      if (!article) {
+         throw new NotFoundError('Article not found')
+      }
+      // return article
    }
    /* generate SLUG */
    private generateSlug(title: string): string {
       return title.toLocaleLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
    }
    /* check article ownership */
-   private checkArticleOwnership(article: any, userId: string, role: Role) {
+   private checkArticleOwnership(article: IArticle, userId: string, role: Role) {
       const isAuthor = article.author.toString() === userId
 
       if (isAuthor) return
       if (role === Role.ADMIN || role === Role.EDITOR) return
 
-      throw new Error("Forbidden")
+      throw new ForbiddenError("Forbidden")
    }
 }
 
