@@ -1,70 +1,87 @@
 //article controller
 
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { articleService } from "../services/article.service"
 
 class ArticleController {
    /*CREATE*/
-   create = async (req: Request, res: Response) => {
-      const user = (req as any).user
+   create = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const user = (req as any).user
 
-      const article = await articleService.create(req.body, user.id)
+         const article = await articleService.create(req.body, user.id)
 
-      res.status(201).json(article)
+         res.status(201).json(article)
+      } catch (error) {
+         next(error)
+      }
    }
    /* GET */
-   getPublished = async (_req: Request, res: Response) => {
-      const articles = await articleService.findAllPublished()
-      res.json(articles)
+   getPublished = async (_req: Request, res: Response, next: NextFunction) => {
+      try {
+         const articles = await articleService.findAllPublished()
+         res.json(articles)
+      } catch (error) {
+         next(error)
+      }
    }
 
-   getBySlug = async (req: Request, res: Response) => {
-      const { slug } = req.params
+   getBySlug = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const slug = req.params.slug as string
 
-      if (Array.isArray(slug)) {
-         return res.status(400).json({ message: "Invalid Slug" })
+         const article = await articleService.findBySlug(slug)
+         res.json(article)
+      } catch (error) {
+         next(error)
       }
-      const article = await articleService.findBySlug(slug)
-      res.json(article)
+
    }
    /* UPDATE */
-   updateContent = async (req: Request, res: Response) => {
-      const user = (req as any).user
-      const { id } = req.params
+   updateContent = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const user = req.user!
+         const id = req.params.id as string
 
-      if (Array.isArray(id)) {
-         return res.status(400).json({ message: 'Invalid article id' })
+         const article = await articleService.updateContent(
+            id,
+            user.id,
+            req.body,
+            user.role
+         )
+
+         res.json(article)
+      } catch (error) {
+         next(error)
       }
 
-      const article = await articleService.updateContent(
-         id,
-         user.id,
-         req.body,
-         user.role
-      )
-
-      res.json(article)
    }
 
-   updateStatus = async (req: Request, res: Response) => {
-      const { id } = req.params
-      const { status } = req.body
-      if (Array.isArray(id)) {
-         return res.status(400).json({ message: 'Invalid article id' })
+   updateStatus = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const id = req.params.id as string
+
+         const { status } = req.body
+         const article = await articleService.updateStatus(id, status)
+         res.json(article)
+
+      } catch (error) {
+         next(error)
       }
-      const article = await articleService.updateStatus(id, status)
-      res.json(article)
+
    }
    /* DELETE */
-   delete = async (req: Request, res: Response) => {
-      const { id } = req.params
+   delete = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const id = req.params.id as string
 
-      if (Array.isArray(id)) {
-         return res.status(400).json({ message: 'Invalid article id' })
+         await articleService.delete(id)
+
+         res.status(204).send()
+      } catch (error) {
+         next(error)
       }
-      await articleService.delete(id)
 
-      res.status(204).send()
    }
 }
 
