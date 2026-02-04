@@ -13,9 +13,14 @@ npm install
 npm run dev
 ```
 
-#####  /backend create .env (example)
+#####  /backend create .env (example + read data base)
 ```
 PORT=4000
 SECRET=your_jwt_secret
 MONGO_URI=mongodb+srv://tester:CH2vaGB6mgHoIRWx@knowledge-base.lakfycb.mongodb.net/?appName=knowledge-base
+```
+
+#####  /frontend create .env (example)
+```
+VITE_API_URL=http://localhost:4000/api
 ```
