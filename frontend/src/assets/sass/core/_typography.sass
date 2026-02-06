@@ -4,20 +4,20 @@
 
 /*=== FONT SIZES ===*/
 .heading
-   @include font-style( blue, 10px, left)
+   @include font-style( var(--text), 10px, left)
    @include font-size($heading, 40px)
 
 .subheading
-   @include font-style( blue, 10px, left)
+   @include font-style( var(--text), 10px, left)
    @include font-size($subheading, 32px)
 
 .body-text
-   @include font-style( blue, 10px, left)
+   @include font-style( var(--text), 10px, left)
    @include font-size($body-text, 32px)
 
 /*=== FONT SIZES MD ===*/
 @media (max-width: 1024px)
-   .heading 
+   .heading
       @include font-size($heading-md, 38px)
    .subheading
       @include font-size($subheading-md, 28px)
@@ -26,7 +26,7 @@
 
 /*=== FONT SIZES SM ===*/
 @media (max-width: 767px)
-   .heading  
+   .heading
       @include font-size($heading-sm, 35px)
    .subheading
       @include font-size($subheading-sm, 26px)
