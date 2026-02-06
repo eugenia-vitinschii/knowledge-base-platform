@@ -1,0 +1,61 @@
+//components/button
+@use '../abstracts/_variables' as *
+@use '../abstracts/_mixins' as *
+.btn
+   display: flex
+   align-items: center
+   justify-content: center
+   border-radius: 12px
+   border: 1px solid transparent
+   width: 100%
+   margin: $margin-element
+   padding: $padding-element
+   transition: $transition
+   &:disabled
+      opacity: $opacity
+      cursor: not-allowed
+
+/*=== SIZES ===*/
+.btn--sm
+   @include button-size(38, 14px, 14px)
+.btn--md
+   @include button-size(44, 16px, 15px)
+.btn--lg
+   @include button-size(50, 18px, 16px)
+
+/*=== VARIANTS ===*/
+.btn--primary
+   @include button-variant(var(--primary), white, var(--primary))
+   &:hover:not(:disabled)
+      background: var(--primary-hover)
+.btn--secundary
+   @include button-variant( var(--bg-soft),var(--text), var(--border))
+   &:hover:not(:disabled)
+      background: var(--primary-hover)
+.btn--danger
+   @include button-variant(var(--danger),white,var(--danger))
+   &:hover:not(:disabled)
+      background: var(--primary-hover)
+.btn--ghost
+   @include button-variant( transparent, var(--text-muted), var(--border))
+   &:hover:not(:disabled)
+      background: var(--primary-hover)
+
+/*=== LOADING ===*/
+.is-loading .btn__content
+   opacity: 0.6
+
+.btn__spinner
+   width: 16px
+   height: 16px
+   border-radius: 50%
+   border: 2px solid gray
+   border-top-color: white
+   animation: spin 0.9s linear infinite
+   margin-right: 9px
+
+@keyframes spin
+   from
+      transform: rotate(0deg)
+   to
+      transform: rotate(360deg)
