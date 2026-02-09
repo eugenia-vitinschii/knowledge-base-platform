@@ -2,6 +2,7 @@
 @use '../abstracts/_variables' as *
 @use '../abstracts/_mixins' as *
 
+/* === INPUT: TEXT, PASSWORD === */
 .ui-field
    display: flex
    flex-direction: column
@@ -9,12 +10,7 @@
       @include field-text(12px, var(--text-muted))
       margin: $margin-element
    &__control
-      width: 100%
-      padding: $padding-element
-      border: $border
-      color: var(--text)
-      background: var(--bg)
-      transition: $transition
+      @include form-element()
       &:focus
          border-color: var(--primary)
          box-shadow: 0 0 0 3px var(--focus)
@@ -27,3 +23,29 @@
       @include field-text(13px,var(--text-muted))
    &.is-error .ui-field__control
       border-color: var(--danger)
+
+/* === TEXTAREA === */
+.textarea
+   display: flex
+   flex-direction: column
+   &__label
+      @include field-text(12px, var(--text-muted))
+      margin: $margin-element
+   &__field
+      @include form-element()
+      resize: vertical
+      min-height: 120px
+      &::placeholder
+         color: var(--text-muted)
+      &:focus-visible
+         border-color: var(--primary)
+   &__error
+      @include field-text(13px, var(--danger))
+   &__hint
+      @include field-text(13px,var(--text-muted))
+
+.has-error .textarea__field
+   border-color: var(--danger)
+.is-disabled
+   opacity: $opacity
+   cursor: not-allowed
