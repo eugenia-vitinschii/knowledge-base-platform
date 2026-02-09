@@ -49,3 +49,37 @@
 .is-disabled
    opacity: $opacity
    cursor: not-allowed
+
+/* === SELECT === */
+.select
+   display: flex
+   flex-direction: column
+   &__label
+      @include field-text(12px, var(--text-muted))
+      margin: $margin-element
+   &__wrapper
+      position: relative
+   &__field
+      @include form-element()
+      appearance: none
+      border-radius: 0px
+      &:focus
+         border-color: var(--primary)
+         box-shadow: 0 0 0 3px var(--focus)
+      &:disabled
+         opacity: $opacity
+         cursor: not-allowed
+      &.is-error
+         border-color: var(--danger)
+   &__error
+      @include field-text(13px, var(--danger))
+   &__hint
+      @include field-text(13px,var(--text-muted))
+   &__icon
+      position: absolute
+      right: 14px
+      top: 50%
+      transform: translateY(-50%)
+      pointer-events: none
+      font-size: 14px
+      color: var(--text-muted)

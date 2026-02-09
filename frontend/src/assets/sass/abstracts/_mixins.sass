@@ -1,5 +1,5 @@
 //mixins
-// @use './variables' as *
+@use './variables' as *
 
 // === FONTS === //
 @mixin font-size($font-size, $line-height)
@@ -25,3 +25,12 @@
    background: $bg
    color: $color
    border: 1px solid $border-color
+
+/*=== FORM ELEMENT ===*/
+@mixin form-element()
+   width: 100%
+   padding: $padding-element
+   border: $border
+   color: var(--text)
+   background: var(--bg-soft)
+   transition: $transition
