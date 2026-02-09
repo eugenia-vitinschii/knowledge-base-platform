@@ -83,3 +83,70 @@
       pointer-events: none
       font-size: 14px
       color: var(--text-muted)
+
+/* === CHECKBOX === */
+.checkbox
+   position: relative
+   &__wrapper.disabled
+      pacity: $opacity
+      cursor: not-allowed
+   &__wrapper
+      width: 100%
+   &__data
+      display: inline-flex
+      align-items: start
+      justify-content: start
+      user-select: none
+      margin-bottom: 6px
+   &__label
+      @include field-text(12px, var(--text))
+      padding-left: 6px
+      margin-top: 4px
+   &__field
+      position: absolute
+      opacity: 0
+      pointer-events: none
+      margin-left: 6px
+   &__box
+      width: 20px
+      height: 20px
+      border: 1px solid var(--border)
+      background: var(--bg-soft)
+      display: flex
+      align-items: center
+      justify-content: center
+      transition: $transition
+      cursor: pointer
+      &.error
+         border-color: var(--danger)
+   &__check
+      color: white
+      transform: scale(0.3)
+      transition: $transition
+      color: var(--text)
+   &__error
+      @include field-text(13px, var(--danger))
+   &__hint
+      @include field-text(13px,var(--text-muted))
+
+.checkbox__field:checked + .checkbox__box
+   background: var(--primary-hover)
+
+.checkbox__field:checked + .checkbox__box .checkbox__check
+   opacity: 1
+   transform: scale(1)
+
+.checkbox__field:checked + .checkbox__box.error .checkbox__check
+   transform: scale(0.3)
+.checkbox__field:checked + .checkbox__box.error
+   background: var(--bg-soft)
+
+.checkbox__field:disabled:checked + .checkbox__box
+   border: 1px solid var(--border)
+   background: var(--bg-soft)
+
+.checkbox__field:disabled:checked + .checkbox__box .checkbox__check
+   transform: scale(0.3)
+
+.checkbox__field:disabled:checked + .checkbox__box + .checkbox__label
+   color: var(--text-muted)
