@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 /* BUTTON TYPES */
-type ButtonVariant = "primary" | "secundary" | "danger" | "ghost"
+type ButtonVariant = "primary" | "secondary" | "danger" | "ghost"
 type ButtonSize = "sm" | "md" | "lg"
 type ButtonType = "button" | "submit" | "reset"
 

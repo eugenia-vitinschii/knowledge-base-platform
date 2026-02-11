@@ -36,7 +36,7 @@ const emit = defineEmits<{
 }>()
 
 function onInput(e: Event) {
-   const target = e.target as HTMLInputElement
+   const target = e.target as HTMLTextAreaElement
    emit("update:modelValue", target.value)
 }
 </script>
