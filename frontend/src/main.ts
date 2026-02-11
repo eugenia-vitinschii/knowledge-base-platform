@@ -5,6 +5,8 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/sass/app.sass'
+import "highlight.js/styles/github-dark.css";
+import "highlight.js/styles/github.css";
 
 import { useThemeStore } from './stores/theme/theme.store'
 
