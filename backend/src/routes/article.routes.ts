@@ -18,8 +18,14 @@ router.post(
    validateResource(CreateArticleDto),
    articleController.create
 )
+router.get(
+   '/:id',
+   authMiddleware,
+   requiredRole(Role.ADMIN, Role.EDITOR),
+   articleController.getById
+)
 
-router.patch(
+router.put(
    '/:id',
    authMiddleware,
    requiredRole(Role.ADMIN, Role.EDITOR),

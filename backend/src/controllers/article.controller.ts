@@ -2,6 +2,7 @@
 
 import { NextFunction, Request, Response } from "express"
 import { articleService } from "../services/article.service"
+import { NotFoundError } from "../common/errors"
 
 class ArticleController {
    /*CREATE*/
@@ -36,6 +37,20 @@ class ArticleController {
          next(error)
       }
 
+   }
+
+   getById = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const id = req.params.id as string;
+
+         const article = await articleService.findById(id)
+
+         if (!article) throw new NotFoundError("Article not found")
+         res.json(article)
+
+      } catch (error) {
+         next(error)
+      }
    }
    /* UPDATE */
    updateContent = async (req: Request, res: Response, next: NextFunction) => {
