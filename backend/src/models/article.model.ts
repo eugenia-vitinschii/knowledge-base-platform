@@ -32,4 +32,20 @@ const ArticleSchema = new Schema<IArticle>({
    { timestamps: true }
 )
 
+ArticleSchema.set("toJSON", {
+   transform: (_doc, ret) => {
+      ret.id = ret._id.toString();
+      delete ret._id;
+      delete ret.__v;
+   }
+})
+
+
+// ArticleSchema.set("toJSON", {
+//    transform: (_, ret) => {
+//       ret.id = ret._id.toString();
+//       delete ret._id;
+//    }
+// })
+
 export const ArticleModel = mongoose.model<IArticle>("Article", ArticleSchema)

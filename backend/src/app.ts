@@ -17,8 +17,6 @@ app.get('/', (_req, res) => {
 
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
-app.use('/api/article', articleRoutes)
+app.use('/api/articles', articleRoutes)
 
 app.use(errorMiddleware)
-
-
