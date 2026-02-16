@@ -1,6 +1,11 @@
 //components/button
 @use '../abstracts/_variables' as *
 @use '../abstracts/_mixins' as *
+
+a
+   cursor: pointer
+   display: block
+
 .btn
    display: flex
    align-items: center
@@ -11,6 +16,7 @@
    margin: $margin-element
    padding: $padding-element
    transition: $transition
+   font-family: "Raleway Dots", sans-serif
    &:disabled
       opacity: $opacity
       cursor: not-allowed
