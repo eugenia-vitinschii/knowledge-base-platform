@@ -8,6 +8,7 @@ import { Role } from "../common/enums/role.enum";
 import { CreateArticleDto } from "../dtos/create-article.dto";
 import { validateResource } from "../middleware/validateResource";
 import { UpdateArticleDto } from "../dtos/update-article.dto";
+import { UpdateArticleStatusDto } from "../dtos/update-article-status.dto";
 
 const router = Router()
 
@@ -37,7 +38,7 @@ router.patch(
    '/:id/status',
    authMiddleware,
    requiredRole(Role.ADMIN),
-   validateResource(UpdateArticleDto),
+   validateResource(UpdateArticleStatusDto),
    articleController.updateStatus
 )
 
@@ -52,3 +53,4 @@ router.get('/', articleController.getPublished)
 router.get('/:slug', articleController.getBySlug)
 
 export default router
+
