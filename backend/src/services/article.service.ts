@@ -10,7 +10,6 @@ import z from "zod";
 import { ForbiddenError, NotFoundError } from "../common/errors";
 import { IArticle } from "../models/article.model";
 
-
 type CreateArticleInput = z.infer<typeof CreateArticleDto>
 type UpdateArticleInput = z.infer<typeof UpdateArticleDto>
 
@@ -64,7 +63,7 @@ class ArticleService {
          throw new NotFoundError("Article not found")
       }
       article.status = status
-      return article.save()
+      return await article.save()
    }
    /* DELETE*/
    async delete(id: string) {
