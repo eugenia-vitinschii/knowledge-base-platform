@@ -10,7 +10,7 @@ import { articlesApi } from "@/api/articles.api";
 
 export const useArticlesStore = defineStore("articles", () => {
    const currentArticle = ref<Article | null>(null);
-
+   const list = ref<Article[]>([])
    const isLoading = ref(false);
    const error = ref<string | null>(null)
 
@@ -18,7 +18,41 @@ export const useArticlesStore = defineStore("articles", () => {
    function setError(message: string | null) {
       error.value = message;
    }
+   /* === GET ALL ARTICLES === */
+   async function fetchAll() {
+      try {
+         isLoading.value = true;
+         setError(null);
 
+         const res = await articlesApi.getAll();
+         list.value = res.data;
+
+         return res.data;
+
+      } catch (error: any) {
+         setError(error?.response?.data?.message || "Failed to load articles")
+         return []
+      } finally {
+         isLoading.value = false
+      }
+   }
+   /* === GET MY ARTICLES (EDITOR) === */
+   async function fetchMy() {
+      try {
+         isLoading.value = true;
+         setError(null);
+
+         const res = await articlesApi.getMy();
+         list.value = res.data
+
+         return res.data;
+      } catch (e: any) {
+         setError(e?.response?.data?.message || "Failed to load your articles");
+         return [];
+      } finally {
+         isLoading.value = false
+      }
+   }
    /* === GET BY ID === */
    async function fetchById(id: string) {
       try {
@@ -28,7 +62,7 @@ export const useArticlesStore = defineStore("articles", () => {
          const res = await articlesApi.getById(id);
          currentArticle.value = res.data;
 
-         return res.data
+         return res.data;
       } catch (e: any) {
          setError(e?.response?.data?.message || "Failed to fetch article");
          return null;
@@ -36,7 +70,6 @@ export const useArticlesStore = defineStore("articles", () => {
          isLoading.value = false
       }
    }
-
    /* === CREATE ARTICLE === */
    async function create(payload: CreateArticlePayload) {
       try {
@@ -95,8 +128,25 @@ export const useArticlesStore = defineStore("articles", () => {
       currentArticle.value = null
       error.value = null
    }
+   /* === DELETE ARTICLE === */
+   async function remove(id: string) {
+      try {
+         isLoading.value = true;
+         setError(null);
 
+         await articlesApi.delete(id);
 
-   return { currentArticle, isLoading, error, fetchById, create, update, updateStatus, resetCurrent }
+         list.value = list.value.filter((a) => a.id !== id)
+
+         return true
+      } catch (e: any) {
+         setError(e?.response?.data?.message || "Failed to delete article");
+         return false;
+      } finally {
+         isLoading.value = false
+      }
+   }
+
+   return { currentArticle, isLoading, error, fetchById, create, update, updateStatus, resetCurrent, fetchAll, fetchMy, remove, list }
 })
 
