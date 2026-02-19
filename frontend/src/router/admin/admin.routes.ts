@@ -12,6 +12,11 @@ export const adminRoutes: RouteRecordRaw[] = [
             component: () => import('@/pages/admin/AdminDashboardPage.vue')
          },
          {
+            path: 'articles',
+            name: 'admin.articles',
+            component: () => import('@/pages/admin/AdminArticlesPage.vue')
+         },
+         {
             path: 'articles/create',
             name: "admin.articles.create",
             component: () => import('@/pages/admin/AdminArticleCreatePage.vue')
