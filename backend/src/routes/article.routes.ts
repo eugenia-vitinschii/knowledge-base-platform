@@ -26,6 +26,12 @@ router.get(
    articleController.getById
 )
 
+router.get("/my",
+   authMiddleware,
+   requiredRole(Role.ADMIN, Role.EDITOR),
+   articleController.getMyArticles
+)
+
 router.put(
    '/:id',
    authMiddleware,

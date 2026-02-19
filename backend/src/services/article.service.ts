@@ -39,6 +39,9 @@ class ArticleService {
    async findById(id: string) {
       return await ArticleModel.findById(id)
    }
+   async findMyArticles(userId: string) {
+      return ArticleModel.find({ author: userId }).sort({ createdAt: -1 })
+   }
    /* UPDATE*/
    async updateContent(articleId: string, userId: string, data: UpdateArticleInput, role: Role) {
       const article = await ArticleModel.findById(articleId)
