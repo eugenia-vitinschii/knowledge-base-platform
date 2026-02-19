@@ -18,5 +18,14 @@ export const articlesApi = {
    },
    getById(id: string) {
       return api.get<Article>(`/articles/${id}`)
-   }
+   },
+   getAll() {
+      return api.get<Article[]>('/articles/admin/all')
+   },
+   getMy() {
+      return api.get<Article[]>('/articles/admin/my')
+   },
+   delete(id: string) {
+      return api.delete(`/articles/${id}`);
+   },
 }
