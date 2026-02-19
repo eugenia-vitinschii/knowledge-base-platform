@@ -34,7 +34,7 @@ router.get("/admin/my",
 router.get("/admin/all",
    authMiddleware,
    requiredRole(Role.ADMIN),
-   articleController.getll
+   articleController.getAll
 )
 
 router.put(

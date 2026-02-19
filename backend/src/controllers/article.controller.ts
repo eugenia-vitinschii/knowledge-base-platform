@@ -47,7 +47,7 @@ class ArticleController {
          next(error)
       }
    }
-   getll = async (req: Request, res: Response, next: NextFunction) => {
+   getAll = async (_req: Request, res: Response, next: NextFunction) => {
       try {
          const articles = await articleService.findAll()
          res.json(articles)
