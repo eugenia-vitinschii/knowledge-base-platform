@@ -32,6 +32,9 @@ class ArticleService {
    async findAllPublished() {
       return ArticleModel.find({ status: ArticleStatus.PUBLISHED })
    }
+   async findAll() {
+      return ArticleModel.find()
+   }
    async findBySlug(slug: string) {
       return ArticleModel.findOne({ slug, status: ArticleStatus.PUBLISHED })
    }

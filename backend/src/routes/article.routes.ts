@@ -26,10 +26,15 @@ router.get(
    articleController.getById
 )
 
-router.get("/my",
+router.get("/admin/my",
    authMiddleware,
    requiredRole(Role.ADMIN, Role.EDITOR),
    articleController.getMyArticles
+)
+router.get("/admin/all",
+   authMiddleware,
+   requiredRole(Role.ADMIN),
+   articleController.getll
 )
 
 router.put(
