@@ -1,0 +1,25 @@
+@use '../abstracts/_variables' as *
+@use '../abstracts/_mixins' as *
+
+.articles-table-wrapper
+   width: 100%
+   overflow: scroll
+.articles-table
+   border-collapse: collapse
+   margin: $margin-block
+   width: 100%
+   th, td
+      @include font-style( var(--text-muted), 10px, left)
+      @include font-size($body-text,25px)
+      padding: $padding-element
+   th
+      color: var(--text)
+      letter-spacing: 0.9px
+   tbody tr
+      border-top: $border
+      margin: $margin-block
+      transition: $transition
+   tbody tr:hover
+      background: var(--bg-card)
+
+   &__actions
