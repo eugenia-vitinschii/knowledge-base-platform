@@ -42,10 +42,10 @@
 <script setup lang="ts">
 
 /* COMPONENTS */
-import UiInput from './UiInput.vue';
-import UiSelect from './UiSelect.vue';
+import UiInput from '@/components/ui/form/UiInput.vue';
+import UiSelect from '@/components/ui/form/UiSelect.vue';
 import MarkdownEditor from '../markdown/MarkdownEditor.vue';
-import UiButton from './UiButton.vue';
+import UiButton from '@/components/ui/UiButton.vue';
 
 /* VUE */
 import { watch, reactive } from 'vue';

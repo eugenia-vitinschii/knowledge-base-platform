@@ -6,9 +6,7 @@
                <form class="auth__form" @submit.prevent="submit">
                   <ui-input v-model="email" label="Email" type="email" />
                   <ui-input v-model="password" label="Password" type="password" />
-                  <button type="submit">
-                     login
-                  </button>
+                  <ui-button type="submit">login</ui-button>
                </form>
             </div>
          </div>
@@ -19,8 +17,8 @@
 
 <script setup lang="ts">
 /*COMPONENTS */
-import UiInput from '@/components/ui/UiInput.vue';
-
+import UiInput from '@/components/ui/form/UiInput.vue';
+import UiButton from '@/components/ui/UiButton.vue';
 /* VUE */
 import { ref } from 'vue';
 /* PINIA */

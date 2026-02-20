@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import ArticleForm from '@/components/ui/ArticleForm.vue';
+import ArticleForm from '@/components/article/ArticleForm.vue';
 
 /* TYPES & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
