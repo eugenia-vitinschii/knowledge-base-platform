@@ -5,6 +5,7 @@ import type { CreateArticlePayload } from "@/types/create-article.payload"
 import type { Article } from "@/types/article.types"
 import type { UpdateArticlePayload } from "@/types/update-article.payload"
 import type { UpdateArticleStatusPayload } from "@/types/update-article-status.payload"
+import type { ArticlePreview } from "@/types/article-preview.type"
 
 export const articlesApi = {
    create(payload: CreateArticlePayload) {
@@ -28,4 +29,7 @@ export const articlesApi = {
    delete(id: string) {
       return api.delete(`/articles/${id}`);
    },
+   getBySlug(slug: string) {
+      return api.get<ArticlePreview>(`/articles/public/${slug}`)
+   }
 }
