@@ -7,9 +7,11 @@ import type { CreateArticlePayload } from "@/types/create-article.payload"
 import type { UpdateArticlePayload } from "@/types/update-article.payload";
 import type { UpdateArticleStatusPayload } from "@/types/update-article-status.payload";
 import { articlesApi } from "@/api/articles.api";
+import type { ArticlePreview } from "@/types/article-preview.type";
 
 export const useArticlesStore = defineStore("articles", () => {
    const currentArticle = ref<Article | null>(null);
+   const currentPreview = ref<ArticlePreview | null>(null);
    const list = ref<Article[]>([])
    const isLoading = ref(false);
    const error = ref<string | null>(null)
@@ -61,6 +63,23 @@ export const useArticlesStore = defineStore("articles", () => {
 
          const res = await articlesApi.getById(id);
          currentArticle.value = res.data;
+
+         return res.data;
+      } catch (e: any) {
+         setError(e?.response?.data?.message || "Failed to fetch article");
+         return null;
+      } finally {
+         isLoading.value = false
+      }
+   }
+   /* === GET BY SLUG === */
+   async function fetchBySlug(slug: string) {
+      try {
+         isLoading.value = true;
+         setError(null);
+
+         const res = await articlesApi.getBySlug(slug);
+         currentPreview.value = res.data;
 
          return res.data;
       } catch (e: any) {
@@ -147,6 +166,6 @@ export const useArticlesStore = defineStore("articles", () => {
       }
    }
 
-   return { currentArticle, isLoading, error, fetchById, create, update, updateStatus, resetCurrent, fetchAll, fetchMy, remove, list }
+   return { currentArticle, isLoading, error, fetchById, create, update, updateStatus, resetCurrent, fetchAll, fetchMy, remove, list, fetchBySlug, currentPreview }
 })
 
