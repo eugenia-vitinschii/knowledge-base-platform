@@ -61,7 +61,7 @@ router.delete(
 )
 
 router.get('/', articleController.getPublished)
-router.get('/:slug', articleController.getBySlug)
+router.get('/public/:slug', articleController.getBySlug)
 
 export default router
 
