@@ -14,24 +14,22 @@
       color: var(--text)
       background: var(--bg-soft)
       padding: $padding-element
+      ul li
+      list-style: circle !important
+      ol
+         list-style: decimal
+      pre
+         white-space: pre
 
 //code block
 .code-block
    position: relative
    margin: $margin-block
+   border: $border
    button
+      white-space: normal
       width: 200px
    &__copy
       position: absolute
-      top: 10px
+      top: 0px
       right: 10px
-      color: var(--text)
-      background: var(--bg-card)
-      display: flex
-      align-items: center
-      justify-content: center
-      border-radius: 12px
-      border: 1px solid transparent
-      margin: $margin-element
-      padding: $padding-element
-      transition: $transition
