@@ -1,0 +1,29 @@
+@use '../abstracts/variables' as *
+
+.badge
+   display: flex
+   flex-direction: row
+   background: var(--bg-card)
+   margin: $margin-element
+   padding: $padding-element
+   width: 100%
+   &__span
+      span
+         font-size: 20px
+         color: var(--text)
+         margin-left: 20px
+   &__icon
+      svg
+         fill: var(--text)
+         width: 20px
+         height: 20px
+
+@media (max-width: 767px)
+   .badge
+      &__span
+         span
+            font-size: 15px
+      &__icon
+         svg
+            width: 15px
+            height: 15px
