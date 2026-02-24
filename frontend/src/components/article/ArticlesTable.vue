@@ -24,7 +24,8 @@
             <td class="articles-table__actions">
                <ui-button type="button" variant="primary" @click="$emit('edit', a.id)">edit</ui-button>
                <ui-button type="button" variant="secondary" @click="$emit('preview', a.id)">preview</ui-button>
-               <ui-button type="button" variant="danger" @click="$emit('delete', a.id)">delete</ui-button>
+               <ui-button type="button" variant="danger" :disabled="!canEditStatus"
+                  @click="$emit('delete', a.id)">delete</ui-button>
             </td>
          </tr>
       </tbody>
