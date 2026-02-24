@@ -19,10 +19,15 @@
 .footer
 	flex: 0 0 auto
 	background: var(--bg-soft)
-	color: var(--text)
-.header
-	display: flex
-	background: var(--bg-soft)
-	a
-		margin-left: 20px
+	&__wrapper
 		color: var(--text)
+	&__actions
+		width: 200px
+.header
+	background: var(--bg-soft)
+	&__wrapper
+		display: flex
+
+		a
+			margin-left: 20px
+			color: var(--text)

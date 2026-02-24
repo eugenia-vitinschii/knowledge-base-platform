@@ -1,5 +1,5 @@
 <template>
-   <button @click="theme.toogleTheme">{{ theme.theme }}</button>
+   <button class="btn btn--primary" @click="theme.toogleTheme">{{ theme.theme }}</button>
 </template>
 
 <script setup lang="ts">
