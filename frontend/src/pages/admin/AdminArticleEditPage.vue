@@ -117,7 +117,7 @@ async function onSubmit() {
    const updated = await articleStore.update(id, payload)
    if (!updated) return
 
-   router.push(`/`)
+   router.push(`/admin/articles`)
 }
 
 </script>

@@ -68,6 +68,6 @@ async function onSubmit() {
    }
    await articleStore.create(payload)
 
-   router.push('/')
+   router.push(`/admin/articles`)
 }
 </script>
