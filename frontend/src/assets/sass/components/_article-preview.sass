@@ -1,0 +1,51 @@
+@use '../abstracts/_variables' as *
+@use '../abstracts/_mixins' as *
+
+.article-preview
+   margin: $margin-block
+   &__heading
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+   &__heading--date
+      display: flex
+      align-items: center
+      flex-direction: row
+      justify-content: start
+      p
+         color: var(--text-muted)
+      svg
+         margin: 5px 4px 0px 0px
+         width: 20px
+         height: 20px
+         fill: var(--text-muted)
+   &__badges
+      display: flex
+      width: 100%
+   &__content
+      margin: $margin-element
+      padding: 30px
+      color: var(--text)
+      border: $border
+      background: var(--bg-soft)
+   &__tags
+      display: flex
+      @include block-element()
+   &__tags--item
+      margin-left: 5px
+      color: var(--text-muted)
+   &__tags--item:first-child
+      margin-left: 0px
+   &__admin
+   &__admin--actions
+      @include block-element()
+      display: flex
+      button
+         width: 200px
+         margin-left: 5px
+      button:first-child
+
+@media (max-width: 767px)
+   .article-preview
+      &__badges
+         flex-direction: column
