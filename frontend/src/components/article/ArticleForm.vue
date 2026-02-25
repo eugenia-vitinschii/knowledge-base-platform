@@ -2,7 +2,6 @@
    <form class="article-form" @submit.prevent="emitSubmit">
       <div class="article-form__section">
          <p class="subheading">Meta</p>
-         <p class="body-text">{{ localForm.title }}</p>
          <div class="article-form__section--items">
             <ui-input v-model="localForm.title" type="text" placeholder="title" label="*Article title" />
             <ui-select v-model="localForm.type" :options="typesOption" label="*Article types" />
@@ -26,14 +25,13 @@
             <ui-button type="button" variant="danger" @click="emit('save-status')">save
                status</ui-button>
          </div>
-
       </div>
+      <p class="subheading">{{ isEdit ? "Update" : "Create" }} article</p>
       <div class="article-form__actions">
          <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
-         <ui-button type="submit" variant="primary" :loading="isLoading">
+         <ui-button type="submit" variant="primary" :loading="isLoading" :size="'md'">
             {{ isEdit ? "update" : "create" }}
          </ui-button>
-
       </div>
       <br>
    </form>
