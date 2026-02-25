@@ -1,10 +1,11 @@
 <template>
    <div class="md-editor">
       <div class="md-editor__tabs">
-         <ui-button variant="primary" @click="activeTab = 'edit'" type="button">
+         <ui-button :variant="activeTab === 'edit' ? 'primary' : 'secondary'" @click="activeTab = 'edit'" type="button">
             edit
          </ui-button>
-         <ui-button variant="secondary" @click="activeTab = 'preview'" type="button">
+         <ui-button :variant="activeTab === 'preview' ? 'primary' : 'secondary'" @click="activeTab = 'preview'"
+            type="button">
             preview
          </ui-button>
       </div>
