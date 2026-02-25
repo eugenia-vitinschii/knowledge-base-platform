@@ -1,4 +1,5 @@
 @use '../abstracts/_variables' as *
+@use '../abstracts/_mixins' as *
 
 //md editor 
 .md-editor
@@ -8,12 +9,9 @@
       display: flex
       min-width: 200px
       max-width: 500px
-      button:last-child
-         margin-left: 5px
    &__preview-content
+      @include block-element()
       color: var(--text)
-      background: var(--bg-soft)
-      padding: $padding-element
       ul li
       list-style: circle !important
       ol
@@ -26,7 +24,6 @@
    position: relative
    margin: $margin-block
    border: $border
-   background: white
    button
       white-space: normal
       width: 200px
