@@ -20,18 +20,19 @@ import ArticlePreview from '@/components/article/ArticlePreview.vue';
 import { useArticlesStore } from '@/stores/articles/article.store';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted } from 'vue';
-
+import { useToast } from '@/shared/composables/useToast';
 /* Variables */
 const articles = useArticlesStore()
 const route = useRoute()
 const router = useRouter();
-
+const toast = useToast()
 /* fetch article (id)*/
 onMounted(async () => {
    const id = route.params.id as string
 
    if (!id) return
    await articles.fetchById(id)
+   toast.info("You are viewing a preview")
 })
 
 /* EDIT */
@@ -46,6 +47,7 @@ const handleDelete = async (id: string) => {
 
    await articles.remove(id)
    articles.list = articles.list.filter(a => a.id !== id)
+   toast.info("Article has been deleted")
    router.push(`/admin/articles`)
 }
 </script>

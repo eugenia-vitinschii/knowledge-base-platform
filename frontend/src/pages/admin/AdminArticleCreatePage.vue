@@ -6,8 +6,7 @@
                <p class="heading">Create Article Page</p>
             </div>
             <div class="page__content">
-               <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading=false
-                  :canEditStatus="canEditStatus" />
+               <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading=false :canEditStatus="false" />
             </div>
          </div>
       </div>
@@ -23,17 +22,19 @@ import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from 
 import type { ArticleFormModel } from '@/types/article-form.types';
 
 /* VUE & PINIA */
-import { reactive, computed } from 'vue';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+
 import { useArticlesStore } from '@/stores/articles/article.store';
-import { useAuthStore } from '@/stores/auth/auth.store';
+
 import type { CreateArticlePayload } from '@/types/create-article.payload';
+import { useToast } from '@/shared/composables/useToast';
 
 const articleStore = useArticlesStore()
-const auth = useAuthStore()
 const router = useRouter()
 
-const canEditStatus = computed(() => auth.user?.role === 'admin')
+const toast = useToast()
+
 /* from data */
 const form = reactive<ArticleFormModel>({
    title: '',
@@ -68,6 +69,8 @@ async function onSubmit() {
    }
    await articleStore.create(payload)
 
+   toast.success("Article has been created")
    router.push(`/admin/articles`)
+
 }
 </script>

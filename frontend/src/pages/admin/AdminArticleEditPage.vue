@@ -21,13 +21,16 @@ import ArticleForm from '@/components/article/ArticleForm.vue';
 /* TYPES & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
 import type { ArticleFormModel } from '@/types/article-form.types';
+import type { UpdateArticlePayload } from '@/types/update-article.payload';
 
 /* VUE & PINIA */
 import { onMounted, reactive, computed, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 import { useArticlesStore } from '@/stores/articles/article.store';
 import { useAuthStore } from '@/stores/auth/auth.store';
-import { useRoute, useRouter } from 'vue-router';
-import type { UpdateArticlePayload } from '@/types/update-article.payload';
+
+import { useToast } from '@/shared/composables/useToast';
 
 /* Variables */
 const route = useRoute()
@@ -35,6 +38,8 @@ const router = useRouter()
 
 const articleStore = useArticlesStore()
 const auth = useAuthStore()
+
+const toast = useToast()
 
 const canEditStatus = computed(() => auth.user?.role === 'admin')
 
@@ -96,6 +101,7 @@ async function saveStatus() {
 
    originalStatus.value = updated.status
    form.status = updated.status
+   toast.success("Status has been updated")
 
 }
 
@@ -115,8 +121,8 @@ async function onSubmit() {
    }
 
    const updated = await articleStore.update(id, payload)
-   if (!updated) return
-
+   if (!updated) return toast.error("Article wasn't updated")
+   toast.success("Article has been updated")
    router.push(`/admin/articles`)
 }
 

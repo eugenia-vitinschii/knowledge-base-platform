@@ -25,7 +25,7 @@ import { useRouter } from 'vue-router';
 /*  PINIA  */
 import { useAuthStore } from '@/stores/auth/auth.store';
 import { useArticlesStore } from '@/stores/articles/article.store';
-
+import { useToast } from '@/shared/composables/useToast';
 /*  TYPES */
 import { ArticleStatus } from '@/shared/enums/article.enum';
 
@@ -33,7 +33,7 @@ import { ArticleStatus } from '@/shared/enums/article.enum';
 const auth = useAuthStore();
 const articles = useArticlesStore();
 const router = useRouter();
-
+const toast = useToast()
 /* check role & fetch data */
 const isAdmin = computed(() => auth.user?.role === 'admin')
 
@@ -53,6 +53,7 @@ const handleSaveStatus = async ({ id, status }: { id: string, status: ArticleSta
    if (article) {
       article.status = status
    }
+   toast.success("Status updated successfully")
 }
 
 /* Table actions */
@@ -70,7 +71,7 @@ const handleDelete = async (id: string) => {
 
    await articles.remove(id)
    articles.list = articles.list.filter(a => a.id !== id)
+   toast.info("Article has been deleted")
 }
-
 
 </script>
