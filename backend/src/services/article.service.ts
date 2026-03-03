@@ -9,9 +9,13 @@ import { Types } from "mongoose";
 import z from "zod";
 import { ForbiddenError, NotFoundError } from "../common/errors";
 import { IArticle } from "../models/article.model";
+import { ArticleFilterDto } from "../dtos/article-filter.dto";
+import { buidArticleQuery } from "../common/utils/buildArticleQuery";
 
 type CreateArticleInput = z.infer<typeof CreateArticleDto>
 type UpdateArticleInput = z.infer<typeof UpdateArticleDto>
+type ArticleFilter = z.infer<typeof ArticleFilterDto>
+
 
 class ArticleService {
    /* CREATE */
@@ -34,6 +38,18 @@ class ArticleService {
    }
    async findAll() {
       return ArticleModel.find()
+   }
+   async findArticles(filters: ArticleFilter, user: { id: string, role?: Role }) {
+      const query = buidArticleQuery(filters)
+
+      if (user?.role === Role.VIEWER) {
+         query.status = ArticleStatus.PUBLISHED
+      }
+      else if (user?.role === Role.EDITOR) {
+         query.author = user.id
+      }
+
+      return ArticleModel.find(query)
    }
    async findBySlug(slug: string) {
       return ArticleModel.findOne({ slug, status: ArticleStatus.PUBLISHED })
