@@ -37,6 +37,13 @@ router.get("/admin/all",
    articleController.getAll
 )
 
+router.get("/admin/filter",
+   authMiddleware,
+   requiredRole(Role.ADMIN, Role.EDITOR),
+   articleController.getArticles
+)
+
+
 router.put(
    '/:id',
    authMiddleware,
@@ -60,8 +67,10 @@ router.delete(
    articleController.delete
 )
 
-router.get('/', articleController.getPublished)
-router.get('/public/:slug', articleController.getBySlug)
+router.get('/', authMiddleware, articleController.getPublished)
+router.get('/public', authMiddleware, articleController.getArticles)
+router.get('/public/:slug', authMiddleware, articleController.getBySlug)
+
 
 export default router
 
