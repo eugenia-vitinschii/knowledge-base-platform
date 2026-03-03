@@ -56,6 +56,16 @@ class ArticleController {
          next(error)
       }
    }
+   getArticles = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const filters = req.query
+         const user = req.user!
+         const articles = await articleService.findArticles(filters, user)
+         res.json(articles)
+      } catch (error) {
+         next(error)
+      }
+   }
 
    getById = async (req: Request, res: Response, next: NextFunction) => {
       try {
