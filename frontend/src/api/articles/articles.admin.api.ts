@@ -8,6 +8,9 @@ import type { ArticlePreview } from "@/types/article-preview.type"
 import type { ArticleFilters } from "@/types/article-filter.types"
 
 export const articlesAdminApi = {
+   getById(id: string) {
+      return api.get<Article>(`/articles/${id}`)
+   },
    getAll() {
       return api.get<Article[]>('/articles/admin/all')
    },

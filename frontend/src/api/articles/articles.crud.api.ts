@@ -20,9 +20,6 @@ export const articlesCrudApi = {
    updateStatus(id: string, payload: UpdateArticleStatusPayload) {
       return api.patch<Article>(`/articles/${id}/status`, payload)
    },
-   getById(id: string) {
-      return api.get<Article>(`/articles/${id}`)
-   },
    delete(id: string) {
       return api.delete(`/articles/${id}`);
    },
