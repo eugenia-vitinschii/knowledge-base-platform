@@ -31,6 +31,8 @@ class ArticleService {
 
       if (!article) throw new NotFoundError("Article not found")
 
+      return article
+
    }
    /* FIND */
    async findAllPublished() {
@@ -39,15 +41,20 @@ class ArticleService {
    async findAll() {
       return ArticleModel.find()
    }
-   async findArticles(filters: ArticleFilter, user: { id: string, role?: Role }) {
+   async findAdminArticles(filters: ArticleFilter, user: { id: string, role?: Role }) {
       const query = buidArticleQuery(filters)
 
-      if (user?.role === Role.VIEWER) {
-         query.status = ArticleStatus.PUBLISHED
-      }
-      else if (user?.role === Role.EDITOR) {
+
+      if (user?.role === Role.EDITOR) {
          query.author = user.id
       }
+
+      return ArticleModel.find(query)
+   }
+   async findPublicArticles(filters: ArticleFilter) {
+      const query = buidArticleQuery(filters)
+
+      query.status = ArticleStatus.PUBLISHED
 
       return ArticleModel.find(query)
    }

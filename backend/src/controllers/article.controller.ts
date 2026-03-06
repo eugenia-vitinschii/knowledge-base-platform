@@ -56,14 +56,28 @@ class ArticleController {
          next(error)
       }
    }
-   getArticles = async (req: Request, res: Response, next: NextFunction) => {
+   getPublicArticles = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const filters = req.query
+
+         const articles = await articleService.findPublicArticles(filters)
+         res.json(articles)
+      } catch (error) {
+         console.log("error", error)
+         next(error)
+
+      }
+   }
+   getAdminArticles = async (req: Request, res: Response, next: NextFunction) => {
       try {
          const filters = req.query
          const user = req.user!
-         const articles = await articleService.findArticles(filters, user)
+         const articles = await articleService.findAdminArticles(filters, user)
          res.json(articles)
       } catch (error) {
+         console.log("error", error)
          next(error)
+
       }
    }
 

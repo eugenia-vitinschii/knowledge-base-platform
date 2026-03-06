@@ -8,5 +8,5 @@ export const ArticleFilterDto = z.object({
    category: z.nativeEnum(ArticleCategory).optional(),
    type: z.nativeEnum(ArcticleType).optional(),
    difficulty: z.nativeEnum(ArticleDifficulty).optional(),
-   status: z.nativeEnum(ArticleStatus).optional(),
+   status: z.nativeEnum(ArticleStatus).optional()
 })
