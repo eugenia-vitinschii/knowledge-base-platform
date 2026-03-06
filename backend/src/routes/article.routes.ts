@@ -1,76 +1,45 @@
-//article routes
+//article routes (CRUD)
 
 import { Router } from "express";
+
+//middlewares
 import { authMiddleware } from "../middleware/auth.middleware";
-import { articleController } from "../controllers/article.controller";
 import { requiredRole } from "../middleware/role.middleware";
-import { Role } from "../common/enums/role.enum";
-import { CreateArticleDto } from "../dtos/create-article.dto";
 import { validateResource } from "../middleware/validateResource";
+
+//DTO's
 import { UpdateArticleDto } from "../dtos/update-article.dto";
 import { UpdateArticleStatusDto } from "../dtos/update-article-status.dto";
+import { CreateArticleDto } from "../dtos/create-article.dto";
+
+//controllers
+import { articleController } from "../controllers/article.controller";
+
+//enums
+import { Role } from "../common/enums/role.enum";
+
 
 const router = Router()
 
-router.post(
-   '/',
-   authMiddleware,
-   requiredRole(Role.ADMIN, Role.EDITOR),
-   validateResource(CreateArticleDto),
-   articleController.create
-)
-router.get(
-   '/:id',
-   authMiddleware,
-   requiredRole(Role.ADMIN, Role.EDITOR),
-   articleController.getById
-)
+/* used for all routes */
+router.use(authMiddleware)
 
-router.get("/admin/my",
-   authMiddleware,
-   requiredRole(Role.ADMIN, Role.EDITOR),
-   articleController.getMyArticles
-)
-router.get("/admin/all",
-   authMiddleware,
-   requiredRole(Role.ADMIN),
-   articleController.getAll
-)
+router.get('/', articleController.getPublished)
 
-router.get("/admin/filter",
-   authMiddleware,
-   requiredRole(Role.ADMIN, Role.EDITOR),
-   articleController.getArticles
-)
+/* CREATE ARTICLE */
+router.post('/', requiredRole(Role.ADMIN, Role.EDITOR), validateResource(CreateArticleDto), articleController.create)
 
+/* GET ARTICLE BY ID */
+router.get('/:id', requiredRole(Role.ADMIN, Role.EDITOR), articleController.getById)
 
-router.put(
-   '/:id',
-   authMiddleware,
-   requiredRole(Role.ADMIN, Role.EDITOR),
-   validateResource(UpdateArticleDto),
-   articleController.updateContent
-)
+/* UPDATE ARTICLE  */
+router.put('/:id', requiredRole(Role.ADMIN, Role.EDITOR), validateResource(UpdateArticleDto), articleController.updateContent)
 
-router.patch(
-   '/:id/status',
-   authMiddleware,
-   requiredRole(Role.ADMIN),
-   validateResource(UpdateArticleStatusDto),
-   articleController.updateStatus
-)
+/* UPDATE STATUS (ADMIN ROLE) */
+router.patch('/:id/status', requiredRole(Role.ADMIN), validateResource(UpdateArticleStatusDto), articleController.updateStatus)
 
-router.delete(
-   '/:id',
-   authMiddleware,
-   requiredRole(Role.ADMIN),
-   articleController.delete
-)
-
-router.get('/', authMiddleware, articleController.getPublished)
-router.get('/public', authMiddleware, articleController.getArticles)
-router.get('/public/:slug', authMiddleware, articleController.getBySlug)
-
+/* DELETE ARTICLE */
+router.delete('/:id', requiredRole(Role.ADMIN), articleController.delete)
 
 export default router
 
