@@ -22,12 +22,12 @@
 import ArticlePreview from '@/components/article/ArticlePreview.vue';
 
 /* VUE  & PINIA & ROUTER*/
-import { useArticlesStore } from '@/stores/articles/article.store';
+import { useArticlesPublicStore } from '@/stores/articles/article.public.store';
 import { useRoute } from 'vue-router';
 import { onMounted } from 'vue'
 
 /* Variables */
-const articles = useArticlesStore()
+const articles = useArticlesPublicStore()
 const route = useRoute()
 
 /* fetch article (slug)*/
