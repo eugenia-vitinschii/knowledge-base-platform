@@ -17,22 +17,22 @@
 /* COMPONENTS */
 import ArticleForm from '@/components/article/ArticleForm.vue';
 
-/* TYPES & ENUMS */
+/* TYPES & ENUMS & PAYLOAD */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
 import type { ArticleFormModel } from '@/types/article-form.types';
+import type { CreateArticlePayload } from '@/types/create-article.payload';
 
-/* VUE & PINIA */
+/* VUE & PINIA & STORE */
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useArticlesCrudStore } from '@/stores/articles/article.crud.store';
 
-import { useArticlesStore } from '@/stores/articles/article.store';
 
-import type { CreateArticlePayload } from '@/types/create-article.payload';
 import { useToast } from '@/shared/composables/useToast';
 
-const articleStore = useArticlesStore()
+/* VARIBALES */
+const articleCrudStore = useArticlesCrudStore()
 const router = useRouter()
-
 const toast = useToast()
 
 /* from data */
@@ -67,7 +67,7 @@ async function onSubmit() {
       category: form.category,
       type: form.type,
    }
-   await articleStore.create(payload)
+   await articleCrudStore.create(payload)
 
    toast.success("Article has been created")
    router.push(`/admin/articles`)
