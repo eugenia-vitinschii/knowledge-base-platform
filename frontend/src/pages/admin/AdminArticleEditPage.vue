@@ -23,22 +23,24 @@ import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from 
 import type { ArticleFormModel } from '@/types/article-form.types';
 import type { UpdateArticlePayload } from '@/types/update-article.payload';
 
-/* VUE & PINIA */
+/* VUE & ROUTER*/
 import { onMounted, reactive, computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { useArticlesStore } from '@/stores/articles/article.store';
+/* PINIA */
+import { useArticlesCrudStore } from '@/stores/articles/article.crud.store';
+import { useArticlesAdminStore } from '@/stores/articles/article.admin.store';
 import { useAuthStore } from '@/stores/auth/auth.store';
-
 import { useToast } from '@/shared/composables/useToast';
 
-/* Variables */
+/* Router Variables */
 const route = useRoute()
 const router = useRouter()
 
-const articleStore = useArticlesStore()
+/* PINIA Variables */
+const articleCrudStore = useArticlesCrudStore()
 const auth = useAuthStore()
-
+const articleAdminStore = useArticlesAdminStore()
 const toast = useToast()
 
 const canEditStatus = computed(() => auth.user?.role === 'admin')
@@ -70,7 +72,7 @@ const originalStatus = ref<ArticleStatus>(ArticleStatus.DRAFT)
 onMounted(async () => {
    const id = route.params.id as string
 
-   const article = await articleStore.fetchById(id)
+   const article = await articleAdminStore.fetchById(id)
    if (!article) return
 
    form.title = article.title;
@@ -88,12 +90,13 @@ const isStatusDirty = computed(() => {
    return canEditStatus.value && form.status !== originalStatus.value
 })
 
+/* SAVE STATUS (admin) */
 async function saveStatus() {
 
    if (!canEditStatus.value) return
    const id = route.params.id as string
 
-   const updated = await articleStore.updateStatus(id, {
+   const updated = await articleCrudStore.updateStatus(id, {
       status: form.status
    })
 
@@ -105,6 +108,7 @@ async function saveStatus() {
 
 }
 
+/* UPDATE LOGIC (exception: status) */
 async function onSubmit() {
    console.log("SUBMIT CALLED")
 
@@ -120,7 +124,7 @@ async function onSubmit() {
       type: form.type,
    }
 
-   const updated = await articleStore.update(id, payload)
+   const updated = await articleCrudStore.update(id, payload)
    if (!updated) return toast.error("Article wasn't updated")
    toast.success("Article has been updated")
    router.push(`/admin/articles`)
