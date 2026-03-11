@@ -1,23 +1,23 @@
-//article service
+// article CRUD service
 
-import { ArticleStatus } from "../common/enums/article.enums";
+
+import z from "zod";
+import { Types } from "mongoose";
+/* MODEL */
+import { ArticleModel, IArticle } from "../models/article.model"
+/* DTO */
 import { CreateArticleDto } from "../dtos/create-article.dto";
 import { UpdateArticleDto } from "../dtos/update-article.dto";
-import { ArticleModel } from "../models/article.model";
+/* ERRORS */
+import { NotFoundError, ForbiddenError } from "../common/errors"
+/* ENUMS */
+import { ArticleStatus } from "../common/enums/article.enums";
 import { Role } from '../common/enums/role.enum'
-import { Types } from "mongoose";
-import z from "zod";
-import { ForbiddenError, NotFoundError } from "../common/errors";
-import { IArticle } from "../models/article.model";
-import { ArticleFilterDto } from "../dtos/article-filter.dto";
-import { buidArticleQuery } from "../common/utils/buildArticleQuery";
-
+/* types*/
 type CreateArticleInput = z.infer<typeof CreateArticleDto>
 type UpdateArticleInput = z.infer<typeof UpdateArticleDto>
-type ArticleFilter = z.infer<typeof ArticleFilterDto>
 
-
-class ArticleService {
+class ArticleCrudService {
    /* CREATE */
    async create(data: CreateArticleInput, authorId: string) {
       const slug = this.generateSlug(data.title)
@@ -32,43 +32,9 @@ class ArticleService {
       if (!article) throw new NotFoundError("Article not found")
 
       return article
-
-   }
-   /* FIND */
-   async findAllPublished() {
-      return ArticleModel.find({ status: ArticleStatus.PUBLISHED })
-   }
-   async findAll() {
-      return ArticleModel.find()
-   }
-   async findAdminArticles(filters: ArticleFilter, user: { id: string, role?: Role }) {
-      const query = buidArticleQuery(filters)
-
-
-      if (user?.role === Role.EDITOR) {
-         query.author = user.id
-      }
-
-      return ArticleModel.find(query)
-   }
-   async findPublicArticles(filters: ArticleFilter) {
-      const query = buidArticleQuery(filters)
-
-      query.status = ArticleStatus.PUBLISHED
-
-      return ArticleModel.find(query)
-   }
-   async findBySlug(slug: string) {
-      return ArticleModel.findOne({ slug, status: ArticleStatus.PUBLISHED })
    }
 
-   async findById(id: string) {
-      return await ArticleModel.findById(id)
-   }
-   async findMyArticles(userId: string) {
-      return ArticleModel.find({ author: userId }).sort({ createdAt: -1 })
-   }
-   /* UPDATE*/
+   /* UPDATE CONTENT */
    async updateContent(articleId: string, userId: string, data: UpdateArticleInput, role: Role) {
       const article = await ArticleModel.findById(articleId)
 
@@ -85,6 +51,7 @@ class ArticleService {
       return article.save()
    }
 
+   /* UPDATE STATUS */
    async updateStatus(articleId: string, status: ArticleStatus) {
       const article = await ArticleModel.findById(articleId)
 
@@ -94,6 +61,7 @@ class ArticleService {
       article.status = status
       return await article.save()
    }
+
    /* DELETE*/
    async delete(id: string) {
       const article = await ArticleModel.findByIdAndDelete(id)
@@ -101,8 +69,8 @@ class ArticleService {
       if (!article) {
          throw new NotFoundError('Article not found')
       }
-      // return article
    }
+
    /* generate SLUG */
    private generateSlug(title: string): string {
       return title.toLocaleLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
@@ -118,4 +86,4 @@ class ArticleService {
    }
 }
 
-export const articleService = new ArticleService()
+export const articleCrudService = new ArticleCrudService()
