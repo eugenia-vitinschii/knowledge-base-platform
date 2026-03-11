@@ -5,13 +5,21 @@ import { ref } from "vue";
 import { articlesApi } from "@/api/articles.api";
 
 /* TYPES */
-import type { ArticlePreview } from "@/types/article-preview.type";
+import type { ArticlePreview, ArticleListItem, ArticlePublicFilters } from "@/types/article";
 
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
 
 export const useArticlesPublicStore = defineStore("articlePublic", () => {
    const currentPreview = ref<ArticlePreview | null>(null);
+
+   const filters = ref<ArticlePublicFilters>({
+      search: '',
+      type: "",
+      difficulty: "",
+      category: ""
+   })
+   const list = ref<ArticleListItem[]>([])
 
    const { request } = useApiRequest()
 
@@ -28,6 +36,18 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
 
       return data
    }
-   return { fetchBySlug, currentPreview }
+   /* === GET  FILTERED === */
+   async function searchArticles(payload?: ArticlePublicFilters) {
 
+      const data = await request(() =>
+         articlesApi.public.searchArticles(payload ?? filters.value).then(r => r.data),
+         "Failed to fetch filtered articles"
+      )
+      if (data) {
+         list.value = data
+      }
+      return data
+   }
+
+   return { fetchBySlug, currentPreview, searchArticles, list, filters }
 })
