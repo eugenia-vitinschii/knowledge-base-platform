@@ -19,8 +19,7 @@ import ArticleForm from '@/components/article/ArticleForm.vue';
 
 /* TYPES & ENUMS & PAYLOAD */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
-import type { ArticleFormModel } from '@/types/article-form.types';
-import type { CreateArticlePayload } from '@/types/create-article.payload';
+import type { ArticleFormModel, CreateArticlePayload } from "@/types/article";
 
 /* VUE & PINIA & STORE */
 import { reactive } from 'vue';

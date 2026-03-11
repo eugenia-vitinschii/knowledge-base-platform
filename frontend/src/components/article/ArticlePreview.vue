@@ -13,16 +13,16 @@
       </div>
       <div class="article-preview__badges">
          <article-badge :variant="'category'" :color="categoryColors[article.category]">{{ article.category
-         }}</article-badge>
+            }}</article-badge>
          <article-badge :variant="'type'" :color="typeColors[article.type]">{{ article.type }}</article-badge>
          <article-badge :variant="'difficulty'" :color="difficultyColors[article.difficulty]">{{
             article.difficulty
-            }}</article-badge>
+         }}</article-badge>
       </div>
       <div class="article-preview__content" ref="articleRef" v-html="rendered">
       </div>
-      <p class="subheading">Tags</p>
-      <div class="article-preview__tags">
+      <p class="subheading" v-if="article.tags?.length">Tags</p>
+      <div class="article-preview__tags" v-if="article.tags?.length">
          <div class="article-preview__tags--item" v-for="(tag, index) in article.tags" :key="index">
             <p>#{{ tag }}</p>
          </div>
@@ -50,7 +50,7 @@ import { md } from '@/shared/lib/markdown';
 import { useAuthStore } from '@/stores/auth/auth.store';
 import { computed, ref } from 'vue';
 /* TYPES */
-import type { ArticlePreview } from '@/types/article-preview.type';
+import type { ArticlePreview } from "@/types/article";
 import { categoryColors, difficultyColors, typeColors } from '@/shared/enums/colors';
 import { useCodeCopy } from '@/shared/composables/useCodeCopy';
 

@@ -5,9 +5,13 @@
             <div class="page__header">
                <p class="heading">Articles Table </p>
             </div>
-            <div class="page__content articles-table-wrapper">
+            <div class="page__content articles-table-wrapper" v-if="articlesAdminStore.list.length">
                <articles-table :items="articlesAdminStore.list" :can-edit-status="isAdmin"
                   @save-status="handleSaveStatus" @edit="handleEdit" @preview="handlePreview" @delete="handleDelete" />
+            </div>
+            <div class="page__info" v-else>
+               <p class="subheading">Hi {{ auth.user?.name }} ! Create your fisrt article!</p>
+               <router-link to="/admin/articles/create" class="heading"> create article</router-link>
             </div>
          </div>
       </div>

@@ -48,7 +48,7 @@ import UiButton from '@/components/ui/UiButton.vue';
 /* VUE */
 import { watch, reactive } from 'vue';
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
-import type { ArticleFormModel } from '@/types/article-form.types';
+import type { ArticleFormModel } from '@/types/article/article-form.types';
 
 /* PROPS */
 const props = defineProps<{

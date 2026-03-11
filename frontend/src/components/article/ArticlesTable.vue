@@ -41,7 +41,7 @@ import UiButton from '@/components/ui/UiButton.vue';
 import { reactive, watch } from 'vue';
 
 /* TYPES */
-import type { ArticleTableRow } from '@/types/article-table.types';
+import type { ArticleTableRow } from "@/types/article";
 import { ArticleStatus } from '@/shared/enums/article.enum';
 
 

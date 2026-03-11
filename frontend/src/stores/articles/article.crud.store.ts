@@ -4,13 +4,8 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { articlesApi } from "@/api/articles.api";
 
-/* TYPES */
-import type { Article } from "@/types/article.types";
-
-/* PAYLOAD  */
-import type { CreateArticlePayload } from "@/types/create-article.payload"
-import type { UpdateArticlePayload } from "@/types/update-article.payload";
-import type { UpdateArticleStatusPayload } from "@/types/update-article-status.payload";
+/* TYPES  & PAYLOAD */
+import type { Article, CreateArticlePayload, UpdateArticlePayload, UpdateArticleStatusPayload } from "@/types/article";
 
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";

@@ -2,16 +2,18 @@
 
 //api
 import { api } from "../http"
+
 //types
-import type { ArticlePreview } from "@/types/article-preview.type"
-import type { ArticleFilters } from "@/types/article-filter.types"
+import type { ArticlePublicFilters, ArticleListItem, ArticlePreview } from "@/types/article"
 
 export const articlesPublicApi = {
+   /* GET BY SLUG */
    getBySlug(slug: string) {
       return api.get<ArticlePreview>(`/articles/public/${slug}`)
    },
-   searchArticles(filters: ArticleFilters) {
-      return api.get<ArticlePreview[]>("/articles/public/filter", {
+   /* SEARCH FILTER (PUBLISHED) */
+   searchArticles(filters: ArticlePublicFilters) {
+      return api.get<ArticleListItem[]>("/articles/public/filter", {
          params: filters
       })
    },

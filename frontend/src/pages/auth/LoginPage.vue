@@ -8,6 +8,7 @@
                   <ui-input v-model="password" label="Password" type="password" />
                   <ui-button type="submit">login</ui-button>
                </form>
+               <ui-button @click="auth.logout">logout</ui-button>
             </div>
          </div>
       </div>
@@ -33,4 +34,5 @@ const password = ref('');
 async function submit() {
    await auth.login({ email: email.value, password: password.value })
 }
+
 </script>

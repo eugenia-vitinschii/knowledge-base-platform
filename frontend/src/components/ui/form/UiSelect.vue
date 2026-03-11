@@ -26,7 +26,7 @@ type Option = {
 }
 /*=== INTERFACE ===*/
 interface Props {
-   modelValue: string
+   modelValue: string | number
    label?: string
    placeholder?: string
    options: Option[]
@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 /*=== EMITS ===*/
 const emit = defineEmits<{
-   (e: "update:modelValue", value: string): void
+   (e: "update:modelValue", value: string | number): void
 }>()
 
 function onChange(e: Event) {

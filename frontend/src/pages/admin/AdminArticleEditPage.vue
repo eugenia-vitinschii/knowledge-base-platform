@@ -20,8 +20,7 @@ import ArticleForm from '@/components/article/ArticleForm.vue';
 
 /* TYPES & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
-import type { ArticleFormModel } from '@/types/article-form.types';
-import type { UpdateArticlePayload } from '@/types/update-article.payload';
+import type { ArticleFormModel, UpdateArticlePayload } from "@/types/article";
 
 /* VUE & ROUTER*/
 import { onMounted, reactive, computed, ref } from 'vue';
