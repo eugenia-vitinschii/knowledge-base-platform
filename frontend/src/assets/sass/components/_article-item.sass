@@ -1,0 +1,30 @@
+
+@use '../abstracts/_variables' as *
+@use '../abstracts/_mixins' as *
+
+.article-item
+   margin: $margin-block
+   padding: $padding-block
+   border: $border
+   transition: $transition
+   &:hover
+      background: var(--bg-soft)
+   &__heading
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+   &__heading--date
+      display: flex
+      align-items: center
+      flex-direction: row
+      justify-content: start
+      p
+         color: var(--text-muted)
+      svg
+         margin: 5px 4px 0px 0px
+         width: 20px
+         height: 20px
+         fill: var(--text-muted)
+   &__badges
+      display: flex
+      width: 100%
