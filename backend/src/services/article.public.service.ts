@@ -6,11 +6,11 @@ import { ArticleModel } from "../models/article.model";
 /* ENUMS */
 import { ArticleStatus } from "../common/enums/article.enums";
 /* DTO's*/
-import { ArticleFilterDto } from "../dtos/article-public-filter.dto";
+import { ArticlePublicFilterDto } from "../dtos/article-public-filter.dto";
 /* */
 import { buidArticleQuery } from "../common/utils/buildArticleQuery";
 
-type ArticleFilter = z.infer<typeof ArticleFilterDto>
+type ArticleFilter = z.infer<typeof ArticlePublicFilterDto>
 
 class ArticlePublicService {
 

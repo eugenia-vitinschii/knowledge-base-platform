@@ -1,10 +1,10 @@
 //article query
-import { ArticleFilterDto } from "../../dtos/article-filter.dto";
+import { ArticlePublicFilterDto } from "../../dtos/article-public-filter.dto";
 import z from "zod";
 
-type ArticleFilter = z.infer<typeof ArticleFilterDto>
+type ArticlePublicFilter = z.infer<typeof ArticlePublicFilterDto>
 
-export function buidArticleQuery(filters: ArticleFilter) {
+export function buidArticleQuery(filters: ArticlePublicFilter) {
    const query: any = {}
 
    Object.entries(filters).forEach(([key, value]) => {
@@ -12,7 +12,11 @@ export function buidArticleQuery(filters: ArticleFilter) {
       if (!value) return
 
       if (key === "search") {
-         query.title = { $regex: value, $option: "i" }
+         const search = String(value).trim()
+
+         if (!search) return
+
+         query.title = { $regex: value, $options: "i" }
          return
       }
       query[key] = value
