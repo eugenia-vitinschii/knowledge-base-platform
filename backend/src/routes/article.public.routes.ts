@@ -3,7 +3,8 @@
 import { Router } from "express";
 
 import { authMiddleware } from "../middleware/auth.middleware";
-import { articleController } from "../controllers/article.controller";
+
+import { articlePublicController } from "../controllers/article.public.controller";
 
 const router = Router()
 
@@ -11,10 +12,9 @@ const router = Router()
 router.use(authMiddleware)
 
 /* GET PUBLIC ARTICLES (STATUS PUBLISHED) */
-router.get('/filter', articleController.getPublicArticles)
+router.get('/filter', articlePublicController.getPublicArticles)
 
 /* GET ARTICLE BY SLUG */
-router.get('/:slug', articleController.getBySlug)
-
+router.get('/:slug', articlePublicController.getBySlug)
 
 export default router

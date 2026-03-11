@@ -4,7 +4,7 @@ import { Router } from "express";
 
 import authRoutes from './auth.routes'
 import userRoutes from "./user.routes"
-import articleRoutes from './article.routes'
+import articleCrudRoutes from './article.crud.routes'
 import articleAdminRoutes from './article.admin.routes'
 import articlePublicRoutes from './article.public.routes'
 
@@ -17,7 +17,7 @@ router.use('/auth', authRoutes)
 router.use('/users', userRoutes)
 
 /* CRUD ROUTES*/
-router.use('/articles', articleRoutes)
+router.use('/articles', articleCrudRoutes)
 
 /* ADMIN ROUTES */
 router.use('/articles/admin', articleAdminRoutes)
