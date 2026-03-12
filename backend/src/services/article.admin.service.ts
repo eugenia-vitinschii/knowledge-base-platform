@@ -4,12 +4,12 @@ import z from "zod";
 /* MODELS */
 import { ArticleModel } from "../models/article.model";
 /* DTO's */
-import { ArticleFilterDto } from "../dtos/article-public-filter.dto";
+import { ArticleAdminFilterDto } from "../dtos/article-admin-filter.dto";
 /* ENUMS */
 import { Role } from '../common/enums/role.enum'
 import { buidArticleQuery } from "../common/utils/buildArticleQuery";
 
-type ArticleFilter = z.infer<typeof ArticleFilterDto>
+type ArticleFilter = z.infer<typeof ArticleAdminFilterDto>
 
 class ArticleAdminService {
    /* FIND BY ID*/
@@ -28,11 +28,9 @@ class ArticleAdminService {
    async searchAdminArticles(filters: ArticleFilter, user: { id: string, role?: Role }) {
       const query = buidArticleQuery(filters)
 
-
       if (user?.role === Role.EDITOR) {
          query.author = user.id
       }
-
       return ArticleModel.find(query)
    }
 }

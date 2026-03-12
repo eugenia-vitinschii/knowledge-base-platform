@@ -49,7 +49,6 @@ class ArticleAdminController {
       } catch (error) {
          console.log("error", error)
          next(error)
-
       }
    }
 }
