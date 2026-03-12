@@ -3,13 +3,16 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <p class="heading">Articles Table </p>
+               <p class="heading">Articles Table ({{ articlesAdminStore.list?.length }}) </p>
+            </div>
+            <div class="page__filter">
+               <article-admin-filter v-model:filter="articlesAdminStore.filters" />
             </div>
             <div class="page__content articles-table-wrapper" v-if="articlesAdminStore.list.length">
                <articles-table :items="articlesAdminStore.list" :can-edit-status="isAdmin"
                   @save-status="handleSaveStatus" @edit="handleEdit" @preview="handlePreview" @delete="handleDelete" />
             </div>
-            <div class="page__info" v-else>
+            <div class="page__info" v-if="articlesAdminStore.list.length === 0">
                <p class="subheading">Hi {{ auth.user?.name }} ! Create your fisrt article!</p>
                <router-link to="/admin/articles/create" class="heading"> create article</router-link>
             </div>
@@ -21,9 +24,9 @@
 <script setup lang="ts">
 /* COMPONENTS */
 import ArticlesTable from '@/components/article/ArticlesTable.vue';
-
+import ArticleAdminFilter from '@/components/article/ArticleAdminFilter.vue';
 /* VUE & Router*/
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 /*  PINIA  */
@@ -53,7 +56,18 @@ onMounted(async () => {
    } else {
       await articlesAdminStore.fetchMy();
    }
+
 })
+/* filter */
+onMounted(() => {
+   articlesAdminStore.searchArticles()
+})
+
+watch(
+   () => articlesAdminStore.filters,
+   () => { articlesAdminStore.searchArticles(articlesAdminStore.filters) },
+   { deep: true }
+)
 
 /* Save Status */
 const handleSaveStatus = async ({ id, status }: { id: string, status: ArticleStatus }) => {
