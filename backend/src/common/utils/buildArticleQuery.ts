@@ -1,10 +1,14 @@
 //article query
-import { ArticlePublicFilterDto } from "../../dtos/article-public-filter.dto";
+
 import z from "zod";
 
-type ArticlePublicFilter = z.infer<typeof ArticlePublicFilterDto>
+/* FILTERS */
+import { ArticlePublicFilterDto } from "../../dtos/article-public-filter.dto";
+import { ArticleAdminFilterDto } from "../../dtos/article-admin-filter.dto";
 
-export function buidArticleQuery(filters: ArticlePublicFilter) {
+type ArticleFilter = z.infer<typeof ArticlePublicFilterDto> | z.infer<typeof ArticleAdminFilterDto>
+
+export function buidArticleQuery(filters: ArticleFilter) {
    const query: any = {}
 
    Object.entries(filters).forEach(([key, value]) => {
