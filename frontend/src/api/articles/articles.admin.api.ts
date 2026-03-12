@@ -20,7 +20,7 @@ export const articlesAdminApi = {
    },
    /* SEARCH & FILTER ARTICLES ADMIN */
    searchAdminArticles(filters: ArticlePublicFilters) {
-      return api.get<Article[]>("/articles/admin", {
+      return api.get<Article[]>("/articles/admin/filter", {
          params: filters
       })
    }

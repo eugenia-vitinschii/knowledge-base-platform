@@ -5,7 +5,7 @@ import { ref } from "vue";
 import { articlesApi } from "@/api/articles.api";
 
 /* TYPES */
-import type { Article, ArticlePublicFilters } from "@/types/article";
+import type { Article, ArticleAdminFilters } from "@/types/article";
 
 
 /* COMPOSABLE */
@@ -14,11 +14,12 @@ import { useApiRequest } from "@/shared/composables/useApiRequest";
 export const useArticlesAdminStore = defineStore("articlesAdmin", () => {
    const currentArticle = ref<Article | null>(null);
    const list = ref<Article[]>([])
-   const filters = ref<ArticlePublicFilters>({
+   const filters = ref<ArticleAdminFilters>({
       search: '',
       type: "",
       difficulty: "",
-      category: ""
+      category: "",
+      status: "",
    })
    const { request } = useApiRequest()
 
@@ -62,7 +63,7 @@ export const useArticlesAdminStore = defineStore("articlesAdmin", () => {
       return data
    }
    /* === GET  FILTERED === */
-   async function fetchFiltered(payload: ArticlePublicFilters) {
+   async function searchArticles(payload?: ArticleAdminFilters) {
 
       const data = await request(() =>
          articlesApi.admin.searchAdminArticles(payload ?? filters.value).then(r => r.data),
@@ -72,8 +73,6 @@ export const useArticlesAdminStore = defineStore("articlesAdmin", () => {
          list.value = data
       }
       return data
-
-
    }
-   return { fetchById, fetchMy, fetchAll, list, currentArticle, fetchFiltered }
+   return { fetchById, fetchMy, fetchAll, list, currentArticle, searchArticles, filters }
 })
