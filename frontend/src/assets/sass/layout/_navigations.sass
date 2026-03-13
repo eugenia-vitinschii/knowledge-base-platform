@@ -27,7 +27,13 @@
 	background: var(--bg-soft)
 	&__wrapper
 		display: flex
-
-		a
+		flex-direction: row
+		justify-content: start
+	&__wrapper-admin, &__wrapper-public
+		display: flex
+		svg
 			margin-left: 20px
-			color: var(--text)
+			margin-top: 10px
+	&__info
+		margin-left: 20px
+		margin-top: -20px
