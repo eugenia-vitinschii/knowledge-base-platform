@@ -30,6 +30,10 @@ export const adminRoutes: RouteRecordRaw[] = [
             path: 'articles/:id/preview',
             name: "admin.articles.preview",
             component: () => import('@/pages/admin/AdminArticlePreviewPage.vue')
+         }, {
+            path: 'articles/stats',
+            name: "admin.articles.stats",
+            component: () => import('@/pages/admin/AdminDashboardPage.vue')
          },
       ]
    }
