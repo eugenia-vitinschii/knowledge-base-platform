@@ -31,6 +31,19 @@ class ArticlePublicController {
 
       }
    }
+   /* VIEWS*/
+   incrementViews = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const slug = req.params.slug as string
+         const article = await articlePublicService.incrementViews(slug)
+
+         res.json(article)
+      } catch (error) {
+         console.log("error", error)
+         next(error)
+
+      }
+   }
 }
 
 export const articlePublicController = new ArticlePublicController()
