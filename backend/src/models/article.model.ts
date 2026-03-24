@@ -32,13 +32,14 @@ const ArticleSchema = new Schema<IArticle>({
 },
    { timestamps: true }
 )
+
 //indexes
 ArticleSchema.index({ slug: 1 })
 ArticleSchema.index({ status: 1 })
 ArticleSchema.index({ author: 1 })
 ArticleSchema.index({ category: 1 })
 ArticleSchema.index({ difficulty: 1 })
-
+ArticleSchema.index({ type: 1 })
 
 ArticleSchema.set("toJSON", {
    transform: (_doc, ret: any) => {
