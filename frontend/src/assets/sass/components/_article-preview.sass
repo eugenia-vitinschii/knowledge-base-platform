@@ -38,6 +38,18 @@
       color: var(--text-muted)
    &__tags--item:first-child
       margin-left: 0px
+   &__views
+      display: flex
+      align-items: center
+      flex-direction: row
+      justify-content: flex-end
+      svg
+         fill: var(--text-muted)
+         width: 15px
+         height: 15px
+         margin: 10px 4px 0px 0px
+      p
+         color: var(--text-muted)
    &__admin
    &__admin--actions
       @include block-element()
