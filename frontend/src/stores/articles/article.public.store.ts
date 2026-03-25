@@ -48,6 +48,15 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
       }
       return data
    }
+   /*=== VIEWS==== */
+   async function incrementViews(slug: string) {
 
-   return { fetchBySlug, currentPreview, searchArticles, list, filters }
+      return request(() =>
+         articlesApi.public.incrementViews(slug).then(r => r.data),
+         "Failed to increment views"
+      )
+   }
+
+
+   return { fetchBySlug, currentPreview, searchArticles, list, filters, incrementViews }
 })
