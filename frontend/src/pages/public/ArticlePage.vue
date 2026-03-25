@@ -21,18 +21,32 @@ import ArticlePreview from '@/components/article/ArticlePreview.vue';
 /* VUE  & PINIA & ROUTER*/
 import { useArticlesPublicStore } from '@/stores/articles/article.public.store';
 import { useRoute } from 'vue-router';
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 
 /* Variables */
 const articles = useArticlesPublicStore()
 const route = useRoute()
 
-/* fetch article (slug)*/
-onMounted(async () => {
-   const slug = route.params.slug as string
 
-   if (!slug) return
+async function loadArticle(slug: string) {
 
+   const key = `viewed-${slug}`
+
+   if (!sessionStorage.getItem(key)) {
+      await articles.incrementViews(slug)
+      sessionStorage.setItem(key, 'true')
+   }
    await articles.fetchBySlug(slug)
-})
+
+}
+
+watch(
+   () => route.params.slug,
+   async (slug) => {
+      if (!slug) return
+
+      await loadArticle(slug as string)
+   },
+   { immediate: true }
+)
 </script>
