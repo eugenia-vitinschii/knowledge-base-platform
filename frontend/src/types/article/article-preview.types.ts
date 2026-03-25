@@ -14,4 +14,5 @@ export interface ArticlePreview {
    type: ArcticleType;
    status: ArticleStatus;
    updatedAt: string;
+   views: string
 }
