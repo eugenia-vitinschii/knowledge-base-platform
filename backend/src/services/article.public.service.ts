@@ -27,12 +27,13 @@ class ArticlePublicService {
 
       return ArticleModel.find(query)
    }
+
    /* INCREMENT VIEWS */
    async incrementViews(slug: string) {
       return ArticleModel.findOneAndUpdate(
          { slug },
          { $inc: { views: 1 } },
-         { new: true }
+         { new: true, timestamps: false }
       )
    }
 
