@@ -17,13 +17,14 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
       search: '',
       type: "",
       difficulty: "",
-      category: ""
+      category: "",
+      tag: ''
    })
    const list = ref<ArticleListItem[]>([])
 
    const { request } = useApiRequest()
 
-   /* === GET BY SLUG === */
+   /* === GET ARTICLE BY SLUG === */
    async function fetchBySlug(slug: string) {
 
       const data = await request(() =>
@@ -36,7 +37,7 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
 
       return data
    }
-   /* === GET  FILTERED === */
+   /* === GET  FILTERED ARTICLES=== */
    async function searchArticles(payload?: ArticlePublicFilters) {
 
       const data = await request(() =>

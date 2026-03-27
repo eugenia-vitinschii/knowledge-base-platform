@@ -7,4 +7,5 @@ export interface ArticlePublicFilters {
    category: ArticleCategory | "";
    difficulty: ArticleDifficulty | "";
    type: ArcticleType | "";
+   tag: string | "",
 }
