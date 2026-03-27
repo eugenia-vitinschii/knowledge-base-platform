@@ -5,7 +5,11 @@ import type { RouteRecordRaw } from "vue-router";
 export const publicRoutes: RouteRecordRaw[] = [
    {
       path: "/",
-      name: "home",
+      redirect: "/articles"
+   },
+   {
+      path: "/articles",
+      name: "articles",
       component: () => import('@/pages/public/HomePage.vue')
    },
    {
@@ -13,5 +17,6 @@ export const publicRoutes: RouteRecordRaw[] = [
       name: "article",
       props: true,
       component: () => import('@/pages/public/ArticlePage.vue')
-   }
+   },
+
 ]
