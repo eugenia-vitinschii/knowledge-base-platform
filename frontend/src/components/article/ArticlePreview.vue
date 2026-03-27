@@ -13,20 +13,20 @@
       </div>
       <div class="article-preview__badges">
          <article-badge :variant="'category'" :color="categoryColors[article.category]">{{ article.category
-         }}</article-badge>
+            }}</article-badge>
          <article-badge :variant="'type'" :color="typeColors[article.type]">{{ article.type }}</article-badge>
          <article-badge :variant="'difficulty'" :color="difficultyColors[article.difficulty]">{{
             article.difficulty
-            }}</article-badge>
+         }}</article-badge>
       </div>
       <div class="article-preview__content" ref="articleRef" v-html="rendered">
       </div>
       <p class="subheading" v-if="article.tags?.length">Tags</p>
       <div class="article-preview__tags" v-if="article.tags?.length">
-         <div class="article-preview__tags--item" v-for="(tag, index) in article.tags" :key="index">
-            <p>#{{ tag }}</p>
-         </div>
-
+         <router-link class="article-preview__tags--item" v-for="(tag, index) in article.tags" :key="index"
+            :to="{ path: '/articles', query: { tag: tag } }">
+            #{{ tag }}
+         </router-link>
       </div>
       <div class="article-preview__views" v-if="!showAdminControls">
          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
@@ -97,7 +97,5 @@ function formatDate(dateString: string) {
       year: 'numeric'
    }).format(date)
 }
-
-
 
 </script>
