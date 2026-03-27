@@ -23,6 +23,11 @@ export function buidArticleQuery(filters: ArticleFilter) {
          query.title = { $regex: value, $options: "i" }
          return
       }
+      if (key === "tag") {
+         const tags = Array.isArray(value) ? value : [value]
+         query.tags = { $in: tags }
+         return
+      }
       query[key] = value
    })
    return query

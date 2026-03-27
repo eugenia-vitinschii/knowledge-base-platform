@@ -9,4 +9,5 @@ export const ArticleAdminFilterDto = z.object({
    type: z.nativeEnum(ArcticleType).optional(),
    difficulty: z.nativeEnum(ArticleDifficulty).optional(),
    status: z.nativeEnum(ArticleStatus).optional(),
+   tag: z.string().optional()
 })
