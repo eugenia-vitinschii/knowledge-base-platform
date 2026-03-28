@@ -1,13 +1,57 @@
+@use '../abstracts/_variables' as *
+@use '../abstracts/_mixins' as *
 
 .article-filter
-   width: 100%
-   display: flex
-   align-items: center
-   justify-content: start
-   overflow: scroll
+   padding: 25px 0px
+   &__active
+      width: 100%
+      display: flex
+      align-items: start
+      justify-content: start
+      flex-direction: row
+      overflow: scroll
+   &__filter
+      width: 100%
+      display: flex
+      align-items: center
+      justify-content: start
+      overflow: scroll
+   &__info
+      button
+         margin: 30px 0px
    input
       margin-top: -20px
       height: 100%
       width: 350px
    select
       width: 280px
+
+.filter-chip
+   min-width: 300px
+   max-width: 350px
+   display: flex
+   align-items: center
+   flex-direction: row
+   justify-content: space-between
+   background: var(--bg-soft)
+   padding: $padding-element
+   @include form-element()
+   transition: $transition
+   &:hover
+      background: var(--bg-card)
+   span
+      color: var(--text-muted)
+      margin: 0px
+      padding: 0px
+      line-height: 0px
+   &__button
+      height: 100%
+      transition: $transition
+      padding-top: 5px
+      svg
+         fill: var(--text-muted)
+         width: 15px
+         height: 15px
+         padding: 0px
+   &__button svg:hover
+      fill: var(--danger)
