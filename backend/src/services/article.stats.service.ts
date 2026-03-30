@@ -11,7 +11,7 @@ class ArticleStatsService {
    async getOverviewStats(user: AuthUser) {
       const match = buildAuthorFilter(user)
 
-      return ArticleModel.aggregate([
+      const result = await ArticleModel.aggregate([
          { $match: match },
          {
             $facet: {
@@ -63,6 +63,7 @@ class ArticleStatsService {
             }
          }
       ])
+      return result[0]
    }
 }
 
