@@ -3,7 +3,7 @@
 //api
 import { api } from "../http"
 //types
-import type { Article, ArticlePublicFilters } from "@/types/article"
+import type { Article, ArticleAdminFilters } from "@/types/article"
 
 export const articlesAdminApi = {
    /* GET BY ID */
@@ -19,7 +19,7 @@ export const articlesAdminApi = {
       return api.get<Article[]>('/articles/admin/my')
    },
    /* SEARCH & FILTER ARTICLES ADMIN */
-   searchAdminArticles(filters: ArticlePublicFilters) {
+   searchAdminArticles(filters: ArticleAdminFilters) {
       return api.get<Article[]>("/articles/admin/filter", {
          params: filters
       })

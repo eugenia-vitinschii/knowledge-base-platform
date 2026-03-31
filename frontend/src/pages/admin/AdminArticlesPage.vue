@@ -5,8 +5,9 @@
             <div class="page__header">
                <p class="heading">Articles Table ({{ articlesAdminStore.list?.length }}) </p>
             </div>
-            <div class="page__filter">
-               <article-admin-filter v-model:filter="articlesAdminStore.filters" />
+            <div class="filter-wrapper">
+               <article-admin-filter :filter="articlesAdminStore.filters" :count="articlesAdminStore.list.length"
+                  @update:filter="onFilterChange" />
             </div>
             <div class="page__content articles-table-wrapper" v-if="articlesAdminStore.list.length">
                <articles-table :items="articlesAdminStore.list" :can-edit-status="isAdmin"
@@ -25,9 +26,10 @@
 /* COMPONENTS */
 import ArticlesTable from '@/components/article/ArticlesTable.vue';
 import ArticleAdminFilter from '@/components/article/ArticleAdminFilter.vue';
+
 /* VUE & Router*/
-import { onMounted, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
 /*  PINIA  */
 import { useAuthStore } from '@/stores/auth/auth.store';
@@ -37,37 +39,60 @@ import { useArticlesAdminStore } from "@/stores/articles/article.admin.store"
 /* ENUMS  & COMPOSABLE*/
 import { ArticleStatus } from '@/shared/enums/article.enum';
 import { useToast } from '@/shared/composables/useToast';
+import { useArticleAdminFilter } from '@/shared/composables/useAdminArticleFilter';
 
-/*PINIA  variables */
+/*TYOES */
+import type { ArticleAdminFilters } from '@/types/article';
+
+/* PINIA  variables */
 const auth = useAuthStore();
 const articlesCrudStore = useArticlesCrudStore();
 const articlesAdminStore = useArticlesAdminStore();
 
+
+const { mapQueryToFilters } = useArticleAdminFilter()
 /*router  variables */
 const router = useRouter();
+const route = useRoute()
 const toast = useToast()
 
 /* check role & fetch data */
 const isAdmin = computed(() => auth.user?.role === 'admin')
 
-onMounted(async () => {
-   if (isAdmin.value) {
-      await articlesAdminStore.fetchAll()
-   } else {
-      await articlesAdminStore.fetchMy();
-   }
 
-})
-/* filter */
-onMounted(() => {
-   articlesAdminStore.searchArticles()
-})
+/* remove empty values from URL */
+function cleanQuery(filters: ArticleAdminFilters) {
+   const query: any = {}
 
+   Object.entries(filters).forEach(([key, value]) => {
+      if (value !== "" && value !== undefined) {
+         query[key] = value
+      }
+   })
+
+   return query
+}
+/* update URL when filters change */
+function onFilterChange(newFilters: ArticleAdminFilters) {
+   router.push({
+      path: '/admin/articles',
+      query: cleanQuery(newFilters)
+   })
+}
+
+/* sync URL /store, fetch filtered */
 watch(
-   () => articlesAdminStore.filters,
-   () => { articlesAdminStore.searchArticles(articlesAdminStore.filters) },
-   { deep: true }
+   () => route.query,
+   async (query) => {
+      const filters = mapQueryToFilters(query)
+      articlesAdminStore.filters = filters
+
+      await articlesAdminStore.searchArticles(filters)
+
+   },
+   { immediate: true }
 )
+
 
 /* Save Status */
 const handleSaveStatus = async ({ id, status }: { id: string, status: ArticleStatus }) => {
