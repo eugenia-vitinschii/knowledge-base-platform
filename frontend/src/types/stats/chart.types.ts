@@ -2,9 +2,10 @@
 
 export interface ChartDataset {
    data: number[]
+   backgroundColor?: string[]
 }
 
 export interface ChartData {
    labels: string[]
-   datasests: ChartDataset[]
+   datasets: ChartDataset[]
 }
