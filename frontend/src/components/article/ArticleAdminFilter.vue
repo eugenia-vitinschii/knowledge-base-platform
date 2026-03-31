@@ -1,10 +1,28 @@
 <template>
    <div class="article-filter">
-      <ui-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
-      <ui-select v-model="localSearch.category" :options="categoryOption" />
-      <ui-select v-model="localSearch.difficulty" :options="difficultyOption" />
-      <ui-select v-model="localSearch.type" :options="typesOption" />
-      <ui-select v-model="localSearch.status" :options="statusOption" />
+      <div class="article-filter__active" v-if="activeFilters.length">
+         <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
+            <span class="body-text">{{ key }} : {{ value }}</span>
+            <button class="filter-chip__button" @click="removeFilter(key)">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                  <path
+                     d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
+               </svg>
+            </button>
+         </div>
+      </div>
+      <div class="article-filter__info" v-if="activeFilters.length">
+         <p class="body-text">Result(s): {{ count }}</p>
+         <ui-button @click="onReset" type="button" variant="danger" v-if="activeFilters.length"> reset</ui-button>
+      </div>
+      <div class="article-filter__filter">
+         <ui-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
+         <ui-select v-model="localSearch.category" :options="categoryOption" />
+         <ui-select v-model="localSearch.difficulty" :options="difficultyOption" />
+         <ui-select v-model="localSearch.type" :options="typesOption" />
+         <ui-select v-model="localSearch.status" :options="statusOption" />
+      </div>
+
    </div>
 </template>
 
@@ -12,19 +30,18 @@
 /* COMPONENTS */
 import UiInput from '../ui/form/UiInput.vue';
 import UiSelect from '../ui/form/UiSelect.vue';
-
-/* DEBOUNCE */
-import { useDebounceFn } from "@vueuse/core"
+import UiButton from '../ui/UiButton.vue';
 
 /* ENUMS & TYPES */
 import { ArticleDifficulty, ArcticleType, ArticleCategory, ArticleStatus } from '@/shared/enums/article.enum';
 import type { ArticleAdminFilters } from "@/types/article";
 
-import { reactive, watch } from 'vue';
+import { reactive, watch, computed } from 'vue';
 
 /* PROPS */
 const props = defineProps<{
-   filter: ArticleAdminFilters
+   filter: ArticleAdminFilters,
+   count: number
 }>()
 
 const localSearch = reactive({ ...props.filter })
@@ -34,17 +51,46 @@ const emit = defineEmits<{
    (e: "update:filter", value: ArticleAdminFilters): void
 }>()
 
-const updateFilters = useDebounceFn(() => {
-   emit("update:filter", { ...localSearch })
-}, 400)
+/* Active Filters */
+const activeFilters = computed(() => {
+   return Object.entries(props.filter).filter(([_, value]) => value !== '' && value !== undefined)
+})
 
-watch(localSearch,
-   () => {
-      updateFilters()
+/* Remove one filter*/
+function removeFilter(key: string) {
+   const updated = {
+      ...props.filter,
+      [key]: ''
+   }
+   emit('update:filter', updated)
+}
+/* REMOVE ALL */
+function onReset() {
+   emit('update:filter', {
+      search: "",
+      category: "",
+      difficulty: '',
+      type: '',
+      status: ''
+   })
+}
+
+/* update filters (props.filter from URL, localSearch from UI) */
+watch(
+   localSearch,
+   (val) => {
+      emit('update:filter', { ...val })
    },
    { deep: true }
 )
 
+watch(
+   () => props.filter,
+   (newVal) => {
+      Object.assign(localSearch, newVal)
+   },
+   { immediate: true }
+)
 /* OPTIONS */
 const typesOption = [
    { label: "All types", value: "" },
