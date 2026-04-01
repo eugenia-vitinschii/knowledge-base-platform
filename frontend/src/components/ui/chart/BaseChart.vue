@@ -6,9 +6,12 @@
       <div v-else-if="isEmpty">
          <p class="body-text">{{ emptyText || "No data available" }}</p>
       </div>
-      <div v-else class="admin-chart__wrapper">
+      <div v-else>
          <p class="body-text">{{ title }}</p>
-         <canvas ref="canvas" class="admin-chart__canvas"></canvas>
+         <div class="admin-chart__wrapper">
+            <canvas ref="canvas" class="admin-chart__canvas"></canvas>
+         </div>
+
       </div>
    </div>
 </template>
