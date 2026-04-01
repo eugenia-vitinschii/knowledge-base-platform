@@ -1,0 +1,26 @@
+//chart wrapper + chart component
+@use '../abstracts/_variables' as *
+
+.chart-wrapper
+   margin: 50px 0px
+   display: grid
+   grid-template-columns: repeat(2, 1fr)
+   gap: 20px
+   &__item--two
+      display: grid
+      grid-template-columns: repeat(2, 1fr)
+      height: 100%
+   &__item--two .admin-chart__wrapper
+      aspect-ratio: 1/1
+.admin-chart
+   &__wrapper
+      width: 100%
+      aspect-ratio: 2/1
+      position: relative
+      background: var(--bg-soft)
+      border: $border
+      padding: $padding-element
+   &__canvas
+      width: 100% !important
+      height: 100% !important
+      display: block
