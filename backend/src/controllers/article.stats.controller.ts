@@ -16,5 +16,15 @@ class ArticleStatsController {
          next(error)
       }
    }
+   getStatsSummary = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const articleSummary = await articleStatsService.getSummaryService()
+
+         res.json(articleSummary)
+
+      } catch (error) {
+         next(error)
+      }
+   }
 }
 export const articleStatsController = new ArticleStatsController()
