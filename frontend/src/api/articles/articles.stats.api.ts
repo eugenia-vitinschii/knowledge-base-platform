@@ -3,11 +3,15 @@
 //api
 import { api } from "../http"
 
-import type { ArticleStatsOverview } from "@/types/stats"
+import type { ArticleStatsOverview, ArticleStatsSummary } from "@/types/stats"
 
 export const articlesStatsApi = {
-   /* FETCH STATS */
-   fetchStats() {
+   /* FETCH OVERVIEW */
+   fetchOverview() {
       return api.get<ArticleStatsOverview>(`/articles/stats/overview`)
+   },
+   /* FETCH STATS */
+   fetchSummary() {
+      return api.get<ArticleStatsSummary>(`/articles/stats/summary`)
    }
 }
