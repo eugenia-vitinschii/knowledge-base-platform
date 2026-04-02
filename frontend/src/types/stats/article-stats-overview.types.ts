@@ -1,4 +1,4 @@
-//stats types
+//stats overview (charts)
 
 export interface StatItem {
    _id: string
