@@ -18,7 +18,7 @@ export interface MostViewed {
 
 export interface ArticleStatsSummary {
    totalArticles: number
-   topAuthor: TopAuthor[] | null
-   topCategory: TopCategory[] | null
-   mostViewed: MostViewed[] | null
+   topAuthor: TopAuthor | null
+   topCategory: TopCategory | null
+   mostViewed: MostViewed | null
 }
