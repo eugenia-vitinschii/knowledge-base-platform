@@ -8,6 +8,9 @@
                </p>
             </div>
             <div class="page__content">
+               <div class="summary-cards">
+                  <summary-card v-for="card in cards" :key="card.label" :data="card" />
+               </div>
                <div class="chart-wrapper">
                   <div class="chart-wrapper__item">
                      <base-chart v-if="typeChartData" title="Type" type="bar" :data="typeChartData" />
@@ -36,47 +39,57 @@
 </template>
 
 <script setup lang="ts">
-import BaseChart from '@/components/ui/chart/BaseChart.vue';
+/* Components */
+import BaseChart from '@/components/ui/stats/BaseChart.vue';
+import SummaryCard from '@/components/ui/stats/SummaryCard.vue';
 
+/* Mappers */
 import { mapAuthorStats } from '@/shared/utils/map-author-stats';
 import { mapStatsToChart } from "@/shared/utils/map-stats-to-chart"
+import { mapSummaryToCards } from '@/shared/utils/map-summary-to-cards';
 
+/* store & vue */
 import { useArticlesStatsStore } from '@/stores/articles/article.stats.store';
-
+import type { StatsCardItem } from '@/types/stats';
 import { onMounted, computed } from 'vue';
 
 const statsStore = useArticlesStatsStore()
 
 /* STATS DATA */
+const cards = computed<StatsCardItem[]>(() => {
+   if (!statsStore.summary) return []
+   return mapSummaryToCards(statsStore.summary)
+})
 
 /* CHART DATA */
 const authorsChartData = computed(() => {
-   if (!statsStore.stats?.author) return null
-   return mapAuthorStats(statsStore.stats.author)
+   if (!statsStore.overview?.author) return null
+   return mapAuthorStats(statsStore.overview.author)
 }
 )
 
 const difficultyChartData = computed(() => {
-   if (!statsStore.stats?.difficulty) return null
-   return mapStatsToChart(statsStore.stats.difficulty)
+   if (!statsStore.overview?.difficulty) return null
+   return mapStatsToChart(statsStore.overview.difficulty)
 })
 
 const categoryChartData = computed(() => {
-   if (!statsStore.stats?.difficulty) return null
-   return mapStatsToChart(statsStore.stats.category)
+   if (!statsStore.overview?.difficulty) return null
+   return mapStatsToChart(statsStore.overview.category)
 })
 const statusChartData = computed(() => {
-   if (!statsStore.stats?.difficulty) return null
-   return mapStatsToChart(statsStore.stats.status)
+   if (!statsStore.overview?.difficulty) return null
+   return mapStatsToChart(statsStore.overview.status)
 })
 
 const typeChartData = computed(() => {
-   if (!statsStore.stats?.difficulty) return null
-   return mapStatsToChart(statsStore.stats.type)
+   if (!statsStore.overview?.difficulty) return null
+   return mapStatsToChart(statsStore.overview.type)
 })
 
 onMounted(() => {
    statsStore.fetchOverview()
+   statsStore.fetchSummary()
 })
 
 </script>
