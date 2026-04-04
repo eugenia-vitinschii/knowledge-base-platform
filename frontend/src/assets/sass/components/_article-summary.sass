@@ -1,0 +1,26 @@
+//stats (ArticleDashboard)
+@use '../abstracts/_variables' as *
+@use '../abstracts/_mixins' as *
+
+//stats wrapper
+.summary-cards
+   display: grid
+   grid-template-columns: repeat(4, 1fr)
+   gap: 20px
+
+//stats item
+.summary-card
+   display: flex
+   flex-direction: column
+   align-items: center
+   background: var(--bg-soft)
+   padding: $padding-block
+   border: $border
+
+@media (max-width: 640px)
+   .summary-cards
+      grid-template-columns: repeat(2, 1fr)
+
+@media (max-width: 375px)
+   .summary-cards
+      grid-template-columns: repeat(1, 1fr)

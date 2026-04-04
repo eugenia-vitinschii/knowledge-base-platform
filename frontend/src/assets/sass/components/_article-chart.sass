@@ -12,6 +12,7 @@
       height: 100%
    &__item--two .admin-chart__wrapper
       aspect-ratio: 1/1
+
 .admin-chart
    &__wrapper
       width: 100%
@@ -24,3 +25,14 @@
       width: 100% !important
       height: 100% !important
       display: block
+
+@media (max-width: 640px)
+   .chart-wrapper
+      grid-template-columns: repeat(1, 1fr)
+
+@media (max-width: 375px)
+   .chart-wrapper
+      &__item--two
+         grid-template-columns: repeat(1, 1fr)
+      &__item--two .admin-chart__wrapper
+         aspect-ratio: 2/1
