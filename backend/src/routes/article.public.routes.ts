@@ -2,9 +2,9 @@
 
 import { Router } from "express";
 
-import { authMiddleware } from "../middleware/auth.middleware";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
-import { articlePublicController } from "../controllers/article.public.controller";
+import { articlePublicController } from "../controllers/article.public.controller.js";
 
 const router = Router()
 

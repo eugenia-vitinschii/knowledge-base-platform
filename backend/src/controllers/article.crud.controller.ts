@@ -1,7 +1,7 @@
 //article crud controller
 import { NextFunction, Request, Response } from "express"
 
-import { articleCrudService } from "../services/article.crud.service"
+import { articleCrudService } from "../services/article.crud.service.js"
 
 class ArticleCrudController {
    /*CREATE*/

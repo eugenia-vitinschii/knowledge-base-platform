@@ -3,20 +3,20 @@
 import { Router } from "express";
 
 //middlewares
-import { authMiddleware } from "../middleware/auth.middleware";
-import { requiredRole } from "../middleware/role.middleware";
-import { validateResource } from "../middleware/validateResource";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { requiredRole } from "../middleware/role.middleware.js";
+import { validateResource } from "../middleware/validateResource.js";
 
 //DTO's
-import { UpdateArticleDto } from "../dtos/update-article.dto";
-import { UpdateArticleStatusDto } from "../dtos/update-article-status.dto";
-import { CreateArticleDto } from "../dtos/create-article.dto";
+import { UpdateArticleDto } from "../dtos/update-article.dto.js";
+import { UpdateArticleStatusDto } from "../dtos/update-article-status.dto.js";
+import { CreateArticleDto } from "../dtos/create-article.dto.js";
 
 //controllers
-import { articleCrudController } from "../controllers/article.crud.controller";
+import { articleCrudController } from "../controllers/article.crud.controller.js";
 
 //enums
-import { Role } from "../common/enums/role.enum";
+import { Role } from "../common/enums/role.enum.js";
 
 const router = Router()
 /* used for all routes */

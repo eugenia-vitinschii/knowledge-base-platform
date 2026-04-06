@@ -3,14 +3,14 @@
 import { Router } from "express";
 
 /* MIDDLEWARES */
-import { authMiddleware } from "../middleware/auth.middleware";
-import { requiredRole } from "../middleware/role.middleware";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { requiredRole } from "../middleware/role.middleware.js";
 
 /* CONTROLLERS*/
-import { articleStatsController } from "../controllers/article.stats.controller";
+import { articleStatsController } from "../controllers/article.stats.controller.js";
 
 /* ENUMS */
-import { Role } from "../common/enums/role.enum";
+import { Role } from "../common/enums/role.enum.js";
 
 const router = Router()
 

@@ -2,12 +2,12 @@
 
 import z from "zod";
 /* MODELS */
-import { ArticleModel } from "../models/article.model";
+import { ArticleModel } from "../models/article.model.js";
 /* DTO's */
-import { ArticleAdminFilterDto } from "../dtos/article-admin-filter.dto";
+import { ArticleAdminFilterDto } from "../dtos/article-admin-filter.dto.js";
 /* ENUMS */
-import { Role } from '../common/enums/role.enum'
-import { buidArticleQuery } from "../common/utils/buildArticleQuery";
+import { Role } from '../common/enums/role.enum.js'
+import { buidArticleQuery } from "../common/utils/buildArticleQuery.js";
 
 type ArticleFilter = z.infer<typeof ArticleAdminFilterDto>
 

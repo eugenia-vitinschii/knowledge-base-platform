@@ -1,11 +1,11 @@
 //article stats (admin)
 
 /* ARTICLE MODEL */
-import { ArticleModel } from "../models/article.model"
+import { ArticleModel } from "../models/article.model.js"
 /* USER TYPE */
-import type { AuthUser } from "../types/auth-user.types"
+import type { AuthUser } from "../types/auth-user.types.js"
 /* ROLE HELPER */
-import { buildAuthorFilter } from "../common/utils/buildAuthorFilter"
+import { buildAuthorFilter } from "../common/utils/buildAuthorFilter.js"
 
 class ArticleStatsService {
    async getOverviewStats(user: AuthUser) {

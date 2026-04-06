@@ -2,7 +2,7 @@
 
 import { NextFunction, Request, Response } from "express"
 
-import { articlePublicService } from "../services/article.public.service"
+import { articlePublicService } from "../services/article.public.service.js"
 
 class ArticlePublicController {
    /* GET ARTICLE BY SLUG */

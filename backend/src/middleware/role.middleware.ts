@@ -1,7 +1,7 @@
 //role middleware
 
 import { Request, Response, NextFunction } from 'express'
-import { Role } from '../common/enums/role.enum'
+import { Role } from '../common/enums/role.enum.js'
 
 export const requiredRole = (...roles: Role[]) => (req: Request, res: Response, next: NextFunction) => {
 

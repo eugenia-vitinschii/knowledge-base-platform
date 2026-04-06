@@ -2,12 +2,12 @@
 
 import { Router } from "express";
 
-import authRoutes from './auth.routes'
-import userRoutes from "./user.routes"
-import articleCrudRoutes from './article.crud.routes'
-import articleAdminRoutes from './article.admin.routes'
-import articlePublicRoutes from './article.public.routes'
-import articleAdminStats from './article.stats.routes'
+import authRoutes from './auth.routes.js'
+import userRoutes from "./user.routes.js"
+import articleCrudRoutes from './article.crud.routes.js'
+import articleAdminRoutes from './article.admin.routes.js'
+import articlePublicRoutes from './article.public.routes.js'
+import articleAdminStats from './article.stats.routes.js'
 
 const router = Router()
 

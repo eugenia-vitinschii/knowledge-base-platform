@@ -2,12 +2,12 @@
 
 import { Router } from "express";
 
-import { authMiddleware } from "../middleware/auth.middleware";
-import { requiredRole } from "../middleware/role.middleware";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { requiredRole } from "../middleware/role.middleware.js";
 
-import { Role } from "../common/enums/role.enum";
+import { Role } from "../common/enums/role.enum.js";
 
-import { articleAdminController } from "../controllers/article.admin.controller";
+import { articleAdminController } from "../controllers/article.admin.controller.js";
 const router = Router()
 
 /* used for all routes */

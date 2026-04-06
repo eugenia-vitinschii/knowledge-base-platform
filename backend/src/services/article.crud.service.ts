@@ -4,15 +4,15 @@
 import z from "zod";
 import { Types } from "mongoose";
 /* MODEL */
-import { ArticleModel, IArticle } from "../models/article.model"
+import { ArticleModel, IArticle } from "../models/article.model.js"
 /* DTO */
-import { CreateArticleDto } from "../dtos/create-article.dto";
-import { UpdateArticleDto } from "../dtos/update-article.dto";
+import { CreateArticleDto } from "../dtos/create-article.dto.js";
+import { UpdateArticleDto } from "../dtos/update-article.dto.js";
 /* ERRORS */
-import { NotFoundError, ForbiddenError } from "../common/errors"
+import { NotFoundError, ForbiddenError } from "../common/errors/index.js"
 /* ENUMS */
-import { ArticleStatus } from "../common/enums/article.enums";
-import { Role } from '../common/enums/role.enum'
+import { ArticleStatus } from "../common/enums/article.enums.js";
+import { Role } from '../common/enums/role.enum.js'
 /* types*/
 type CreateArticleInput = z.infer<typeof CreateArticleDto>
 type UpdateArticleInput = z.infer<typeof UpdateArticleDto>

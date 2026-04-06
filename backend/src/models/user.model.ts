@@ -1,7 +1,7 @@
 //user model
 
 import mongoose, { Schema, Document } from "mongoose";
-import { Role } from "../common/enums/role.enum";
+import { Role } from "../common/enums/role.enum.js";
 
 export interface IUser extends Document {
    name: string

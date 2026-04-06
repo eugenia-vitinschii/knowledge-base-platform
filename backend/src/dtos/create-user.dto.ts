@@ -1,6 +1,6 @@
 //create user dto
 
-import { Role } from '../common/enums/role.enum'
+import { Role } from '../common/enums/role.enum.js'
 import { z } from "zod"
 
 export const CreateUserDto = z.object({

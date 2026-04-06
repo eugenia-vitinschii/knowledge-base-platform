@@ -1,9 +1,9 @@
 //login service
 
 import bcrypt from 'bcrypt'
-import { UserModel } from "../models/user.model"
-import { signToken } from "../common/utils/jwt"
-import { UnauthorizedError } from '../common/errors'
+import { UserModel } from "../models/user.model.js"
+import { signToken } from "../common/utils/jwt.js"
+import { UnauthorizedError } from '../common/errors/index.js'
 
 class AuthService {
    async login(email: string, password: string) {

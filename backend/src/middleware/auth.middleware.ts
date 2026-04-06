@@ -1,7 +1,7 @@
 //auth middleware
 
 import { Request, Response, NextFunction } from "express";
-import { verifyToken } from "../common/utils/jwt";
+import { verifyToken } from "../common/utils/jwt.js";
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
    const authHeader = req.headers.authorization

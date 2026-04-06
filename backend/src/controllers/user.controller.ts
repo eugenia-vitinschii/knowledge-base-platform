@@ -1,7 +1,7 @@
 //user controller
 
 import { NextFunction, Request, Response } from "express";
-import { userService } from "../services/user.service";
+import { userService } from "../services/user.service.js";
 
 class UserController {
    create = async (req: Request, res: Response, next: NextFunction) => {

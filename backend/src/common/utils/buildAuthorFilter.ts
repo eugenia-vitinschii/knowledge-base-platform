@@ -1,7 +1,7 @@
 //filter author
 
-import { Role } from "../enums/role.enum"
-import { AuthUser } from "../../types/auth-user.types"
+import { Role } from "../enums/role.enum.js"
+import { AuthUser } from "../../types/auth-user.types.js"
 
 import { Types } from "mongoose"
 

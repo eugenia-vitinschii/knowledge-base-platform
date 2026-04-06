@@ -1,6 +1,6 @@
 //user type
 
-import { Role } from '../common/enums/role.enum'
+import { Role } from '../common/enums/role.enum.js'
 
 declare global {
    namespace Express {

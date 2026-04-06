@@ -1,11 +1,11 @@
 //user service
 
 import bcrypt from 'bcrypt'
-import { UserModel } from "../models/user.model";
-import { CreateUserDto } from "../dtos/create-user.dto";
+import { UserModel } from "../models/user.model.js";
+import { CreateUserDto } from "../dtos/create-user.dto.js";
 import { z } from 'zod'
-import { ConflictError } from '../common/errors/conflict.error';
-import { NotFoundError } from '../common/errors';
+import { ConflictError } from '../common/errors/conflict.error.js';
+import { NotFoundError } from '../common/errors/index.js';
 
 const SALT_ROUNDS = 10
 

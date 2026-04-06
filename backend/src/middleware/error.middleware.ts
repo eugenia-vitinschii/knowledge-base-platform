@@ -1,7 +1,7 @@
 // error middleware
 
 import { Request, Response, NextFunction } from "express"
-import { HttpError } from "../common/errors"
+import { HttpError } from "../common/errors/index.js"
 import mongoose from "mongoose"
 
 export const errorMiddleware = (err: Error, _req: Request, res: Response, _next: NextFunction) => {

@@ -1,7 +1,7 @@
 //jwt
 
 import jwt from "jsonwebtoken"
-import { Role } from "../enums/role.enum"
+import { Role } from "../enums/role.enum.js"
 
 const JWT_SECRET = process.env.JWT_SECRET!
 export interface JwtUserPayload {

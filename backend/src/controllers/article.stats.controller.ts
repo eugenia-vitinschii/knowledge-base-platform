@@ -3,7 +3,7 @@
 import { NextFunction, Request, Response } from "express"
 
 /* SERVICE */
-import { articleStatsService } from "../services/article.stats.service"
+import { articleStatsService } from "../services/article.stats.service.js"
 
 class ArticleStatsController {
    /* GET ALL STATS (status, difficulty, category, type, author) */

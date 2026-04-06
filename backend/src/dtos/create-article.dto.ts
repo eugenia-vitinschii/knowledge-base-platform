@@ -1,6 +1,6 @@
 //create article dto
 
-import { ArcticleType, ArticleCategory, ArticleDifficulty } from "../common/enums/article.enums"
+import { ArcticleType, ArticleCategory, ArticleDifficulty } from "../common/enums/article.enums.js"
 import { z } from "zod"
 
 export const CreateArticleDto = z.object({

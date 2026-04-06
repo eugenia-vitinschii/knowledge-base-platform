@@ -3,8 +3,8 @@
 import z from "zod";
 
 /* FILTERS */
-import { ArticlePublicFilterDto } from "../../dtos/article-public-filter.dto";
-import { ArticleAdminFilterDto } from "../../dtos/article-admin-filter.dto";
+import { ArticlePublicFilterDto } from "../../dtos/article-public-filter.dto.js";
+import { ArticleAdminFilterDto } from "../../dtos/article-admin-filter.dto.js";
 
 type ArticleFilter = z.infer<typeof ArticlePublicFilterDto> | z.infer<typeof ArticleAdminFilterDto>
 
