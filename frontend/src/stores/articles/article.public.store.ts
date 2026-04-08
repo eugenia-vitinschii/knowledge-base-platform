@@ -5,7 +5,7 @@ import { ref } from "vue";
 import { articlesApi } from "@/api/articles.api";
 
 /* TYPES */
-import type { ArticlePreview, ArticleListItem, ArticlePublicFilters } from "@/types/article";
+import type { ArticlePreview, ArticleListItem, ArticlePublicFilters, ArticleQueryParams } from "@/types/article";
 
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
@@ -20,6 +20,10 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
       category: "",
       tag: ''
    })
+
+
+   const meta = ref<{ page: number; pages: number; total: number } | null>(null)
+
    const list = ref<ArticleListItem[]>([])
 
    const { request } = useApiRequest()
@@ -38,14 +42,15 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
       return data
    }
    /* === GET  FILTERED ARTICLES=== */
-   async function searchArticles(payload?: ArticlePublicFilters) {
+   async function searchArticles(payload: ArticleQueryParams) {
 
       const data = await request(() =>
-         articlesApi.public.searchArticles(payload ?? filters.value).then(r => r.data),
+         articlesApi.public.searchArticles(payload).then(r => r.data),
          "Failed to fetch filtered articles"
       )
       if (data) {
-         list.value = data
+         list.value = data.data
+         meta.value = data.meta
       }
       return data
    }
@@ -59,5 +64,5 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
    }
 
 
-   return { fetchBySlug, currentPreview, searchArticles, list, filters, incrementViews }
+   return { fetchBySlug, currentPreview, searchArticles, list, filters, incrementViews, meta }
 })
