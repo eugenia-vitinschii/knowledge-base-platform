@@ -21,9 +21,12 @@ class ArticlePublicController {
    /* SEARCH & FILTER ARTICLES (PUBLISHED) */
    getPublicArticles = async (req: Request, res: Response, next: NextFunction) => {
       try {
-         const filters = req.query
+         const { page = "1", limit = "10", ...filters } = req.query
 
-         const articles = await articlePublicService.findPublicArticles(filters)
+         const articles = await articlePublicService.findPublicArticles(
+            filters,
+            { page: Number(page), limit: Number(limit) }
+         )
          res.json(articles)
       } catch (error) {
          console.log("error", error)

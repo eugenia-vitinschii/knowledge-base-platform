@@ -20,12 +20,27 @@ class ArticlePublicService {
    }
 
    /* SEARCH & FILTER PUBLIC ARTICLES */
-   async findPublicArticles(filters: ArticleFilter) {
+   async findPublicArticles(filters: ArticleFilter, pagination: { page: number; limit: number }) {
       const query = buidArticleQuery(filters)
 
       query.status = ArticleStatus.PUBLISHED
 
-      return ArticleModel.find(query)
+      const { page, limit } = pagination
+      const skip = (page - 1) * limit
+
+      const [articles, total] = await Promise.all([
+         ArticleModel.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+
+         ArticleModel.countDocuments(query)
+      ])
+      return {
+         data: articles,
+         meta: {
+            total,
+            page,
+            pages: Math.ceil(total / limit)
+         }
+      }
    }
 
    /* INCREMENT VIEWS */
