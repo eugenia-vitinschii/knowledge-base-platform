@@ -1,10 +1,11 @@
 // PUBLIC API (/public)
 
 //api
+import type { ArticleQueryParams } from "@/types/article/article-query-params.types"
 import { api } from "../http"
 
 //types
-import type { ArticlePublicFilters, ArticleListItem, ArticlePreview } from "@/types/article"
+import type { ArticleListItem, ArticlePreview, PaginatedResponse } from "@/types/article"
 
 export const articlesPublicApi = {
 
@@ -19,9 +20,9 @@ export const articlesPublicApi = {
    },
 
    /* SEARCH FILTER (PUBLISHED) */
-   searchArticles(filters: ArticlePublicFilters) {
-      return api.get<ArticleListItem[]>("/articles/public/filter", {
-         params: filters
+   searchArticles(params: ArticleQueryParams) {
+      return api.get<PaginatedResponse<ArticleListItem>>("/articles/public/filter", {
+         params
       })
    },
 
