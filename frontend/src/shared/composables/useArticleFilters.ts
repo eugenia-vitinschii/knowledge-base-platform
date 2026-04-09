@@ -1,18 +1,21 @@
 // query mapper
 
-import type { ArticlePublicFilters } from "@/types/article";
+import type { ArticleQueryParams } from "@/types/article";
 import type { LocationQuery } from "vue-router";
 
 
 export function useArticleFilter() {
 
-   function mapQueryToFilters(query: LocationQuery): ArticlePublicFilters {
+   function mapQueryToParams(query: LocationQuery): ArticleQueryParams {
       return {
          search: getString(query.search),
          category: getString(query.category) as any,
          difficulty: getString(query.difficulty) as any,
          type: getString(query.type) as any,
-         tag: getString(query.tag)
+         tag: getString(query.tag),
+
+         page: getNumber(query.page) || 1,
+         limit: getNumber(query.limit) || 10,
       }
    }
 
@@ -22,7 +25,13 @@ export function useArticleFilter() {
       return ""
    }
 
+   function getNumber(value: unknown): number | undefined {
+      if (Array.isArray(value)) return Number(value[0])
+      if (typeof value === "string") return Number(value)
+      return undefined
+   }
+
    return {
-      mapQueryToFilters
+      mapQueryToParams
    }
 }
