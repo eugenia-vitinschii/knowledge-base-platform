@@ -42,9 +42,15 @@ class ArticleAdminController {
    /* SEARCH & FILTER ARTICLES  */
    searchAdminArticles = async (req: Request, res: Response, next: NextFunction) => {
       try {
-         const filters = req.query
+         const { page = "1", limit = "10", ...filters } = req.query
          const user = req.user!
-         const articles = await articleAdminService.searchAdminArticles(filters, user)
+
+         const articles = await articleAdminService.searchAdminArticles(
+            filters,
+            user,
+            { page: Number(page), limit: Number(limit) }
+         )
+
          res.json(articles)
       } catch (error) {
          console.log("error", error)

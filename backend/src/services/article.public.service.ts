@@ -20,7 +20,10 @@ class ArticlePublicService {
    }
 
    /* SEARCH & FILTER PUBLIC ARTICLES */
-   async findPublicArticles(filters: ArticleFilter, pagination: { page: number; limit: number }) {
+   async findPublicArticles(
+      filters: ArticleFilter,
+      pagination: { page: number; limit: number }
+   ) {
       const query = buidArticleQuery(filters)
 
       query.status = ArticleStatus.PUBLISHED
