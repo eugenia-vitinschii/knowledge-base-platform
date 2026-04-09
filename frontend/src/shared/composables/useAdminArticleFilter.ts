@@ -1,18 +1,21 @@
 // query mapper
 
-import type { ArticleAdminFilters } from "@/types/article";
+import type { ArticleAdminQueryParams } from "@/types/article";
 import type { LocationQuery } from "vue-router";
 
 
 export function useArticleAdminFilter() {
 
-   function mapQueryToFilters(query: LocationQuery): ArticleAdminFilters {
+   function mapQueryToParams(query: LocationQuery): ArticleAdminQueryParams {
       return {
          search: getString(query.search),
          category: getString(query.category) as any,
          difficulty: getString(query.difficulty) as any,
          type: getString(query.type) as any,
-         status: getString(query.status) as any
+         status: getString(query.status) as any,
+
+         page: getNumber(query.page) || 1,
+         limit: getNumber(query.limit) || 10,
       }
    }
 
@@ -22,7 +25,14 @@ export function useArticleAdminFilter() {
       return ""
    }
 
+
+   function getNumber(value: unknown): number | undefined {
+      if (Array.isArray(value)) return Number(value[0])
+      if (typeof value === "string") return Number(value)
+      return undefined
+   }
+
    return {
-      mapQueryToFilters
+      mapQueryToParams
    }
 }

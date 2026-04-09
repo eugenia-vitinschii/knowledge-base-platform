@@ -3,10 +3,10 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <p class="heading">Articles Table ({{ articlesAdminStore.list?.length }}) </p>
+               <p class="heading">Articles Table </p>
             </div>
             <div class="filter-wrapper">
-               <article-admin-filter :filter="articlesAdminStore.filters" :count="articlesAdminStore.list.length"
+               <article-admin-filter :filter="articlesAdminStore.filters" :count="totalItems"
                   @update:filter="onFilterChange" />
             </div>
             <div class="page__content articles-table-wrapper" v-if="articlesAdminStore.list.length">
@@ -17,6 +17,9 @@
                <p class="subheading">Hi {{ auth.user?.name }} ! Create your fisrt article!</p>
                <router-link to="/admin/articles/create" class="heading"> create article</router-link>
             </div>
+            <div class="pagination-wrapper">
+               <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
+            </div>
          </div>
       </div>
    </div>
@@ -26,6 +29,7 @@
 /* COMPONENTS */
 import ArticlesTable from '@/components/article/ArticlesTable.vue';
 import ArticleAdminFilter from '@/components/article/ArticleAdminFilter.vue';
+import BasePagination from '@/components/ui/BasePagination.vue';
 
 /* VUE & Router*/
 import { computed, watch } from 'vue';
@@ -42,7 +46,7 @@ import { useToast } from '@/shared/composables/useToast';
 import { useArticleAdminFilter } from '@/shared/composables/useAdminArticleFilter';
 
 /*TYOES */
-import type { ArticleAdminFilters } from '@/types/article';
+import type { ArticleAdminFilters, ArticleAdminQueryParams } from '@/types/article';
 
 /* PINIA  variables */
 const auth = useAuthStore();
@@ -50,7 +54,7 @@ const articlesCrudStore = useArticlesCrudStore();
 const articlesAdminStore = useArticlesAdminStore();
 
 
-const { mapQueryToFilters } = useArticleAdminFilter()
+const { mapQueryToParams } = useArticleAdminFilter()
 /*router  variables */
 const router = useRouter();
 const route = useRoute()
@@ -59,9 +63,30 @@ const toast = useToast()
 /* check role & fetch data */
 const isAdmin = computed(() => auth.user?.role === 'admin')
 
+/* PAGINATION */
+const currentPage = computed(() => articlesAdminStore.meta?.page ?? 1)
+const totalPages = computed(() => articlesAdminStore.meta?.pages ?? 1)
+const totalItems = computed(() => articlesAdminStore.meta?.total ?? 1)
+
+function extractFilters(params: ArticleAdminQueryParams): ArticleAdminFilters {
+   const { page, limit, ...filters } = params
+   return filters
+}
+
+function onPageChange(page: number) {
+   const params = mapQueryToParams(route.query)
+
+   router.push({
+      path: '/admin/articles',
+      query: cleanQuery({
+         ...params,
+         page
+      })
+   })
+}
 
 /* remove empty values from URL */
-function cleanQuery(filters: ArticleAdminFilters) {
+function cleanQuery(filters: ArticleAdminQueryParams) {
    const query: any = {}
 
    Object.entries(filters).forEach(([key, value]) => {
@@ -74,9 +99,16 @@ function cleanQuery(filters: ArticleAdminFilters) {
 }
 /* update URL when filters change */
 function onFilterChange(newFilters: ArticleAdminFilters) {
+   const params = mapQueryToParams(route.query)
+
    router.push({
       path: '/admin/articles',
-      query: cleanQuery(newFilters)
+      query: cleanQuery({
+         ...params,
+         ...newFilters,
+         page: 1,
+         limit: 10
+      })
    })
 }
 
@@ -84,15 +116,15 @@ function onFilterChange(newFilters: ArticleAdminFilters) {
 watch(
    () => route.query,
    async (query) => {
-      const filters = mapQueryToFilters(query)
-      articlesAdminStore.filters = filters
+      const params = mapQueryToParams(query)
 
-      await articlesAdminStore.searchArticles(filters)
+      articlesAdminStore.filters = extractFilters(params)
+
+      await articlesAdminStore.searchArticles(params)
 
    },
    { immediate: true }
 )
-
 
 /* Save Status */
 const handleSaveStatus = async ({ id, status }: { id: string, status: ArticleStatus }) => {
