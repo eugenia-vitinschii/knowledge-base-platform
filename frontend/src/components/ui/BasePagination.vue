@@ -1,16 +1,16 @@
 <template>
    <div class="pagination">
-      <button :disabled="page === 1" @click="$emit('change', page - 1)">
-         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+      <button :disabled="page === 1" @click="$emit('change', page - 1)" class="pagination__button-svg">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
             <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
          </svg>
       </button>
       <button v-for="item in pages" :key="item + ''" :disabled="item === '...'" :class="{ active: item === page }"
-         @click="typeof item === 'number' && $emit('change', item)">
-         <p class="body-text">{{ item }}</p>
+         @click="typeof item === 'number' && $emit('change', item)" class="pagination__button-number">
+         {{ item }}
       </button>
-      <button :disabled="page === totalPages" @click="$emit('change', page + 1)">
-         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+      <button :disabled="page === totalPages" @click="$emit('change', page + 1)" class="pagination__button-svg">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
             <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
          </svg>
       </button>
