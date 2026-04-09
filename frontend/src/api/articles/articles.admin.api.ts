@@ -3,7 +3,7 @@
 //api
 import { api } from "../http"
 //types
-import type { Article, ArticleAdminFilters } from "@/types/article"
+import type { Article, ArticleAdminQueryParams, PaginatedResponse } from "@/types/article"
 
 export const articlesAdminApi = {
    /* GET BY ID */
@@ -19,8 +19,8 @@ export const articlesAdminApi = {
       return api.get<Article[]>('/articles/admin/my')
    },
    /* SEARCH & FILTER ARTICLES ADMIN */
-   searchAdminArticles(filters: ArticleAdminFilters) {
-      return api.get<Article[]>("/articles/admin/filter", {
+   searchAdminArticles(filters: ArticleAdminQueryParams) {
+      return api.get<PaginatedResponse<Article>>("/articles/admin/filter", {
          params: filters
       })
    }
