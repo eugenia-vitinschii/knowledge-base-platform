@@ -7,7 +7,7 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 import { requiredRole } from "../middleware/role.middleware.js";
 
 /* CONTROLLERS*/
-import { articleStatsController } from "../controllers/article.stats.controller.js";
+import { articleStatsController } from "../modules/articles/controllers/article.stats.controller.js";
 
 /* ENUMS */
 import { Role } from "../common/enums/role.enum.js";

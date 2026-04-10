@@ -2,7 +2,7 @@
 
 import { NextFunction, Request, Response } from "express"
 import { articleAdminService } from "../services/article.admin.service.js";
-import { NotFoundError } from "../common/errors/index.js"
+import { NotFoundError } from "@/common/errors/not-found.error.js";
 
 class ArticleAdminController {
    /* GET BY ID*/

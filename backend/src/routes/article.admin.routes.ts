@@ -7,7 +7,7 @@ import { requiredRole } from "../middleware/role.middleware.js";
 
 import { Role } from "../common/enums/role.enum.js";
 
-import { articleAdminController } from "../controllers/article.admin.controller.js";
+import { articleAdminController } from "../modules/articles/controllers/article.admin.controller.js";
 const router = Router()
 
 /* used for all routes */

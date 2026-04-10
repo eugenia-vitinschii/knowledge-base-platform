@@ -8,12 +8,12 @@ import { requiredRole } from "../middleware/role.middleware.js";
 import { validateResource } from "../middleware/validateResource.js";
 
 //DTO's
-import { UpdateArticleDto } from "../dtos/update-article.dto.js";
-import { UpdateArticleStatusDto } from "../dtos/update-article-status.dto.js";
-import { CreateArticleDto } from "../dtos/create-article.dto.js";
+import { UpdateArticleDto } from "../modules/articles/dtos/update-article.dto.js";
+import { UpdateArticleStatusDto } from "../modules/articles/dtos/update-article-status.dto.js";
+import { CreateArticleDto } from "../modules/articles/dtos/create-article.dto.js";
 
 //controllers
-import { articleCrudController } from "../controllers/article.crud.controller.js";
+import { articleCrudController } from "../modules/articles/controllers/article.crud.controller.js";
 
 //enums
 import { Role } from "../common/enums/role.enum.js";
