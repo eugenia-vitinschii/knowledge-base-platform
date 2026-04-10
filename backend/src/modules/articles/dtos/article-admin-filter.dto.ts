@@ -1,7 +1,7 @@
 //article adminfilters dto
 
 import { z } from "zod"
-import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from "../common/enums/article.enums.js"
+import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from "@/common/enums/article.enums.js"
 
 export const ArticleAdminFilterDto = z.object({
    search: z.string().optional(),
