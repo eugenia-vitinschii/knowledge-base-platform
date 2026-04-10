@@ -4,7 +4,7 @@ import { Router } from "express";
 
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
-import { articlePublicController } from "../controllers/article.public.controller.js";
+import { articlePublicController } from "../modules/articles/controllers/article.public.controller.js";
 
 const router = Router()
 
