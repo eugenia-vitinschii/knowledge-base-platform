@@ -10,6 +10,7 @@
    width: 100%
    &__span
       span
+         white-space: nowrap
          font-size: 20px
          color: var(--text)
          margin-left: 10px
@@ -29,3 +30,11 @@
          svg
             width: 15px
             height: 15px
+
+@media (max-width: 486px)
+   .badge
+      padding: 5px
+      align-items: center
+      &__span
+         span
+            font-size: 12px
