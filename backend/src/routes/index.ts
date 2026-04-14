@@ -2,6 +2,9 @@
 
 import { Router } from "express";
 
+import adminUserRoutes from "@/modules/admin/routes/admin-user.routes.js"
+
+
 import authRoutes from './auth.routes.js'
 import userRoutes from "./user.routes.js"
 import articleCrudRoutes from './article.crud.routes.js'
@@ -11,6 +14,10 @@ import articleAdminStats from './article.stats.routes.js'
 
 const router = Router()
 
+
+/* ADMIN */
+
+router.use("/admin", adminUserRoutes)
 /* AUTH ROUTES*/
 router.use('/auth', authRoutes)
 
