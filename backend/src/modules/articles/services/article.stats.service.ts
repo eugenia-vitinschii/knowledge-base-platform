@@ -1,7 +1,7 @@
 //article stats (admin)
 
 /* ARTICLE MODEL */
-import { ArticleModel } from "@/models/article.model.js"
+import { ArticleModel } from "@/modules/articles/models/article.model.js";
 /* USER TYPE */
 import type { AuthUser } from "@/types/auth-user.types.js"
 /* ROLE HELPER */

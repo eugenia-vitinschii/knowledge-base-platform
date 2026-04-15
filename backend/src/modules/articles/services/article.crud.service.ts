@@ -4,7 +4,7 @@
 import z from "zod";
 import { Types } from "mongoose";
 /* MODEL */
-import { ArticleModel, IArticle } from "@/models/article.model.js"
+import { ArticleModel, IArticle } from "@/modules/articles/models/article.model.js";
 /* DTO */
 import { CreateArticleDto } from "../dtos/create-article.dto.js";
 import { UpdateArticleDto } from "../dtos/update-article.dto.js";

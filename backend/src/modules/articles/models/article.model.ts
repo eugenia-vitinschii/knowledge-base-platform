@@ -1,7 +1,7 @@
 //article model
 
 import mongoose, { Schema, Document, Types } from 'mongoose'
-import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '../common/enums/article.enums.js'
+import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/common/enums/article.enums.js'
 
 export interface IArticle extends Document {
    title: string

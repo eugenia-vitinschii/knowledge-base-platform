@@ -2,7 +2,7 @@
 
 import z from "zod";
 /* MODELS */
-import { ArticleModel } from "@/models/article.model.js";
+import { ArticleModel } from "@/modules/articles/models/article.model.js";
 /* DTO's */
 import { ArticleAdminFilterDto } from "../dtos/article-admin-filter.dto.js";
 /* ENUMS */
