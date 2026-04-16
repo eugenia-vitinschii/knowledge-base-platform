@@ -12,7 +12,7 @@ export const articlesAdminApi = {
    },
    /* GET ALL ARTICLES */
    getAll() {
-      return api.get<Article[]>('/articles/admin/all')
+      return api.get<Article[]>('/articles/admin')
    },
    /* GET MY ARTICLES  */
    getMy() {
@@ -20,7 +20,7 @@ export const articlesAdminApi = {
    },
    /* SEARCH & FILTER ARTICLES ADMIN */
    searchAdminArticles(filters: ArticleAdminQueryParams) {
-      return api.get<PaginatedResponse<Article>>("/articles/admin/filter", {
+      return api.get<PaginatedResponse<Article>>("/articles/admin/search", {
          params: filters
       })
    }

@@ -21,7 +21,7 @@ export const articlesPublicApi = {
 
    /* SEARCH FILTER (PUBLISHED) */
    searchArticles(params: ArticleQueryParams) {
-      return api.get<PaginatedResponse<ArticleListItem>>("/articles/public/filter", {
+      return api.get<PaginatedResponse<ArticleListItem>>("/articles/public/search", {
          params
       })
    },

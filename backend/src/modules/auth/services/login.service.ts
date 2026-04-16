@@ -1,6 +1,7 @@
 //login service
 
 import bcrypt from 'bcrypt'
+
 import { UserModel } from "@/modules/users/models/user.model.js"
 import { signToken } from "@/common/utils/jwt.js"
 import { UnauthorizedError } from '@/common/errors/index.js'
