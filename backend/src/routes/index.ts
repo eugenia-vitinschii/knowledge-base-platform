@@ -2,38 +2,40 @@
 
 import { Router } from "express";
 
-import adminUserRoutes from "@/modules/admin/routes/admin-user.routes.js"
+/*AUTH*/
+import authRoutes from '@/modules/auth/routes/auth.routes.js'
 
 
-import authRoutes from './auth.routes.js'
-import userRoutes from "./user.routes.js"
-import articleCrudRoutes from './article.crud.routes.js'
-import articleAdminRoutes from './article.admin.routes.js'
-import articlePublicRoutes from './article.public.routes.js'
-import articleAdminStats from './article.stats.routes.js'
+/* ADMIN ROUTES */
+import adminUserRoutes from "@/modules/users/routes/admin-user.routes.js"
+
+import articleCrudRoutes from '@/modules/articles/routes/article.crud.routes.js'
+import articleAdminRoutes from '../modules/articles/routes/article.admin.routes.js'
+import articlePublicRoutes from '../modules/articles/routes/article.public.routes.js'
+import articleAdminStats from '../modules/articles/routes/article.stats.routes.js'
+
+import { authMiddleware } from "@/middleware/auth.middleware.js";
 
 const router = Router()
 
 
-/* ADMIN */
-
-router.use("/admin", adminUserRoutes)
-/* AUTH ROUTES*/
+/* auth routes */
 router.use('/auth', authRoutes)
 
-/* USERS ROUTES */
-router.use('/users', userRoutes)
+/* used for all routes */
+router.use(authMiddleware)
 
-/* CRUD ROUTES*/
+/* articles management */
 router.use('/articles', articleCrudRoutes)
-
-/* ADMIN ROUTES */
 router.use('/articles/admin', articleAdminRoutes)
-
-/* STATS ROUTES */
 router.use('/articles/stats', articleAdminStats)
-
-/* PUBLIC ROUTES*/
 router.use('/articles/public', articlePublicRoutes)
+
+
+/* admin user management */
+router.use('/admin/users', adminUserRoutes)
+
+
+
 
 export default router;
