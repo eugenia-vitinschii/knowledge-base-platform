@@ -52,6 +52,16 @@ class AdminUserService {
       return UserModel.find().select("-password")
    }
 
+   /* GET USER BY ID */
+   async getUserById(userId: string) {
+      const user = await UserModel.findById(userId).select("-password")
+
+      if (!user) {
+         throw new NotFoundError("User nor found")
+      }
+      return user
+   }
+
    /* UPDATE USER ROLE */
    async updateUserRole(userId: string, role: Role) {
       const user = await UserModel.findByIdAndUpdate(
@@ -80,6 +90,7 @@ class AdminUserService {
       }
       return user
    }
+
 
    /* DELETE USER  */
    async deleteUser(userId: string) {

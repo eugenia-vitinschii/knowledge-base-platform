@@ -23,6 +23,16 @@ class AdminUserController {
          next(error)
       }
    }
+   /* GET USER BY ID */
+   getUserById = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const id = req.params.id as string
+         const user = await adminUserService.getUserById(id)
+         res.json(user)
+      } catch (error) {
+         next(error)
+      }
+   }
    /* UPDATE ROLE */
    updateRole = async (req: Request, res: Response, next: NextFunction) => {
       try {

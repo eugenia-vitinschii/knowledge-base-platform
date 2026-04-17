@@ -23,6 +23,7 @@ router.post("/", validateResource(CreateUserDto), adminUserController.createUser
 /* Get all users  */
 router.get("/", adminUserController.getUsers)
 
+router.get("/:id", adminUserController.getUserById)
 /* Update user role */
 router.patch("/:id/role", validateResource(UpdateUserRoleDto), adminUserController.updateRole)
 

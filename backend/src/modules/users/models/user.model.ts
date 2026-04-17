@@ -43,6 +43,12 @@ const UserSchema: Schema = new Schema<IUser>({
 
 }, { timestamps: true })
 
-
+UserSchema.set("toJSON", {
+   transform: (_doc, ret: any) => {
+      ret.id = ret._id.toString();
+      delete ret._id;
+      delete ret.__v;
+   }
+})
 
 export const UserModel = mongoose.model<IUser>("User", UserSchema)
