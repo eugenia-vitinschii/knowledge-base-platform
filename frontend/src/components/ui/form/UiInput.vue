@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 /* INPUT TYPE */
-type InputType = "text" | "email" | "password" | "search"
+type InputType = "text" | "email" | "password" | "search" | "date" | "tel"
 
 /* PROPS */
 defineProps<{
