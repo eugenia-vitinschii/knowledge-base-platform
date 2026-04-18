@@ -1,0 +1,14 @@
+@use '../../abstracts/_mixins' as *
+
+.admin-user-form
+   &__actions
+      @include block-element()
+      display: flex
+      align-items: center
+      margin: 30px 0px
+      a
+         margin-left: 5px
+   &__section--items
+      @include block-element()
+      display: flex
+      flex-direction: column
