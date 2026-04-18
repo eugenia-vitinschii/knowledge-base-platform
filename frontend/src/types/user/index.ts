@@ -1,6 +1,6 @@
 
 /* PAYLOADS */
-export * from "./payloads/create-user.payload"
+export * from "./payloads/admin-create-user.payload"
 export * from "./payloads/update-user-role.payload"
 export * from "./payloads/admin-update-user.payload"
 

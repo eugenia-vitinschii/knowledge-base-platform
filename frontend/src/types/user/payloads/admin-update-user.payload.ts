@@ -6,7 +6,6 @@ export interface AdminUpdateUserPayload {
    name?: string
    email?: string
 
-   role?: string
    position?: Position
    location?: Location
    phone?: string

@@ -1,7 +1,7 @@
 //create user payload
 import type { Gender, Position, Location } from "@/shared/enums/user.enum"
 
-export interface CreateUserPayload {
+export interface AdminCreateUserPayload {
    name: string
    email: string
 

@@ -6,7 +6,7 @@ import { ref } from "vue";
 import { usersApi } from "@/api/users.api";
 
 /*TYPES */
-import type { CreateUserPayload, UpdateUserRolePayload, User } from "@/types/user";
+import type { AdminUpdateUserPayload, AdminCreateUserPayload, UpdateUserRolePayload, User } from "@/types/user";
 
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
@@ -20,44 +20,69 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
 
    /* === FETCH USERS === */
    async function fetchUsers() {
-   
+
       const data = await request(() =>
          usersApi.admin.getAll().then(r => r.data),
          "Failed to load users"
       )
-   
+
       if (data) {
          list.value = data
       }
-      
-         return data
-      }
-   /* === CREATE USER === */
-   async function create(payload:CreateUserPayload) {
-   
+
+      return data
+   }
+   /* === Fetch user by id === */
+   async function fetchUserById(id: string) {
       const data = await request(() =>
-        usersApi.admin.create(payload).then(r => r.data),
+         usersApi.admin.getById(id).then(r => r.data),
+         "Failed to load user"
+      )
+
+      if (data) {
+         selectedUser.value = data
+      }
+
+      return data
+   }
+   /* === CREATE USER === */
+   async function create(payload: AdminCreateUserPayload) {
+
+      const data = await request(() =>
+         usersApi.admin.create(payload).then(r => r.data),
          "Failed to create new user"
       )
-   
+
       if (data) {
          await fetchUsers()
       }
-         return data
-      }
+      return data
+   }
    /* === UPDATE ROLE === */
    async function updateRole(id: string, payload: UpdateUserRolePayload) {
-   
+
       const data = await request(() =>
          usersApi.admin.updateRole(id, payload).then(r => r.data),
          "Failed to update user role"
       )
-   
+
       if (data) {
          selectedUser.value = data
       }
-         return data
+      return data
+   }
+   /* === UPDATE USER  === */
+   async function update(id: string, payload: AdminUpdateUserPayload) {
+      const data = await request(() =>
+         usersApi.admin.update(id, payload).then(r => r.data),
+         "Failed to update user"
+      )
+
+      if (data) {
+         selectedUser.value = data
       }
+      return data
+   }
    /* === DETELE USER === */
    async function remove(id: string) {
       const data = await request(() =>
@@ -77,5 +102,7 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
       updateRole,
       remove,
       fetchUsers,
+      update,
+      fetchUserById
    }
 })
