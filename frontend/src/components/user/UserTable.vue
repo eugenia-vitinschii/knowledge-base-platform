@@ -4,8 +4,8 @@
          <tr>
             <th>name</th>
             <th>role</th>
-            <th>[job title]</th>
-            <th>[departament]</th>
+            <th>position</th>
+            <th>location</th>
             <th>actions</th>
          </tr>
       </thead>
@@ -13,10 +13,10 @@
          <tr v-for="i in items">
             <td>{{ i.name }}</td>
             <td>{{ i.role }}</td>
-            <td>job title</td>
-            <td>departament</td>
+            <td>{{ i.position }}</td>
+            <td>{{ i.location }}</td>
             <td class="user-table__actions">
-               <ui-button>Edit</ui-button>
+               <ui-button type="button" @click="$emit('edit', i.id)">Edit</ui-button>
                <ui-button type="button" variant="danger" @click="$emit('delete', i.id)">Delete</ui-button>
             </td>
          </tr>
@@ -39,6 +39,7 @@ const props = defineProps<{
 /* EMITS */
 const emit = defineEmits<{
    (e: 'delete', id: string): void;
+   (e: 'edit', id: string): void;
 }>();
 
 

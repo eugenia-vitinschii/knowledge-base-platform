@@ -5,7 +5,7 @@
             <div class="page__header">
                <h1 class="heading">Users Table </h1>
                <div class="users-wrapper">
-                  <user-table :items="userStore.list" @delete="handleDeleteUser" />
+                  <user-table :items="userStore.list" @delete="handleDeleteUser" @edit="handleEdit" />
                </div>
             </div>
          </div>
@@ -24,8 +24,10 @@ import { onMounted } from 'vue';
 
 import { useToast } from '@/shared/composables/useToast';
 
+import { useRouter } from 'vue-router';
 const userStore = useAdminUsersStore();
 const toast = useToast()
+const router = useRouter();
 
 /* ACTIONS */
 const handleDeleteUser = async (id: string) => {
@@ -39,6 +41,13 @@ const handleDeleteUser = async (id: string) => {
    }
 
 };
+
+const handleEdit = (id: string) => {
+   if (!id) return
+   router.push(`/admin/users/edit/${id}`)
+}
+
+
 onMounted(() => {
    userStore.fetchUsers()
 })

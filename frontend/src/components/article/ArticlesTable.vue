@@ -2,7 +2,7 @@
    <table class="articles-table">
       <thead>
          <tr>
-            <th>titile</th>
+            <th>title</th>
             <th>status</th>
             <th>type</th>
             <th>category</th>
