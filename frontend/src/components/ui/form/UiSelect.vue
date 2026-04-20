@@ -22,7 +22,7 @@
 /*=== OPTION TYPE ===*/
 type Option = {
    label: string
-   value: string
+   value: string | number
 }
 /*=== INTERFACE ===*/
 interface Props {

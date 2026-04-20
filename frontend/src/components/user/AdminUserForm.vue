@@ -10,7 +10,7 @@
             <ui-select v-model="localForm.position" :options="positionOptions" label="Position" />
          </div>
       </div>
-      <div class="admin-user-form__section">
+      <div class="admin-user-form__section" v-if="isEdit">
          <p class="subheading">User Role</p>
          <div class="admin-user-form__section--items">
             <ui-select v-model="localForm.role" :options="roleOptions" label="Role" />
@@ -33,7 +33,7 @@
             <ui-input v-model="localForm.hiredDate" label="Hired Date" type="date" placeholder="Hired date" />
          </div>
       </div>
-      <p class="subheading">{{ isEdit ? "Update" : "Create" }} article</p>
+      <p class="subheading">{{ isEdit ? "Update" : "Create" }} user</p>
       <div class="admin-user-form__actions">
          <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
          <ui-button type="submit" variant="primary" :size="'md'">
