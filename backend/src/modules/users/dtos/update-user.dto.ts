@@ -9,6 +9,7 @@ export const UpdateUserDto = z.object({
    name: z.string().min(5).optional(),
    email: z.string().email().optional(),
 
+
    position: z.nativeEnum(Position).default(Position.OTHER).optional(),
    location: z.nativeEnum(Location).default(Location.REMOTE).optional(),
    phone: z.string().optional().optional(),

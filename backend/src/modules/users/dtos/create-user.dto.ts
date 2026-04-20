@@ -18,6 +18,5 @@ export const CreateUserDto = z.object({
    gender: z.nativeEnum(Gender).default(Gender.OTHER),
    bio: z.string().max(500).optional(),
 
-   birthdate: z.date().optional(),
-   hiredDate: z.date().optional(),
+   hiredDate: z.coerce.date().optional(),
 })

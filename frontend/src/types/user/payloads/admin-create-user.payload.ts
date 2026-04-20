@@ -1,9 +1,13 @@
 //create user payload
+import type { Role } from "@/shared/enums/role.enum"
 import type { Gender, Position, Location } from "@/shared/enums/user.enum"
 
 export interface AdminCreateUserPayload {
    name: string
    email: string
+
+   password: string
+   role: Role
 
    position: Position
    location: Location
@@ -12,5 +16,5 @@ export interface AdminCreateUserPayload {
    gender: Gender
    bio: string
 
-   hiredDate: string
+   hiredDate?: string
 }
