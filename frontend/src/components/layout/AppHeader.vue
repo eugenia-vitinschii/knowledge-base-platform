@@ -3,7 +3,7 @@
       <div class="container">
          <div class="header__wrapper">
             <div class="header__wrapper-public">
-               <router-link to="/">
+               <router-link to="/articles">
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#e3e3e3">
                      <path
@@ -19,7 +19,7 @@
                </router-link>
             </div>
             <div class="header__wrapper-admin" v-if="isAdmin || isEditor">
-               <router-link to="/admin/articles/stats">
+               <router-link to="/admin/stats">
                   <svg xmlns=" http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#e3e3e3">
                      <path
