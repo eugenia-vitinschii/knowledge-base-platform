@@ -12,13 +12,16 @@ import { dashboardRoutes } from '@/modules/dashboard/routes/dashboard.routes';
 
 /* PUBLIC ROUTES */
 import { publicArticlesRoutes } from '@/modules/articles/routes/public.articles.routes';
+import { profileRoutes } from '@/modules/profile/routes/profile.routes';
 
 const routes: RouteRecordRaw[] = [
   ...publicArticlesRoutes,
+  ...profileRoutes,
   ...authRoutes,
   ...dashboardRoutes,
   ...adminUsersRoutes,
   ...adminArticlesRoutes,
+
 ]
 
 
