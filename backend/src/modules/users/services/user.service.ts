@@ -1,43 +1,20 @@
-//user service
+//Profile service
 
-import bcrypt from 'bcrypt'
-import { UserModel } from "@/models/user.model.js";
-import { CreateUserDto } from "../dtos/create-user.dto.js";
-import { z } from 'zod'
-import { ConflictError } from '@/common/errors/conflict.error.js';
-import { NotFoundError } from '@/common/errors/index.js';
 
-const SALT_ROUNDS = 10
+import { UserModel } from "../models/user.model.js"
 
-type CreateUserInput = z.infer<typeof CreateUserDto>
+import { NotFoundError } from '@/common/errors/not-found.error.js';
+
 
 class UserService {
-   async create(data: CreateUserInput) {
-      const existingUser = await UserModel.findOne({ email: data.email })
+   /* GET USER */
+   async getMe(userId: string) {
+      const user = await UserModel.findById(userId).select("-password")
 
-      if (existingUser) {
-         throw new ConflictError("User with this email already exists!")
+      if (!user) {
+         throw new NotFoundError("User not found")
       }
-
-      const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS)
-
-      const user = await UserModel.create({
-         name: data.name,
-         email: data.email,
-         password: hashedPassword,
-         role: data.role
-      })
-
-      return {
-         id: user._id,
-         name: user.name,
-         email: user.email,
-         role: user.role,
-      }
-   }
-
-   async findById(id: string) {
-      throw new NotFoundError("User not exists")
+      return user
    }
 }
 

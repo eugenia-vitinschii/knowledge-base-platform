@@ -5,7 +5,7 @@ import { Router } from "express";
 /*AUTH*/
 import authRoutes from '@/modules/auth/routes/auth.routes.js'
 
-
+import profileUserRoutes from "@/modules/users/routes/profile-user.routes.js";
 /* ADMIN ROUTES */
 import adminUserRoutes from "@/modules/users/routes/admin-user.routes.js"
 
@@ -35,7 +35,10 @@ router.use('/articles/public', articlePublicRoutes)
 /* admin user management */
 router.use('/admin/users', adminUserRoutes)
 
+/* profile routes */
 
+
+router.use('/', profileUserRoutes)
 
 
 export default router;
