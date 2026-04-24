@@ -13,7 +13,7 @@
          </div>
          <div class="profile-details__side">
             <div class="profile-details__actions">
-               <ui-button>Edit Profile</ui-button>
+               <ui-button @click="$emit('edit')">Edit Profile</ui-button>
             </div>
             <div class="profile__details__list">
                <div class="profile-details__list-item">
@@ -30,19 +30,19 @@
                   </svg>
                   <p>{{ profile.location }}</p>
                </div>
-               <div class="profile-details__list-item">
+               <div class="profile-details__list-item" v-if="profile.visibility.phone === 'public'">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
                      <path
                         d="M240-160v-640 640ZM637-40q-26 0-49-10.5T548-80L346-322l45-46q18-18 44-22.5t49 7.5l116 58v-355h80q66 0 113 47t47 113v320q0 66-47 113T680-40h-43ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h360q33 0 56.5 23.5T680-800v120h-80v-120H240v640h241l67 80H240Zm208.5-611.5Q460-703 460-720t-11.5-28.5Q437-760 420-760t-28.5 11.5Q380-737 380-720t11.5 28.5Q403-680 420-680t28.5-11.5ZM637-120h43q33 0 56.5-23t23.5-57v-320q0-33-23.5-56.5T680-600v405L468-302l138 168q6 7 14 10.5t17 3.5Z" />
                   </svg>
                   <p>{{ profile.phone }}</p>
                </div>
-               <div class="profile-details__list-item" v-if="profile.birthdate">
+               <div class="profile-details__list-item" v-if="profile.visibility.birthDate === 'public'">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
                      <path
                         d="M160-80q-17 0-28.5-11.5T120-120v-200q0-33 23.5-56.5T200-400v-160q0-33 23.5-56.5T280-640h160v-58q-18-12-29-29t-11-41q0-15 6-29.5t18-26.5l56-56 56 56q12 12 18 26.5t6 29.5q0 24-11 41t-29 29v58h160q33 0 56.5 23.5T760-560v160q33 0 56.5 23.5T840-320v200q0 17-11.5 28.5T800-80H160Zm120-320h400v-160H280v160Zm-80 240h560v-160H200v160Zm80-240h400-400Zm-80 240h560-560Zm560-240H200h560Z" />
                   </svg>
-                  <p>{{ profile.birthdate }}</p>
+                  <p>{{ formatBirthday(profile.birthDate) }}</p>
                </div>
                <div class="profile-details__list-item">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
@@ -65,12 +65,16 @@
 /* COMPONENTS */
 import UiButton from "@/components/ui/UiButton.vue"
 
-import { formatJoinedDate } from "@/shared/lib/formatDate";
-import type { ProfileDetails } from "../types/profile-details";
+import { formatJoinedDate, formatBirthday } from "@/shared/lib/formatDate";
+import type { Profile } from "../types/index";
 
 
 defineProps<{
-   profile: ProfileDetails
+   profile: Profile
 }>()
+
+const emit = defineEmits<{
+   (e: 'edit'): void;
+}>();
 
 </script>
