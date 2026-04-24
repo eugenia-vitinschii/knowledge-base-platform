@@ -1,6 +1,7 @@
 //update profile dto (user only)
 
 import { Position, Gender } from '@/common/enums/user.enums.js'
+import { Visibility } from '@/common/enums/visibility.enums.js'
 
 import { z } from "zod"
 
@@ -14,5 +15,10 @@ export const UpdateProfileDto = z.object({
    gender: z.nativeEnum(Gender).default(Gender.OTHER),
    bio: z.string().max(500).optional(),
 
-   birthdate: z.date().optional(),
+   birthDate: z.coerce.date().optional(),
+
+   visibility: z.object({
+      phone: z.nativeEnum(Visibility).optional(),
+      birthDate: z.nativeEnum(Visibility).optional()
+   }).optional()
 })

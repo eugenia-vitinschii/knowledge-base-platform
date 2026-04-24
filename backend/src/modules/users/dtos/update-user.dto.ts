@@ -17,5 +17,5 @@ export const UpdateUserDto = z.object({
    gender: z.nativeEnum(Gender).default(Gender.OTHER).optional(),
    bio: z.string().max(500).optional(),
 
-   hiredDate: z.string().optional(),
+   hiredDate: z.coerce.date().optional(),
 })
