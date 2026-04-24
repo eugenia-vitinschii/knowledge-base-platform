@@ -1,0 +1,17 @@
+
+@use '../../abstracts/_mixins' as *
+
+.profile-form
+   margin-bottom: 30px
+   &__actions
+      @include block-element()
+      display: flex
+      align-items: center
+      a
+         margin-left: 5px
+   &__section--items
+      @include block-element()
+      display: flex
+      flex-direction: column
+   &__checkbox
+      margin-top: 10px
