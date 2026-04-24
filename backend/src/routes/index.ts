@@ -36,8 +36,6 @@ router.use('/articles/public', articlePublicRoutes)
 router.use('/admin/users', adminUserRoutes)
 
 /* profile routes */
-
-
 router.use('/', profileUserRoutes)
 
 
