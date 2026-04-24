@@ -3,6 +3,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { Role } from "../../../common/enums/role.enum.js";
 import { Position, Location, Gender } from "../../../common/enums/user.enums.js";
+import { Visibility } from "@/common/enums/visibility.enums.js";
 
 export interface IUser extends Document {
    name: string
@@ -17,8 +18,13 @@ export interface IUser extends Document {
    gender: Gender
    bio: string
 
-   birthdate: Date
+   birthDate: Date
    hiredDate: Date
+
+   visibility: {
+      phone: Visibility
+      birthDate: Visibility
+   }
 
 }
 
@@ -38,8 +44,21 @@ const UserSchema: Schema = new Schema<IUser>({
    gender: { type: String, enum: Object.values(Gender), default: Gender.OTHER },
    bio: { type: String, maxlength: 500 },
 
-   birthdate: { type: Date },
+   birthDate: { type: Date },
    hiredDate: { type: Date },
+
+   visibility: {
+      phone: {
+         type: String,
+         enum: Object.values(Visibility),
+         default: Visibility.PRIVATE
+      },
+      birthDate: {
+         type: String,
+         enum: Object.values(Visibility),
+         default: Visibility.PRIVATE
+      }
+   }
 
 }, { timestamps: true })
 
