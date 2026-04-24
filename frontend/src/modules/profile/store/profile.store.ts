@@ -4,10 +4,11 @@ import { profileApi } from "../api/profile.api";
 import { ref } from "vue";
 
 /* TYPES */
-import type { Profile } from "../types/profile.type";
+import type { Profile, ProfileUpdatePayload } from "../types/index";
 
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
+
 
 
 export const useProfileStore = defineStore("profile", () => {
@@ -16,6 +17,7 @@ export const useProfileStore = defineStore("profile", () => {
 
    const { request } = useApiRequest()
 
+   /* FETCH MY PROfILE */
    async function fetchProfile() {
       const data = await request(() =>
          profileApi.fetchProfile().then(r => r.data),
@@ -27,9 +29,22 @@ export const useProfileStore = defineStore("profile", () => {
       }
       return data
    }
+   /* UPDATE MY PROFILE */
+   async function updateProfile(payload: ProfileUpdatePayload) {
+      const data = await request(() =>
+         profileApi.updateProfile(payload).then(r => r.data),
+         "Failed to fetch profile"
+      )
+
+      if (data) {
+         profile.value = data
+      }
+      return data
+   }
 
    return {
       profile,
-      fetchProfile
+      fetchProfile,
+      updateProfile,
    }
 })

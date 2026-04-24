@@ -1,23 +1,20 @@
-//profile type
 
 import type { Gender, Position } from "@/shared/enums/user.enum"
-import { Visibility } from "@/shared/enums/visibility.enum"
+import type { Visibility } from "@/shared/enums/visibility.enum"
 
-export interface Profile {
+export interface ProfileUpdateForm {
    name: string
    email: string
 
    position: Position
-   location: Location
    phone: string
 
    gender: Gender
    bio: string
 
-   birthDate?: string | undefined
-   hiredDate?: string
+   birthDate: string
    visibility: {
-      phone: Visibility
+      phone: Visibility,
       birthDate: Visibility
    }
 }
