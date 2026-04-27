@@ -16,7 +16,7 @@ type InputType = "text" | "email" | "password" | "search" | "date" | "tel"
 
 /* PROPS */
 defineProps<{
-   modelValue: string
+   modelValue: string | number | undefined
    label?: string
    placeholder?: string
    hint?: string
