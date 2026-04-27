@@ -1,7 +1,7 @@
 <template>
    <form class="profile-form" @submit.prevent="emitSubmit">
       <div class="profile-form__section">
-         <p class="subheading">Main info</p>
+         <h2 class="subheading">Main info</h2>
          <div class="profile-form__section--items">
             <ui-input v-model="localForm.name" label="Name" type="text" placeholder="name" />
             <ui-input v-model="localForm.email" label="Email" type="email" placeholder="email" />
@@ -9,12 +9,12 @@
          </div>
       </div>
       <div class=" profile-form__section">
-         <p class="subheading">Contacts & Location</p>
+         <p class="subheading">Contacts & Bio</p>
          <div class="profile-form__section--items">
             <ui-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number" />
             <ui-checkbox :model-value="localForm.visibility.phone === 'private'"
                @update:model-value="v => localForm.visibility.phone = v ? Visibility.PRIVATE : Visibility.PUBLIC"
-               label="Hide phone " />
+               label="Hide phone " class="profile-form__checkbox" />
             <ui-textarea v-model="localForm.bio" label="Bio" placeholder="Short bio about the user" />
          </div>
       </div>
@@ -25,10 +25,10 @@
             <ui-input v-model="localForm.birthDate" label="Birth Date" type="date" placeholder="Birdtj date" />
             <ui-checkbox :model-value="localForm.visibility.birthDate === 'private'"
                @update:model-value="v => localForm.visibility.birthDate = v ? Visibility.PRIVATE : Visibility.PUBLIC"
-               label="Hide Birthday" />
+               label="Hide Birthday" class="profile-form__checkbox" />
          </div>
       </div>
-      <p class="subheading">save</p>
+      <p class="subheading">Save</p>
       <div class="profile-form__actions">
          <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
          <ui-button type="submit" variant="primary" :size="'md'">
