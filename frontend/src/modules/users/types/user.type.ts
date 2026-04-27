@@ -17,5 +17,5 @@ export interface User {
    gender: Gender
    bio: string
 
-   hiredDate: string
+   hiredDate?: string
 }

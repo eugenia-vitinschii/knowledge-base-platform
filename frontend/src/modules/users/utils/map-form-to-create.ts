@@ -15,7 +15,7 @@ export function mapFormToCreatePayload(form: AdminUserFormModel): AdminCreateUse
       bio: form.bio,
       gender: form.gender,
 
-      hiredDate: form.hiredDate.trim() ? form.hiredDate : undefined
+      hiredDate: form.hiredDate || undefined,
 
    }
 }

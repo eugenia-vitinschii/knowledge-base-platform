@@ -16,15 +16,13 @@ export function mapUserToForm(user: User): AdminUserFormModel {
       name: user.name ?? '',
       email: user.email ?? '',
       role: user.role ?? Role.VIEWER,
-
+      password: user.password ?? '',
       position: user.position ?? Position.OTHER,
       location: user.location ?? Location.REMOTE,
       phone: user.phone ?? '',
 
       gender: user.gender ?? Gender.OTHER,
-      hiredDate: user.hiredDate
-         ? new Date(user.hiredDate).toISOString().split('T')[0]
-         : '',
+      hiredDate: user.hiredDate ? new Date(user.hiredDate).toISOString().split('T')[0] : '',
 
       bio: user.bio ?? '',
    }

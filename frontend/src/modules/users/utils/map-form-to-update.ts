@@ -14,7 +14,7 @@ export function mapFormToUpdatePayload(form: AdminUserFormModel): AdminUpdateUse
       bio: form.bio,
       gender: form.gender,
 
-      hiredDate: form.hiredDate
+      hiredDate: form.hiredDate || undefined,
 
    }
 }
