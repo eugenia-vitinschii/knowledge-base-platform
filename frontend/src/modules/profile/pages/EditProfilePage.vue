@@ -24,7 +24,7 @@ import { useProfileStore } from '../store/profile.store';
 import { useToast } from '@/shared/composables/useToast';
 
 /* TYPES & ENUMS */
-import type { ProfileUpdateForm } from "../types/index"
+import type { ProfileFormData } from '../validation/profile.schema';
 import { Gender, Position } from "@/shared/enums/user.enum"
 
 import { mapProfileToUpdatePayload } from '../utils/map-profile-to-update';
@@ -38,7 +38,7 @@ const router = useRouter()
 const profileStore = useProfileStore()
 const toast = useToast()
 
-const form = reactive<ProfileUpdateForm>({
+const form = reactive<ProfileFormData>({
    name: '',
    email: '',
    position: Position.FRONTEND,

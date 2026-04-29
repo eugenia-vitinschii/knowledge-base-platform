@@ -1,7 +1,9 @@
-import type { ProfileUpdateForm, ProfileUpdatePayload } from "../types";
 
+import type { ProfileUpdatePayload } from "../types";
 
-export function mapProfileToUpdatePayload(form: ProfileUpdateForm): ProfileUpdatePayload {
+import type { ProfileFormData } from '../validation/profile.schema';
+
+export function mapProfileToUpdatePayload(form: ProfileFormData): ProfileUpdatePayload {
    return {
       name: form.name,
       email: form.email,

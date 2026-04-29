@@ -6,13 +6,13 @@ import { Visibility } from '@/common/enums/visibility.enums.js'
 import { z } from "zod"
 
 export const UpdateProfileDto = z.object({
-   name: z.string().min(5),
-   email: z.string().email(),
+   name: z.string().min(5).optional(),
+   email: z.string().email().optional(),
 
-   position: z.nativeEnum(Position).default(Position.OTHER),
+   position: z.nativeEnum(Position).optional(),
    phone: z.string().optional(),
 
-   gender: z.nativeEnum(Gender).default(Gender.OTHER),
+   gender: z.nativeEnum(Gender).optional(),
    bio: z.string().max(500).optional(),
 
    birthDate: z.coerce.date().optional(),

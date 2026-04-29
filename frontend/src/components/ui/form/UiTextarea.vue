@@ -14,7 +14,7 @@
 <script setup lang="ts">
 /*=== INTERFACE PROPS ===*/
 interface Props {
-   modelValue: string
+   modelValue: string | undefined
    label?: string
    placeholder?: string
    error?: string
