@@ -21,3 +21,7 @@ export const phoneField = z
 export const bioField = z
    .string().max(500, 'Maximum 500 characters').optional()
 
+export const passwordField = z
+   .string().min(4, "Minimum 5 characters").max(34, "Maximum 34 characters")
+
+

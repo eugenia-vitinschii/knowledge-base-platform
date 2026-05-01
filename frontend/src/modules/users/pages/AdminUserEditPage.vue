@@ -18,7 +18,7 @@
 import AdminUserForm from '../components/AdminUserForm.vue';
 
 /* VUE & ROUTER*/
-import { onMounted, reactive, computed, ref } from 'vue';
+import { onMounted, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 /* PINIA */

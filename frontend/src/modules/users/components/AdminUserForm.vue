@@ -3,10 +3,12 @@
       <div class="admin-user-form__section">
          <p class="subheading">Main info</p>
          <div class="admin-user-form__section--items">
-            <ui-input v-model="localForm.name" label="Name" type="text" placeholder="name" />
-            <ui-input v-model="localForm.email" label="Email" type="email" placeholder="email" />
+            <ui-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
+               @update:model-value="validateField('name')" />
+            <ui-input v-model="localForm.email" label="Email" type="email" placeholder="email" :error="errors.email"
+               @update:model-value="validateField('email')" />
             <ui-input v-model="localForm.password" label="Password" type="password" placeholder="password"
-               :disabled="isEdit" />
+               :disabled="isEdit" :error="errors.password" @update:model-value="validateField('password')" />
             <ui-select v-model="localForm.position" :options="positionOptions" label="Position" />
          </div>
       </div>
@@ -21,7 +23,8 @@
       <div class=" admin-user-form__section">
          <p class="subheading">Contacts & Location</p>
          <div class="admin-user-form__section--items">
-            <ui-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number" />
+            <ui-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
+               :error="errors.phone" @update:model-value="validateField('phone')" />
             <ui-select v-model="localForm.location" :options="locationOptions" label="Location" />
             <ui-textarea v-model="localForm.bio" label="Bio" placeholder="Short bio about the user" />
          </div>
@@ -57,6 +60,8 @@ import UiButton from '@/components/ui/UiButton.vue';
 import type { AdminUserFormModel, AdminUpdateUserPayload, AdminCreateUserPayload } from '@/modules/users/types/index';
 import { Gender, Position, Location } from "@/shared/enums/user.enum"
 import { Role } from "@/shared/enums/role.enum"
+/* Validation */
+import { createUserSchema, updateUserSchema } from '../validation/user.schema';
 
 /* PROPS */
 const props = defineProps<{
@@ -72,8 +77,11 @@ const emit = defineEmits<{
    (e: "save-role"): void
 }>()
 
+/* errors */
+const errors = reactive<Partial<Record<keyof AdminUserFormModel, string>>>({})
+
 /*local form copy*/
-const localForm = reactive({ ...props.modelValue })
+const localForm = reactive<AdminUserFormModel>({ ...props.modelValue })
 
 /* sync */
 watch(
@@ -95,8 +103,44 @@ watch(
    { deep: true }
 )
 
+/* validate fiels */
+function validateField(field: keyof AdminUserFormModel) {
+   const schema = props.isEdit ? updateUserSchema : createUserSchema
+
+   const result = schema.safeParse(localForm)
+
+   if (result.success) {
+      delete errors[field]
+      return
+   }
+
+   const issue = result.error.issues.find(i => i.path[0] === field)
+
+   if (issue) {
+      errors[field] = issue.message
+   } else {
+      delete errors[field]
+   }
+
+
+}
+
 /* submit */
 function emitSubmit() {
+   const schema = props.isEdit ? updateUserSchema : createUserSchema
+
+   const result = schema.safeParse(localForm)
+
+   console.log(result)
+   if (!result.success) {
+      result.error.issues.forEach(issue => {
+         const key = issue.path[0] as keyof AdminUserFormModel
+         errors[key] = issue.message
+      })
+      return
+   }
+
+
    const payload: any = { ...localForm }
 
    if (props.isEdit) {
