@@ -3,7 +3,8 @@
       <div class="article-form__section">
          <p class="subheading">Meta</p>
          <div class="article-form__section--items">
-            <ui-input v-model="localForm.title" type="text" placeholder="title" label="*Article title" />
+            <ui-input v-model="localForm.title" type="text" placeholder="title" label="*Article title"
+               :error="errors.title" @update:model-value="validateField('title')" />
             <ui-select v-model="localForm.type" :options="typesOption" label="*Article types" />
             <ui-select v-model="localForm.difficulty" :options="difficultyOption" label="*Article difficulty" />
             <ui-select v-model="localForm.category" :options="categoryOption" label="*Article category" />
@@ -15,7 +16,8 @@
       <div class="article-form__section">
          <p class="subheading">Content</p>
          <div class="article-form__section--items">
-            <markdown-editor v-model="localForm.content" />
+            <markdown-editor v-model="localForm.content" :error="errors.content"
+               @update:model-value="validateField('content')" />
          </div>
       </div>
       <div class="article-form__section" v-if="canEditStatus">
@@ -48,11 +50,20 @@ import UiButton from '@/components/ui/UiButton.vue';
 /* VUE */
 import { watch, reactive } from 'vue';
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
-import type { ArticleFormModel } from '../types/index';
+import type { CreateArticlePayload, UpdateArticlePayload } from '../types/index';
+
+/* validation */
+import type { ArticleFormData } from '../validation/articles.schema';
+import { articleSchema } from '../validation/articles.schema';
+
+
+import { useToast } from '@/shared/composables/useToast';
+
+const toast = useToast()
 
 /* PROPS */
 const props = defineProps<{
-   modelValue: ArticleFormModel
+   modelValue: ArticleFormData
    isEdit?: boolean
    canEditStatus?: boolean
    isLoading?: boolean,
@@ -61,10 +72,13 @@ const props = defineProps<{
 
 /* EMIT */
 const emit = defineEmits<{
-   (e: "update:modelValue", value: ArticleFormModel): void
-   (e: "submit"): void
+   (e: "update:modelValue", value: ArticleFormData): void
+   (e: "submit", payload: CreateArticlePayload | UpdateArticlePayload): void
    (e: "save-status"): void
 }>()
+
+/* rwactive errors */
+const errors = reactive<Partial<Record<keyof ArticleFormData, string>>>({})
 
 /* Local FORM */
 const localForm = reactive({ ...props.modelValue })
@@ -73,7 +87,7 @@ const localForm = reactive({ ...props.modelValue })
 watch(
    () => props.modelValue,
    (val) => Object.assign(localForm, val),
-   { deep: true }
+   { deep: true, immediate: true }
 )
 /* update Local FORM */
 watch(
@@ -81,9 +95,41 @@ watch(
    (val) => emit("update:modelValue", { ...val }),
    { deep: true }
 )
+
+/* validate fiels */
+function validateField(field: keyof ArticleFormData) {
+   const result = articleSchema.safeParse(localForm)
+
+   if (result.success) {
+      delete errors[field]
+      return
+   }
+
+   const issue = result.error.issues.find(i => i.path[0] === field)
+
+   if (issue) {
+      errors[field] = issue.message
+   } else {
+      delete errors[field]
+   }
+}
 /* submit */
 function emitSubmit() {
-   emit("submit");
+   const result = articleSchema.safeParse(localForm)
+
+   if (!result.success) {
+      result.error.issues.forEach(issue => {
+         const key = issue.path[0] as keyof ArticleFormData
+         errors[key] = issue.message
+      })
+
+      toast.error("Please fix form errors")
+      return
+   }
+
+   const payload = { ...localForm }
+
+   emit("submit", payload);
 }
 
 /* OPTIONS */
