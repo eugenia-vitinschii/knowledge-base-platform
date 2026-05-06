@@ -1,11 +1,11 @@
 <template>
    <div class="select">
-      <label class="select__label" v-if="label">
+      <label class="select__label" v-if="label" :for="id">
          {{ label }}
       </label>
       <div class="select__wrapper">
-         <select class="select__field" :class="{ 'is-error': !!error }" :value="modelValue" :disabled="disabled"
-            @change="onChange">
+         <select class="select__field" :id="id" :class="{ 'is-error': !!error }" :value="modelValue"
+            :disabled="disabled" @change="onChange">
             <option v-if="placeholder" value="" disabled>{{ placeholder }}</option>
             <option v-for="option in options" :key="option.value" :value="option.value">
                {{ option.label }}
@@ -19,6 +19,9 @@
 </template>
 
 <script setup lang="ts">
+import { useId } from 'vue'
+
+const id = useId()
 /*=== OPTION TYPE ===*/
 type Option = {
    label: string

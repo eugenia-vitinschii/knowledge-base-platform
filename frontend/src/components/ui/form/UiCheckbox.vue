@@ -1,8 +1,8 @@
 <template>
    <div class="checkbox">
-      <label class="checkbox__wrapper" :class="{ 'disabled': disabled }">
+      <label class="checkbox__wrapper" :class="{ 'disabled': disabled }" :for="id">
          <div class="checkbox__data">
-            <input type="checkbox" class="checkbox__field" :checked="modelValue" :disabled="disabled"
+            <input type="checkbox" class="checkbox__field" :id="id" :checked="modelValue" :disabled="disabled"
                @change="onChange">
             <span class="checkbox__box" :class="{ 'error': !!error }">
                <span class="checkbox__check">✓</span>
@@ -25,6 +25,9 @@
 </template>
 
 <script setup lang="ts">
+import { useId } from 'vue'
+
+const id = useId()
 /*=== PROPS  Interface ===*/
 interface Props {
    modelValue: boolean

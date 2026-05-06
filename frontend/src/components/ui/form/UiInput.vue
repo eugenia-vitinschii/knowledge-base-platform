@@ -1,16 +1,20 @@
 <template>
    <div class="ui-field" :class="{ 'is-error': !!error, 'is-disabled': disabled }">
-      <label class="ui-field__label">
+      <label class="ui-field__label" :for="id">
          {{ label }}
       </label>
-      <input class="ui-field__control" :type="type" :placeholder="placeholder" :disabled="disabled" :value="modelValue"
-         @input="onInput">
+      <input class="ui-field__control" :id="id" :type="type" :placeholder="placeholder" :disabled="disabled"
+         :value="modelValue" @input="onInput">
       <p class="ui-field__error" v-if="error">{{ error }}</p>
       <p class="ui-field__hint" v-else-if="hint">{{ hint }}</p>
    </div>
 </template>
 
 <script setup lang="ts">
+import { useId } from 'vue'
+
+const id = useId()
+
 /* INPUT TYPE */
 type InputType = "text" | "email" | "password" | "search" | "date" | "tel"
 
