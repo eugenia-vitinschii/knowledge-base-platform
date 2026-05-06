@@ -1,0 +1,20 @@
+//update article mapper
+
+import type { CreateArticlePayload } from "../types"
+
+import type { ArticleFormData } from "../validation/articles.schema"
+
+import { parseTags } from "./parse-tags"
+
+
+export function mapFormToCreatePayload(form: ArticleFormData): CreateArticlePayload {
+   return {
+      title: form.title,
+      content: form.content,
+      subcategory: form.subcategory || undefined,
+      difficulty: form.difficulty,
+      category: form.category,
+      type: form.type,
+      tags: form.tags ? parseTags(form.tags as any) : []
+   }
+}

@@ -11,12 +11,12 @@ export const articleSchema = z.object({
    type: z.nativeEnum(ArcticleType),
    difficulty: z.nativeEnum(ArticleDifficulty),
    category: z.nativeEnum(ArticleCategory),
-   status: z.nativeEnum(ArticleStatus),
    tags: z.string().optional(),
    subcategory: z.string().optional()
 })
 
 
-export type ArticleFormData = z.infer<typeof articleSchema>
-
+export type ArticleFormData = z.infer<typeof articleSchema> & {
+   status: ArticleStatus
+}
 
