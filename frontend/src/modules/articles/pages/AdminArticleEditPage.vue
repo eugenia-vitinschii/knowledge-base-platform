@@ -20,8 +20,8 @@ import ArticleForm from '../components/ArticleForm.vue';
 
 /* TYPES & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
-import type { ArticleFormModel, UpdateArticlePayload } from "../types/index";
-
+import type { ArticleFormData } from '../validation/articles.schema';
+import { mapArticleToForm } from '../utils/map-article-to-form';
 /* VUE & ROUTER*/
 import { onMounted, reactive, computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -31,6 +31,7 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from '../store/article.admin.store';
 import { useAuthStore } from '@/stores/auth/auth.store';
 import { useToast } from '@/shared/composables/useToast';
+import { mapFormToUpdatePayload } from '../utils/map-form-to-update';
 
 /* Router Variables */
 const route = useRoute()
@@ -44,8 +45,9 @@ const toast = useToast()
 
 const canEditStatus = computed(() => auth.user?.role === 'admin')
 
+const articleId = computed(() => String(route.params.id || ''))
 /* form */
-const form = reactive<ArticleFormModel>({
+const form = reactive<ArticleFormData>({
    title: '',
    content: '',
    tags: '',
@@ -56,31 +58,16 @@ const form = reactive<ArticleFormModel>({
    status: ArticleStatus.DRAFT,
 })
 
-/* tag parser */
-function parseTags(input: string): string[] {
-   return Array.from(
-      new Set(
-         input.split(/[,\s]+/).map(t => t.trim()).filter(Boolean).map((t) => t.toLocaleLowerCase())
-      )
-   )
-}
+
 
 const originalStatus = ref<ArticleStatus>(ArticleStatus.DRAFT)
 
 /* load article */
 onMounted(async () => {
-   const id = route.params.id as string
-
-   const article = await articleAdminStore.fetchById(id)
+   const article = await articleAdminStore.fetchById(articleId.value)
    if (!article) return
 
-   form.title = article.title;
-   form.content = article.content;
-   form.tags = article.tags.join(",");
-   form.subcategory = article.subcategory || '';
-   form.difficulty = article.difficulty;
-   form.category = article.category;
-   form.type = article.type;
+   Object.assign(form, mapArticleToForm(article))
 
    originalStatus.value = article.status
 })
@@ -93,9 +80,8 @@ const isStatusDirty = computed(() => {
 async function saveStatus() {
 
    if (!canEditStatus.value) return
-   const id = route.params.id as string
 
-   const updated = await articleCrudStore.updateStatus(id, {
+   const updated = await articleCrudStore.updateStatus(articleId.value, {
       status: form.status
    })
 
@@ -109,23 +95,13 @@ async function saveStatus() {
 
 /* UPDATE LOGIC (exception: status) */
 async function onSubmit() {
-   console.log("SUBMIT CALLED")
 
-   const id = route.params.id as string
+   const updated = await articleCrudStore.update(articleId.value, mapFormToUpdatePayload(form))
 
-   const payload: UpdateArticlePayload = {
-      title: form.title,
-      content: form.content,
-      tags: parseTags(form.tags),
-      subcategory: form.subcategory || undefined,
-      difficulty: form.difficulty,
-      category: form.category,
-      type: form.type,
-   }
-
-   const updated = await articleCrudStore.update(id, payload)
    if (!updated) return toast.error("Article wasn't updated")
+
    toast.success("Article has been updated")
+
    router.push(`/admin/articles`)
 }
 

@@ -58,6 +58,8 @@ import { articleSchema } from '../validation/articles.schema';
 
 
 import { useToast } from '@/shared/composables/useToast';
+import { mapFormToUpdatePayload } from '../utils/map-form-to-update';
+import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 
 const toast = useToast()
 
@@ -81,7 +83,7 @@ const emit = defineEmits<{
 const errors = reactive<Partial<Record<keyof ArticleFormData, string>>>({})
 
 /* Local FORM */
-const localForm = reactive({ ...props.modelValue })
+const localForm = reactive<ArticleFormData>({ ...props.modelValue })
 
 /* update Local FORM */
 watch(
@@ -100,12 +102,7 @@ watch(
 function validateField(field: keyof ArticleFormData) {
    const result = articleSchema.safeParse(localForm)
 
-   if (result.success) {
-      delete errors[field]
-      return
-   }
-
-   const issue = result.error.issues.find(i => i.path[0] === field)
+   const issue = result.success ? undefined : result.error.issues.find(i => i.path[0] === field)
 
    if (issue) {
       errors[field] = issue.message
@@ -127,7 +124,7 @@ function emitSubmit() {
       return
    }
 
-   const payload = { ...localForm }
+   const payload = props.isEdit ? mapFormToUpdatePayload(localForm) : mapFormToCreatePayload(localForm)
 
    emit("submit", payload);
 }

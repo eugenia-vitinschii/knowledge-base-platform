@@ -19,7 +19,6 @@ import ArticleForm from '../components/ArticleForm.vue';
 
 /* TYPES & ENUMS & PAYLOAD */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
-import type { ArticleFormModel, CreateArticlePayload } from "../types/index";
 
 /* VUE & PINIA & STORE */
 import { reactive } from 'vue';
@@ -28,6 +27,8 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 
 
 import { useToast } from '@/shared/composables/useToast';
+import type { ArticleFormData } from '../validation/articles.schema';
+import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 
 /* VARIBALES */
 const articleCrudStore = useArticlesCrudStore()
@@ -35,7 +36,7 @@ const router = useRouter()
 const toast = useToast()
 
 /* from data */
-const form = reactive<ArticleFormModel>({
+const form = reactive<ArticleFormData>({
    title: '',
    content: '',
    tags: '',
@@ -46,29 +47,15 @@ const form = reactive<ArticleFormModel>({
    status: ArticleStatus.DRAFT,
 })
 
-/* parse tags  */
-function parseTags(input: string): string[] {
-   return Array.from(
-      new Set(
-         input.split(/[,\s]+/).map(t => t.trim()).filter(Boolean).map((t) => t.toLocaleLowerCase())
-      )
-   )
-}
-
 /* submit */
 async function onSubmit() {
-   const payload: CreateArticlePayload = {
-      title: form.title,
-      content: form.content,
-      tags: parseTags(form.tags),
-      subcategory: form.subcategory || undefined,
-      difficulty: form.difficulty,
-      category: form.category,
-      type: form.type,
-   }
-   await articleCrudStore.create(payload)
+
+   const updated = await articleCrudStore.create(mapFormToCreatePayload(form))
+
+   if (!updated) return toast.error("Failed to create the article")
 
    toast.success("Article has been created")
+
    router.push(`/admin/articles`)
 
 }
