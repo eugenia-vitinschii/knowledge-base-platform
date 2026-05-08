@@ -56,7 +56,7 @@ const form = reactive<ProfileFormData>({
 /* load user data */
 onMounted(async () => {
 
-   const user = await profileStore.fetchProfile()
+   const user = await profileStore.fetchMyProfile()
 
    if (!user) return
 

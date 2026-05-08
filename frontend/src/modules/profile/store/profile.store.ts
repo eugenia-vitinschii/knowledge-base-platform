@@ -18,9 +18,21 @@ export const useProfileStore = defineStore("profile", () => {
    const { request } = useApiRequest()
 
    /* FETCH MY PROfILE */
-   async function fetchProfile() {
+   async function fetchMyProfile() {
       const data = await request(() =>
-         profileApi.fetchProfile().then(r => r.data),
+         profileApi.fetchMyProfile().then(r => r.data),
+         "Failed to fetch my profile"
+      )
+
+      if (data) {
+         profile.value = data
+      }
+      return data
+   }
+   /* FETCH PROfILE */
+   async function fetchProfile(id: string) {
+      const data = await request(() =>
+         profileApi.fetchProfile(id).then(r => r.data),
          "Failed to fetch profile"
       )
 
@@ -44,7 +56,8 @@ export const useProfileStore = defineStore("profile", () => {
 
    return {
       profile,
-      fetchProfile,
+      fetchMyProfile,
       updateProfile,
+      fetchProfile,
    }
 })

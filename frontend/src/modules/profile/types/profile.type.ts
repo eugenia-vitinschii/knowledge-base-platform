@@ -4,6 +4,7 @@ import type { Gender, Position } from "@/shared/enums/user.enum"
 import { Visibility } from "@/shared/enums/visibility.enum"
 
 export interface Profile {
+   id: string
    name: string
    email: string
 
