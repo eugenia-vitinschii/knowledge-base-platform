@@ -15,6 +15,11 @@ export const articlesPublicApi = {
       return api.get<ArticlePreview>(`/articles/public/${slug}`)
    },
 
+   /* GET BY AUTHOR */
+   getByAuthor(id: string) {
+      return api.get<ArticleListItem[]>(`/articles/public/user/${id}`)
+   },
+
    /* INCREMENT VIEWS */
    incrementViews(slug: string) {
       return api.patch(`/articles/public/${slug}/views`)
@@ -26,6 +31,5 @@ export const articlesPublicApi = {
          params
       })
    },
-
 
 }

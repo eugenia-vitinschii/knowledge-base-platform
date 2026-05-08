@@ -11,13 +11,16 @@ export const publicArticlesRoutes: RouteRecordRaw[] = [
             name: "articles",
             component: () => import('../pages/HomePage.vue')
          }, {
+            path: "users/:id",
+            name: "author-articles",
+            props: true,
+            component: () => import('../pages/AuthorArticlesPage.vue')
+         }, {
             path: ":slug",
             name: "article",
             props: true,
             component: () => import('../pages/ArticlePage.vue')
-         }
+         },
       ]
-
    }
-
 ]

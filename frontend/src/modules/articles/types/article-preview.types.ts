@@ -2,6 +2,11 @@
 
 import type { ArticleCategory, ArticleDifficulty, ArticleStatus, ArcticleType } from "@/shared/enums/article.enum";
 
+export interface ArticleAuthor {
+   id: string
+   name: string
+}
+
 export interface ArticlePreview {
    id: string;
    title: string;
@@ -15,4 +20,5 @@ export interface ArticlePreview {
    status: ArticleStatus;
    updatedAt: string;
    views: string
+   author: ArticleAuthor
 }
