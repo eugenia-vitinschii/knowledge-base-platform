@@ -5,7 +5,10 @@
             <div class="footer__actions">
                <theme-toggle />
             </div>
-            <p class="body-text">Lorem ipsum 2026</p>
+            <div class="footer__text">
+               <p class="body-text">KBP 2026</p>
+            </div>
+
          </div>
       </div>
    </footer>
