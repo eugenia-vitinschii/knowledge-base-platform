@@ -19,7 +19,7 @@ export interface IArticle extends Document {
 
 const ArticleSchema = new Schema<IArticle>({
    title: { type: String, required: true },
-   slug: { type: String, required: true, unique: true },
+   slug: { type: String, required: true },
    content: { type: String, required: true },
    difficulty: { type: String, enum: Object.values(ArticleDifficulty), required: true },
    tags: [{ type: String }],

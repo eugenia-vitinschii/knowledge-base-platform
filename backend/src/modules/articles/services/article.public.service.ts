@@ -16,7 +16,7 @@ class ArticlePublicService {
 
    /* GET ARTICLE BY SLUG (PUBLISHED) */
    async findBySlug(slug: string) {
-      return ArticleModel.findOne({ slug, status: ArticleStatus.PUBLISHED })
+      return ArticleModel.findOne({ slug, status: ArticleStatus.PUBLISHED }).populate('author', 'name')
    }
 
    /* SEARCH & FILTER PUBLIC ARTICLES */
@@ -32,7 +32,7 @@ class ArticlePublicService {
       const skip = (page - 1) * limit
 
       const [articles, total] = await Promise.all([
-         ArticleModel.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+         ArticleModel.find(query).populate('author', 'name').skip(skip).limit(limit).sort({ createdAt: -1 }),
 
          ArticleModel.countDocuments(query)
       ])
@@ -53,6 +53,11 @@ class ArticlePublicService {
          { $inc: { views: 1 } },
          { new: true, timestamps: false }
       )
+   }
+   /* FETCH  ARTICLES BY AUTHOR */
+   async fetchByAuthor(userId: string) {
+      return ArticleModel.find({ author: userId, status: ArticleStatus.PUBLISHED })
+         .populate('author', 'name')
    }
 
 }

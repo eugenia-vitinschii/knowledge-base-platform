@@ -13,7 +13,11 @@ router.get('/search', articlePublicController.getPublicArticles)
 /* VIEWS */
 router.patch('/:slug/views', articlePublicController.incrementViews)
 
+/* GET ARTICLES BY AUTHOR */
+router.get('/user/:id', articlePublicController.fetchByAuthor)
+
 /* GET ARTICLE BY SLUG */
 router.get('/:slug', articlePublicController.getBySlug)
+
 
 export default router

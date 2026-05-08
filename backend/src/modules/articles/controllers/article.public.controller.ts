@@ -15,9 +15,19 @@ class ArticlePublicController {
       } catch (error) {
          next(error)
       }
-
    }
+   /* FETCH ARTICLES BY AUTHOR */
+   fetchByAuthor = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const id = req.params.id as string
+         const article = await articlePublicService.fetchByAuthor(id)
 
+         res.json(article)
+      } catch (error) {
+         console.log("error", error)
+         next(error)
+      }
+   }
    /* SEARCH & FILTER ARTICLES (PUBLISHED) */
    getPublicArticles = async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -47,6 +57,7 @@ class ArticlePublicController {
 
       }
    }
+
 }
 
 export const articlePublicController = new ArticlePublicController()
