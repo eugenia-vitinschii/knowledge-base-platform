@@ -12,7 +12,7 @@
             </div>
          </div>
          <div class="profile-details__side">
-            <div class="profile-details__actions">
+            <div class="profile-details__actions" v-if="!public">
                <ui-button @click="$emit('edit')">Edit Profile</ui-button>
             </div>
             <div class="profile__details__list">
@@ -55,6 +55,9 @@
          </div>
       </div>
       <div class="profile-details__about">
+         <router-link :to="`/articles/users/${profile.id}`" class="body-text">
+            View all articles
+         </router-link>
          <h2 class="subheading">BIO</h2>
          <p class="body-text">{{ profile.bio }}</p>
       </div>
@@ -70,7 +73,8 @@ import type { Profile } from "../types/index";
 
 
 defineProps<{
-   profile: Profile
+   profile: Profile,
+   public: boolean
 }>()
 
 const emit = defineEmits<{

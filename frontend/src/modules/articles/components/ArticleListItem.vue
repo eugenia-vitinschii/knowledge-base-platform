@@ -2,6 +2,7 @@
    <router-link :to="'/articles/' + article.slug" class="article-item">
       <div class="article-item__heading">
          <h2 class="heading">{{ article.title }}</h2>
+
          <div class="article-item__heading--date">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                <path
@@ -15,7 +16,11 @@
             article.category }}</article-badge>
          <article-badge :variant="'type'" :color="typeColors[article.type]">{{ article.type }}</article-badge>
          <article-badge :variant="'difficulty'" :color="difficultyColors[article.difficulty]">{{ article.difficulty
-         }}</article-badge>
+            }}</article-badge>
+      </div>
+      <div class="article-item__author">
+         <router-link :to="`/users/${article.author.id}`" class="body-text">{{ article.author?.name }}
+         </router-link>
       </div>
    </router-link>
 </template>
