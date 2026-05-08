@@ -16,6 +16,17 @@ class UserController {
          next(error)
       }
    }
+   /* GET PROFILE */
+   getProfile = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         const id = req.params.id as string
+
+         const user = await userService.getProfile(id)
+         res.json(user)
+      } catch (error) {
+         next(error)
+      }
+   }
    /* UPDATE ME */
    updateMe = async (req: Request, res: Response, next: NextFunction) => {
       try {

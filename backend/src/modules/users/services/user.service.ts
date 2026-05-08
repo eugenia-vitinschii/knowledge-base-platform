@@ -10,8 +10,17 @@ import { UpdateProfileDto } from "../dtos/update-profile.dto.js";
 
 type UpdateProfileInput = z.infer<typeof UpdateProfileDto>
 class UserService {
-   /* GET USER */
+   /* GET ME */
    async getMe(userId: string) {
+      const user = await UserModel.findById(userId).select("-password")
+
+      if (!user) {
+         throw new NotFoundError("User not found")
+      }
+      return user
+   }
+   /* GET PROFILE */
+   async getProfile(userId: string) {
       const user = await UserModel.findById(userId).select("-password")
 
       if (!user) {

@@ -13,6 +13,10 @@ const router = Router()
 /*GET ME */
 router.get("/me", userController.getMe)
 
+/* EDIT ME */
 router.patch("/me", validateResource(UpdateProfileDto), userController.updateMe)
+
+/* GET PROFILE */
+router.get("/users/:id", userController.getProfile)
 
 export default router
