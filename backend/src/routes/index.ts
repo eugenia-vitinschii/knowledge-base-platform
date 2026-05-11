@@ -14,6 +14,9 @@ import articleAdminRoutes from '../modules/articles/routes/article.admin.routes.
 import articlePublicRoutes from '../modules/articles/routes/article.public.routes.js'
 import articleAdminStats from '../modules/articles/routes/article.stats.routes.js'
 
+
+import commentsRoutes from '@/modules/comments/routes/comment.routes.js'
+
 import { authMiddleware } from "@/middleware/auth.middleware.js";
 
 const router = Router()
@@ -30,7 +33,7 @@ router.use('/articles', articleCrudRoutes)
 router.use('/articles/admin', articleAdminRoutes)
 router.use('/articles/stats', articleAdminStats)
 router.use('/articles/public', articlePublicRoutes)
-
+router.use('/articles', commentsRoutes)
 
 /* admin user management */
 router.use('/admin/users', adminUserRoutes)
