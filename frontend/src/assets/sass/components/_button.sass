@@ -65,3 +65,27 @@ a
       transform: rotate(0deg)
    to
       transform: rotate(360deg)
+
+.icon-btn
+   margin: 5px 0px
+   svg
+      transition: $transition
+      width: 20px
+      height: 20px
+   &:disabled
+      opacity: $opacity
+      cursor: not-allowed
+
+.icon-btn--primary
+   svg
+      fill: var(--text)
+   &:not(:disabled):hover
+      svg
+         fill: var(--primary-hover)
+
+.icon-btn--danger
+   svg
+      fill: var(--danger)
+   &:not(:disabled):hover
+      svg
+         fill: var(--primary-hover)
