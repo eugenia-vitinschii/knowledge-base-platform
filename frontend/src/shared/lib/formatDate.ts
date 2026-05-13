@@ -18,3 +18,9 @@ export function formatBirthday(date?: string | Date) {
 
    return dayjs(date).format('D MMM');
 }
+
+export function formatCreatedDate(date?: string | Date) {
+   if (!date) return '';
+
+   return dayjs(date).format('D MMM');
+}
