@@ -3,21 +3,28 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <p class="heading">Articles Table </p>
+               <h1 class="heading">Admin Articles Page</h1>
             </div>
             <div class="filter-wrapper">
                <article-admin-filter :filter="articlesAdminStore.filters" :count="totalItems"
                   @update:filter="onFilterChange" />
             </div>
-            <div class="page__content articles-table-wrapper" v-if="articlesAdminStore.list.length">
+            <div class="page__content articles-table-wrapper" v-if="hasArticles">
                <articles-table :items="articlesAdminStore.list" :can-edit-status="isAdmin"
                   @save-status="handleSaveStatus" @edit="handleEdit" @preview="handlePreview" @delete="handleDelete" />
             </div>
-            <div class="page__info" v-if="articlesAdminStore.list.length === 0">
-               <p class="subheading">Hi {{ auth.user?.name }} ! Create your fisrt article!</p>
-               <router-link to="/admin/articles/create" class="heading"> create article</router-link>
+            <div class="page__info" v-else>
+               <empty-state v-if="!hasFilters" :variant="'accent'"
+                  :title="`${auth.user?.name}, write your first article!`"
+                  :description="'It looks like you haven\'t created anything yet. Time to share some knowledge!'">
+                  <template #action>
+                     <router-link class="body-text" :to="'/admin/articles/create'">Create article</router-link>
+                  </template>
+               </empty-state>
+               <empty-state v-else :variant="'search'" :title="'No results found'"
+                  :description="'Try adjusting your filters or search terms to find what youre looking for'" />
             </div>
-            <div class="pagination-wrapper">
+            <div class="pagination-wrapper" v-if="hasArticles">
                <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
          </div>
@@ -30,6 +37,7 @@
 import ArticlesTable from '../components/ArticlesTable.vue';
 import ArticleAdminFilter from '../components/ArticleAdminFilter.vue';
 import BasePagination from '@/components/ui/BasePagination.vue';
+import EmptyState from '@/shared/feedback/EmptyState.vue';
 
 /* VUE & Router*/
 import { computed, watch } from 'vue';
@@ -48,17 +56,18 @@ import { useArticleAdminFilter } from '@/modules/articles/composables/useAdminAr
 /*TYOES */
 import type { ArticleAdminFilters, ArticleAdminQueryParams } from '../types/index';
 
+
 /* PINIA  variables */
 const auth = useAuthStore();
 const articlesCrudStore = useArticlesCrudStore();
 const articlesAdminStore = useArticlesAdminStore();
-
+const toast = useToast()
 
 const { mapQueryToParams } = useArticleAdminFilter()
+
 /*router  variables */
 const router = useRouter();
 const route = useRoute()
-const toast = useToast()
 
 /* check role & fetch data */
 const isAdmin = computed(() => auth.user?.role === 'admin')
@@ -84,6 +93,16 @@ function onPageChange(page: number) {
       })
    })
 }
+/* empty state */
+function hasActiveFilter(filters: ArticleAdminFilters): boolean {
+   return Object.values(filters).some(Boolean)
+}
+const hasFilters = computed(() => {
+   return hasActiveFilter(articlesAdminStore.filters)
+})
+const hasArticles = computed(() => {
+   return articlesAdminStore.list.length > 0
+})
 
 /* remove empty values from URL */
 function cleanQuery(filters: ArticleAdminQueryParams) {
