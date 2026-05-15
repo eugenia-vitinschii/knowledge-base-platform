@@ -3,11 +3,9 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__title">
-               <p class="body-text">
-                  Admin Dashboard
-               </p>
+               <h1 class="heading">Admin Dashboard</h1>
             </div>
-            <div class="page__content">
+            <div class="page__content" v-if="hasAnyCharts">
                <div class="summary-cards">
                   <summary-card v-for="card in cards" :key="card.label" :data="card" />
                </div>
@@ -29,6 +27,18 @@
                   </div>
                </div>
             </div>
+            <div class="page__info" v-else>
+               <empty-state 
+                  :variant="'accent'" 
+                  :title="'Welcome to Admin Dashboard'"
+                  :description="'Here you can find insights about your articles'">
+                  <template #action>
+                     <router-link class="body-text" :to="'/admin/articles/create'">
+                        Create article
+                     </router-link>
+                  </template>
+               </empty-state>
+            </div>
          </div>
       </div>
    </div>
@@ -38,6 +48,7 @@
 /* Components */
 import BaseChart from '../components/BaseChart.vue';
 import SummaryCard from '../components/SummaryCard.vue';
+import EmptyState from '@/shared/feedback/EmptyState.vue';
 
 /* Mappers */
 import { mapAuthorStats } from '@/modules/dashboard/utils/map-author-stats';
@@ -46,7 +57,7 @@ import { mapSummaryToCards } from '@/modules/dashboard/utils/map-summary-to-card
 
 /* store & vue */
 import { useArticlesStatsStore } from '@/modules/dashboard/store/article.stats.store';
-import type { StatsCardItem } from '@/modules/dashboard/types';
+import type {  AuthorStat, StatItem, StatsCardItem } from '@/modules/dashboard/types/index';
 import { onMounted, computed } from 'vue';
 
 const statsStore = useArticlesStatsStore()
@@ -57,30 +68,55 @@ const cards = computed<StatsCardItem[]>(() => {
    return mapSummaryToCards(statsStore.summary)
 })
 
-/* CHART DATA */
-const authorsChartData = computed(() => {
-   if (!statsStore.overview?.author) return null
-   return mapAuthorStats(statsStore.overview.author)
+/* chart data helper */
+function hasChartItems<T>(data?: T[]): data is T[] {
+   return !!data?.length
 }
-)
+
+/* helper for charts ( *author )*/
+function createStatsChartData(data?: StatItem[]) {
+   if (!hasChartItems(data)) return null
+
+   return mapStatsToChart(data)
+}
+
+/* helper for author*/
+function createAuthorChartData(data?: AuthorStat[]) {
+   if (!hasChartItems(data)) return null
+
+   return mapAuthorStats(data)
+}
+
+/* Chart data */
+const authorsChartData = computed(() => {
+   return createAuthorChartData(statsStore.overview?.author)
+})
 
 const difficultyChartData = computed(() => {
-   if (!statsStore.overview?.difficulty) return null
-   return mapStatsToChart(statsStore.overview.difficulty)
+   return createStatsChartData(statsStore.overview?.difficulty)
 })
 
 const categoryChartData = computed(() => {
-   if (!statsStore.overview?.difficulty) return null
-   return mapStatsToChart(statsStore.overview.category)
+   return createStatsChartData(statsStore.overview?.category)
 })
 const statusChartData = computed(() => {
-   if (!statsStore.overview?.difficulty) return null
-   return mapStatsToChart(statsStore.overview.status)
+   return createStatsChartData(statsStore.overview?.status)
 })
 
 const typeChartData = computed(() => {
-   if (!statsStore.overview?.difficulty) return null
-   return mapStatsToChart(statsStore.overview.type)
+   return createStatsChartData(statsStore.overview?.type)
+})
+
+/* has any charts */
+const chartData = [
+   difficultyChartData,
+   categoryChartData,
+   statusChartData, 
+   typeChartData, 
+   authorsChartData
+]
+const hasAnyCharts = computed(() => {
+   return chartData.some(chart => chart.value)
 })
 
 onMounted(() => {
