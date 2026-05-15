@@ -1,0 +1,29 @@
+/* shared compoents*/
+
+/* ================= EMPTY STATE =================  */
+.empty-state
+   padding: 10px
+   &__text
+      p,h3
+         text-align: center
+   &__actions
+      a
+         text-align: center
+         text-decoration: underline
+
+.empty-state--default
+   border: 1px dotted var(--border)
+
+.empty-state--accent
+   border: 1px dotted var(--success)
+   p, h3, a
+      color: var(--success)
+
+.empty-state--search
+   border: 1px dotted var(--warning)
+   p, h3, a
+      color: var(--warning)
+
+/* =================  =================  */
+/* =================  =================  */
+/* =================  =================  */
