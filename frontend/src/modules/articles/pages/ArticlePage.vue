@@ -1,16 +1,29 @@
 <template>
    <div class="page">
       <div class="container">
-         <div class="page__header">
-            <h1 class="heading">Article Page</h1>
-         </div>
-         <div class="page__wrapper" v-if="articlesStore.currentPreview">
-            <article-preview :article="articlesStore.currentPreview" :show-admin-controls=false />
-            <comment-list :comments="commentsStore.comments" />
-            <comment-form @submit="onSubmit" />
-         </div>
-         <div v-else>
-            <p class="body-text">Article not found</p>
+         <div class="page__wrapper">
+            <div class="page__header">
+               <h1 class="heading">Article Page</h1>
+            </div>
+            <div class="page__content">
+               <Transition name="fade" mode="out-in">
+                  <div class="article-preview__wrapper" v-if="articleIsLoading" key="loading">
+                     <article-preview-skeleton />
+                  </div>
+                  <div class="article-preview__wrapper" v-else-if="articlesStore.currentPreview" key="content">
+                     <article-preview :article="articlesStore.currentPreview" :show-admin-controls=false />
+                  </div>
+               </Transition>
+               <Transition name="fade" mode="out-in">
+                  <div class="comment-list__wrapper" v-if="commentsIsLoading" key="loading-comments">
+                     <comment-list-skeleton v-for="n in 6" :key="n" />
+                  </div>
+                  <div class="comment-list__wrapper" v-else-if="articlesStore.currentPreview" key="content-comments">
+                     <comment-list :comments="commentsStore.comments" />
+                     <comment-form @submit="onSubmit" />
+                  </div>
+               </Transition>
+            </div>
          </div>
       </div>
    </div>
@@ -28,8 +41,11 @@ import { useToast } from '@/shared/composables/useToast';
 
 /* COMPONENTS */
 import ArticlePreview from '../components/ArticlePreview.vue';
+import ArticlePreviewSkeleton from '@/shared/ui/ArticlePreviewSkeleton.vue';
 import CommentForm from '@/modules/comments/components/CommentForm.vue';
 import CommentList from '@/modules/comments/components/CommentList.vue';
+import CommentListSkeleton from '@/shared/ui/CommentListSkeleton.vue';
+
 
 import type { CreateCommentPayload } from '@/modules/comments/types';
 
@@ -39,6 +55,9 @@ const route = useRoute()
 
 const articlesStore = useArticlesPublicStore()
 const commentsStore = useComentsStore()
+
+const articleIsLoading = computed(() => articlesStore.isLoading)
+const commentsIsLoading = computed(() => commentsStore.isLoading)
 
 const articleId = computed(() => articlesStore.currentPreview?.id || '')
 
@@ -55,9 +74,7 @@ async function loadArticle(slug: string) {
    if (articlesStore.currentPreview?.id) {
       await commentsStore.fetchByArticle(articlesStore.currentPreview.id)
    }
-
 }
-
 
 /* submit */
 async function onSubmit(payload: CreateCommentPayload) {

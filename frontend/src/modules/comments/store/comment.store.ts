@@ -10,6 +10,7 @@ import { useApiRequest } from "@/shared/composables/useApiRequest";
 import type { Comment, CreateCommentPayload } from "../types";
 
 import { commentsApi } from "../api/comment.api";
+import { delay } from "@/shared/lib/delay"
 
 export const useComentsStore = defineStore("commemts", () => {
 
@@ -22,16 +23,22 @@ export const useComentsStore = defineStore("commemts", () => {
    async function fetchByArticle(articleId: string) {
       isLoading.value = true
 
-      const data = await request(() =>
-         commentsApi.fetchComments(articleId).then(r => r.data), 'Failed to fetch comments'
-      )
+      try {
+         if (import.meta.env.DEV) {
+            await delay(800)
+         }
+         const data = await request(() =>
+            commentsApi.fetchComments(articleId).then(r => r.data), 'Failed to fetch comments'
+         )
 
-      if (data) {
-         comments.value = data
+         if (data) {
+            comments.value = data
+         }
+         return data
+      } finally {
+         isLoading.value = false
       }
 
-      isLoading.value = false
-      return data
    }
 
    /* CREATE COMMPENT */

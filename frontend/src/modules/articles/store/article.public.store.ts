@@ -32,16 +32,25 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
 
    /* === GET ARTICLE BY SLUG === */
    async function fetchBySlug(slug: string) {
+      isLoading.value = true
 
-      const data = await request(() =>
-         articlesApi.public.getBySlug(slug).then(r => r.data),
-         "Failed to fetch article by slug"
-      )
-      if (data) {
-         currentPreview.value = data
+      try {
+         if (import.meta.env.DEV) {
+            await delay(800)
+         }
+         const data = await request(() =>
+            articlesApi.public.getBySlug(slug).then(r => r.data),
+            "Failed to fetch article by slug"
+         )
+         if (data) {
+            currentPreview.value = data
+         }
+
+         return data
+      } finally {
+         isLoading.value = false
       }
 
-      return data
    }
    /*=== GET BY AUHTOR === */
    async function fetchByAuthor(id: string) {
