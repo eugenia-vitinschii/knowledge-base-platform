@@ -10,17 +10,22 @@
                   <articles-public-filter :filter="articlePublicStore.filters" :count="totalItems"
                      @update:filter="onFilterChange" />
                </div>
-               <div class="article-list" v-if="hasArticles">
-                  <article-list-item v-for="article in articlePublicStore.list" :key="article.slug"
-                     :article="article" />
-               </div>
-               <div class="page__info" v-else>
-                  <empty-state :variant="'search'" :title="'No results found'"
-                     :description="'Try adjusting your filters or search terms to find what you\'re looking for'" />
-               </div>
-               <div class="pagination-wrapper" v-if="hasArticles">
-                  <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
-               </div>
+               <Transition name="fade" mode="out-in">
+                  <div class="article-list" v-if="isLoading">
+                     <article-list-item-skeleton v-for="n in 6" :key="n" />
+                  </div>
+                  <div class="article-list" v-else-if="hasArticles">
+                     <article-list-item v-for="article in articlePublicStore.list" :key="article.slug"
+                        :article="article" />
+                  </div>
+                  <div class="page__info" v-else>
+                     <empty-state :variant="'search'" :title="'No results found'"
+                        :description="'Try adjusting your filters or search terms to find what you\'re looking for'" />
+                  </div>
+               </Transition>
+            </div>
+            <div class="page__footer" v-if="hasArticles && !isLoading">
+               <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
          </div>
       </div>
@@ -33,6 +38,7 @@ import { watch, computed } from 'vue';
 
 /* COMPONNETS */
 import ArticleListItem from '../components/ArticleListItem.vue';
+import ArticleListItemSkeleton from '@/shared/ui/ArticleListItemSkeleton.vue';
 import ArticlesPublicFilter from '../components/ArticlesPublicFilter.vue';
 import BasePagination from '@/components/ui/BasePagination.vue';
 import EmptyState from '@/shared/feedback/EmptyState.vue';
@@ -54,6 +60,8 @@ const route = useRoute()
 const router = useRouter()
 
 const { mapQueryToParams } = useArticleFilter()
+
+const isLoading = computed(() => articlePublicStore.isLoading)
 
 /* empty state */
 const hasArticles = computed(() => {

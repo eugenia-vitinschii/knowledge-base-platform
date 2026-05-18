@@ -10,6 +10,7 @@ import type { ArticlePreview, ArticleListItem, ArticlePublicFilters, ArticleQuer
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
 
+import { delay } from "@/shared/lib/delay"
 export const useArticlesPublicStore = defineStore("articlePublic", () => {
    const currentPreview = ref<ArticlePreview | null>(null);
 
@@ -21,6 +22,7 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
       tag: ''
    })
 
+   const isLoading = ref(false)
 
    const meta = ref<{ page: number; pages: number; total: number } | null>(null)
 
@@ -57,16 +59,25 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
 
    /* === GET  FILTERED ARTICLES=== */
    async function searchArticles(payload: ArticleQueryParams) {
+      isLoading.value = true
 
-      const data = await request(() =>
-         articlesApi.public.searchArticles(payload).then(r => r.data),
-         "Failed to fetch filtered articles"
-      )
-      if (data) {
-         list.value = data.data
-         meta.value = data.meta
+      try {
+         if (import.meta.env.DEV) {
+            await delay(800)
+         }
+         const data = await request(() =>
+            articlesApi.public.searchArticles(payload).then(r => r.data),
+            "Failed to fetch filtered articles"
+         )
+         if (data) {
+            list.value = data.data
+            meta.value = data.meta
+         }
+         return data
+      } finally {
+         isLoading.value = false
       }
-      return data
+
    }
    /*=== VIEWS==== */
    async function incrementViews(slug: string) {
@@ -77,5 +88,5 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
       )
    }
 
-   return { fetchBySlug, currentPreview, searchArticles, list, filters, incrementViews, meta, fetchByAuthor }
+   return { fetchBySlug, currentPreview, searchArticles, list, filters, incrementViews, meta, fetchByAuthor, isLoading }
 })
