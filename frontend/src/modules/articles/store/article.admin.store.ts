@@ -7,6 +7,7 @@ import { articlesApi } from "@/modules/articles/api/articles.api";
 /* TYPES */
 import type { Article, ArticleAdminFilters, ArticleAdminQueryParams } from "../types/index";
 
+import { delay } from "@/shared/lib/delay"
 
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
@@ -21,23 +22,32 @@ export const useArticlesAdminStore = defineStore("articlesAdmin", () => {
       category: "",
       status: "",
    })
-
+   const isLoading = ref(false)
    const meta = ref<{ page: number; pages: number; total: number } | null>(null)
 
    const { request } = useApiRequest()
 
    /* === GET BY ID === */
    async function fetchById(id: string) {
+      isLoading.value = true
 
-      const data = await request(() =>
-         articlesApi.admin.getById(id).then(r => r.data),
-         "Failed to fetch article by id"
-      )
+      try {
+         if (import.meta.env.DEV) {
+            await delay(800)
+         }
 
-      if (data) {
-         currentArticle.value = data
+         const data = await request(() =>
+            articlesApi.admin.getById(id).then(r => r.data),
+            "Failed to fetch article by id"
+         )
+
+         if (data) {
+            currentArticle.value = data
+         }
+         return data
+      } finally {
+         isLoading.value = false
       }
-      return data
    }
    /* === GET MY ARTICLES (EDITOR) === */
    async function fetchMy() {
@@ -67,16 +77,25 @@ export const useArticlesAdminStore = defineStore("articlesAdmin", () => {
    }
    /* === GET  FILTERED === */
    async function searchArticles(payload?: ArticleAdminQueryParams) {
+      isLoading.value = true
 
-      const data = await request(() =>
-         articlesApi.admin.searchAdminArticles(payload ?? filters.value).then(r => r.data),
-         "Failed to fetch filtered articles"
-      )
-      if (data) {
-         list.value = data.data
-         meta.value = data.meta
+      try {
+         if (import.meta.env.DEV) {
+            await delay(800)
+         }
+         const data = await request(() =>
+            articlesApi.admin.searchAdminArticles(payload ?? filters.value).then(r => r.data),
+            "Failed to fetch filtered articles"
+         )
+         if (data) {
+            list.value = data.data
+            meta.value = data.meta
+         }
+         return data
+      } finally {
+         isLoading.value = false
       }
-      return data
+
    }
-   return { fetchById, fetchMy, fetchAll, list, currentArticle, searchArticles, filters, meta }
+   return { fetchById, fetchMy, fetchAll, list, currentArticle, searchArticles, filters, meta, isLoading }
 })
