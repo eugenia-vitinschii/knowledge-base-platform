@@ -10,16 +10,16 @@
                   <div class="article-preview__wrapper" v-if="articleIsLoading" key="loading">
                      <article-preview-skeleton />
                   </div>
-                  <div class="article-preview__wrapper" v-else-if="articlesStore.currentPreview" key="content">
-                     <article-preview :article="articlesStore.currentPreview" :show-admin-controls=false />
+                  <div class="article-preview__wrapper" v-else-if="article" key="content">
+                     <article-preview :article="article" :show-admin-controls=false />
                   </div>
                </Transition>
                <Transition name="fade" mode="out-in">
                   <div class="comment-list__wrapper" v-if="commentsIsLoading" key="loading-comments">
                      <comment-list-skeleton v-for="n in 6" :key="n" />
                   </div>
-                  <div class="comment-list__wrapper" v-else-if="articlesStore.currentPreview" key="content-comments">
-                     <comment-list :comments="commentsStore.comments" />
+                  <div class="comment-list__wrapper" v-else-if="article" key="content-comments">
+                     <comment-list :comments="comments" />
                      <comment-form @submit="onSubmit" />
                   </div>
                </Transition>
@@ -56,8 +56,11 @@ const route = useRoute()
 const articlesStore = useArticlesPublicStore()
 const commentsStore = useComentsStore()
 
+/* UI render flow*/
 const articleIsLoading = computed(() => articlesStore.isLoading)
 const commentsIsLoading = computed(() => commentsStore.isLoading)
+const article = computed(() => articlesStore.currentPreview)
+const comments = computed(()=> commentsStore.comments)
 
 const articleId = computed(() => articlesStore.currentPreview?.id || '')
 

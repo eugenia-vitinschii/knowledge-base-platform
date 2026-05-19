@@ -1,12 +1,21 @@
 <template>
    <div class="page">
       <div class="container">
-         <div class="page__header">
-            <h1 class="heading">Article Preview</h1>
-         </div>
-         <div class="page__wrapper" v-if="aticlesAdminStore.currentArticle">
-            <article-preview :article="aticlesAdminStore.currentArticle" :show-admin-controls=true @edit="handleEdit"
-               @delete="handleDelete" />
+         <div class="page__wrapper">
+            <div class="page__header">
+               <h1 class="heading">Article Preview</h1>
+            </div>
+            <div class="page__content">
+               <Transition name="fade" mode="out-in">
+                  <div class="article-preview__wrapper" v-if="articleIsLoading" key="loading">
+                     <article-preview-skeleton />
+                  </div>
+                  <div class="article-preview__wrapper" v-else-if="article" key="content">
+                     <article-preview :article="article" :show-admin-controls=true @edit="handleEdit"
+                        @delete="handleDelete" />
+                  </div>
+               </Transition>
+            </div>
          </div>
       </div>
    </div>
@@ -15,6 +24,7 @@
 <script setup lang="ts">
 /* COMPONENTS */
 import ArticlePreview from '../components/ArticlePreview.vue';
+import ArticlePreviewSkeleton from '@/shared/ui/ArticlePreviewSkeleton.vue';
 
 /* PINIA */
 import { useArticlesCrudStore } from '../store/article.crud.store';
@@ -22,7 +32,7 @@ import { useArticlesAdminStore } from '../store/article.admin.store';
 
 /* VUE  & ROUTER */
 import { useRoute, useRouter } from 'vue-router';
-import { onMounted } from 'vue';
+import { computed, watch } from 'vue';
 
 import { useToast } from '@/shared/composables/useToast';
 
@@ -35,16 +45,14 @@ const route = useRoute()
 const router = useRouter();
 const toast = useToast()
 
-/* FETCH ARTICLES (BY ID)  */
-onMounted(async () => {
-   const id = route.params.id as string
+/* UI render flow*/
+const articleIsLoading = computed(() => aticlesAdminStore.isLoading)
+const article = computed(() => aticlesAdminStore.currentArticle)
 
-   if (!id) return
 
+async function loadArticle(id: string) {
    await aticlesAdminStore.fetchById(id)
-   toast.info("You are viewing a preview")
-})
-
+}
 /* EDIT */
 const handleEdit = (id: string) => {
    router.push(`/admin/articles/${id}/edit`)
@@ -61,4 +69,16 @@ const handleDelete = async (id: string) => {
    toast.info("Article has been deleted")
    router.push(`/admin/articles`)
 }
+
+watch(
+   () => route.params.id,
+   async (id) => {
+      if (!id) return
+
+      await loadArticle(id as string)
+      toast.info("You are viewing a preview")
+   },
+   { immediate: true }
+)
+
 </script>

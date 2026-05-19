@@ -54,16 +54,25 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
    }
    /*=== GET BY AUHTOR === */
    async function fetchByAuthor(id: string) {
+      isLoading.value = true
 
-      const data = await request(() =>
-         articlesApi.public.getByAuthor(id).then(r => r.data),
-         "Failed to fetch article by auhtor"
-      )
-      if (data) {
-         list.value = data
+      try {
+         if (import.meta.env.DEV) {
+            await delay(800)
+         }
+
+         const data = await request(() =>
+            articlesApi.public.getByAuthor(id).then(r => r.data),
+            "Failed to fetch article by auhtor")
+
+         if (data) {
+            list.value = data
+         }
+
+         return data
+      } finally {
+         isLoading.value = false
       }
-
-      return data
    }
 
    /* === GET  FILTERED ARTICLES=== */

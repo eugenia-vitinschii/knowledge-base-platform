@@ -2,7 +2,6 @@
 import type { ArticlePreview } from "./article-preview.types";
 
 export interface Article extends ArticlePreview {
-   author: string;
    createdAt: string;
 }
 

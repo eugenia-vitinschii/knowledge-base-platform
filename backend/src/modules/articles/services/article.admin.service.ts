@@ -14,7 +14,7 @@ type ArticleFilter = z.infer<typeof ArticleAdminFilterDto>
 class ArticleAdminService {
    /* FIND BY ID*/
    async findById(id: string) {
-      return ArticleModel.findById(id)
+      return ArticleModel.findById(id).populate('author', 'name')
    }
    /* FIND ALL (admin)*/
    async findAll() {
