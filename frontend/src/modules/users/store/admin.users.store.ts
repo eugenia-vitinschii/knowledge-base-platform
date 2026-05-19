@@ -10,6 +10,7 @@ import type { AdminUpdateUserPayload, AdminCreateUserPayload, UpdateUserRolePayl
 
 /* COMPOSABLE */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
+import { delay } from "@/shared/lib/delay"
 
 export const useAdminUsersStore = defineStore("adminUsers", () => {
 
@@ -17,20 +18,30 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
    const list = ref<User[]>([])
 
    const { request } = useApiRequest()
+   const isLoading = ref(false)
 
    /* === FETCH USERS === */
    async function fetchUsers() {
+      isLoading.value = true
 
-      const data = await request(() =>
-         usersApi.admin.getAll().then(r => r.data),
-         "Failed to load users"
-      )
+      try {
+         if (import.meta.env.DEV) {
+            await delay(800)
+         }
+         const data = await request(() =>
+            usersApi.admin.getAll().then(r => r.data),
+            "Failed to load users"
+         )
 
-      if (data) {
-         list.value = data
+         if (data) {
+            list.value = data
+         }
+
+         return data
+      } finally {
+         isLoading.value = false
       }
 
-      return data
    }
    /* === Fetch user by id === */
    async function fetchUserById(id: string) {
@@ -103,6 +114,7 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
       remove,
       fetchUsers,
       update,
-      fetchUserById
+      fetchUserById,
+      isLoading
    }
 })

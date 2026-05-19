@@ -26,7 +26,8 @@
             <ui-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
             <ui-select v-model="localForm.location" :options="locationOptions" label="Location" />
-            <ui-textarea v-model="localForm.bio" label="Bio" placeholder="Short bio about the user" />
+            <ui-textarea v-model="localForm.bio" label="Bio" placeholder="Short bio about the user" :error="errors.bio"
+               @update:model-value="validateField('bio')" />
          </div>
       </div>
       <div class="admin-user-form__section">
