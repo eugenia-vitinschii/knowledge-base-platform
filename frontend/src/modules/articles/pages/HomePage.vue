@@ -11,14 +11,14 @@
                      @update:filter="onFilterChange" />
                </div>
                <Transition name="fade" mode="out-in">
-                  <div class="article-list" v-if="isLoading">
+                  <div class="article-list" v-if="isLoading" key="loading">
                      <article-list-item-skeleton v-for="n in 6" :key="n" />
                   </div>
-                  <div class="article-list" v-else-if="hasArticles">
+                  <div class="article-list" v-else-if="hasArticles" key="articles">
                      <article-list-item v-for="article in articlePublicStore.list" :key="article.slug"
                         :article="article" />
                   </div>
-                  <div class="page__info" v-else>
+                  <div class="page__info" v-else key="empty">
                      <empty-state :variant="'search'" :title="'No results found'"
                         :description="'Try adjusting your filters or search terms to find what you\'re looking for'" />
                   </div>
@@ -61,12 +61,9 @@ const router = useRouter()
 
 const { mapQueryToParams } = useArticleFilter()
 
+/* UI render flow*/
 const isLoading = computed(() => articlePublicStore.isLoading)
-
-/* empty state */
-const hasArticles = computed(() => {
-   return articlePublicStore.list.length > 0
-})
+const hasArticles = computed(() => articlePublicStore.list.length > 0)
 
 /* Pagination */
 function onPageChange(page: number) {

@@ -2,10 +2,24 @@
    <div class="page">
       <div class="container">
          <div class="page__wrapper">
-            <h1 class="heading">Articles by {{ profile.profile?.name }}</h1>
-            <div class="page__content">
-               <article-list-item v-for="article in articles.list" :key="article.slug" :article="article" />
+            <div class="page__header">
+               <h1 class="heading">Articles by {{ profile.profile?.name }}</h1>
             </div>
+            <div class="page__content">
+               <Transition name="fade" mode="out-in">
+                  <div class="article-list" v-if="isLoading" key="loading">
+                     <article-list-item-skeleton v-for="n in 6" :key="n" />
+                  </div>
+                  <div class="article-list" v-else-if="hasArticles" key="articles">
+                     <article-list-item v-for="article in articles.list" :key="article.slug" :article="article" />
+                  </div>
+                  <div class="page__info" v-else key="empty">
+                     <empty-state :variant="'search'" :title="'No results found'"
+                        :description="'This author hasn\'t published any articles yet'" />
+                  </div>
+               </Transition>
+            </div>
+            <div class="page__footer"></div>
          </div>
       </div>
    </div>
@@ -14,8 +28,12 @@
 <script setup lang="ts">
 /* COMPONENTS */
 import ArticleListItem from '../components/ArticleListItem.vue';
+import ArticleListItemSkeleton from '@/shared/ui/ArticleListItemSkeleton.vue';
+import EmptyState from '@/shared/feedback/EmptyState.vue';
 
-import { watch } from 'vue';
+/* VUE & ROUTER */
+import { watch, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 /* STORES  */
 import { useArticlesPublicStore } from '../store/article.public.store';
@@ -23,9 +41,12 @@ import { useProfileStore } from '@/modules/profile/store/profile.store';
 
 const articles = useArticlesPublicStore()
 const profile = useProfileStore()
-
-import { useRoute } from 'vue-router';
 const route = useRoute()
+
+/* UI render flow*/
+const hasArticles = computed(() => articles.list.length > 0)
+const isLoading = computed(() => articles.isLoading)
+
 
 /* FETCH ARTICLES  */
 watch(
