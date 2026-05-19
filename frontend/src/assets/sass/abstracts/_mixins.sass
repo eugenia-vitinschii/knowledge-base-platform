@@ -40,3 +40,20 @@
    background: var(--bg-soft)
    padding: $padding-block
    border: $border
+
+/*=== SKELETONS ===*/
+@mixin skeleton-color()
+   background: var(--muted)
+   opacity: 0.6
+
+@mixin skeleton-text($width, $margin-top: 0 )
+   @include skeleton-color()
+   width: $width
+   height: 20px
+   margin-top: $margin-top
+
+@mixin skeleton-img()
+   @include img-style()
+   @include skeleton-color()
+   aspect-ratio: 1 / 1
+   width: 100%

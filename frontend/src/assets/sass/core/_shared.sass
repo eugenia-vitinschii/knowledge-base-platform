@@ -1,4 +1,6 @@
 /* shared compoents*/
+@use '../abstracts/variables' as *
+@use '../abstracts/mixins' as *
 
 /* ================= EMPTY STATE =================  */
 .empty-state
@@ -24,6 +26,98 @@
    p, h3, a
       color: var(--warning)
 
-/* =================  =================  */
-/* =================  =================  */
+/* ================= SKELEYONS =================  */
+   //shimmer styles
+.shimmer
+   position: relative
+   overflow: hidden
+
+.shimmer::before
+   content: ''
+   position: absolute
+   top: 0
+   left: -150px
+   height: 100%
+   width: inherit
+   background: linear-gradient(to right, transparent 0%, #ffffff33 50%, transparent 100%)
+   animation: loading 2.6s infinite
+
+@keyframes loading
+   0%
+      left: -150px
+
+   100%
+      left: 100%
+
+//article preview compoenmt
+.article-preview-skeleton
+   margin: $margin-block
+   padding: $padding-block
+   border: $border
+   &__text
+      @include skeleton-text(200px, 6px)
+   &__line
+      @include skeleton-text(100%, 30px)
+      height: 30px
+   &__content
+      @include skeleton-text(100%, 30px)
+      height: 500px
+      margin: $margin-element
+      padding: 30px
+      border: $border
+
+//comment list component
+.comment-list-skeleton
+   margin: $margin-block
+   padding: $padding-block
+   border: $border
+   &__text
+      @include skeleton-text(200px, 6px)
+   &__line
+      @include skeleton-text(100%, 30px)
+      height: 60px
+
+//article list item component
+.article-list--item-skeleton
+   margin: $margin-block
+   padding: $padding-block
+   border: $border
+   &__text
+      @include skeleton-text(200px, 6px)
+   &__content
+      @include skeleton-text(100%, 30px)
+      height: 40px
+   &__line
+      @include skeleton-text(100px, 30px)
+
+//articles table
+.table-skeleton
+   border-collapse: collapse
+   margin: $margin-block
+   width: 100%
+   tbody
+      tr
+         border-top: $border
+   &__th
+      @include skeleton-text(100px, 30px)
+      margin-bottom: 10px
+   &__td
+      @include skeleton-text(200px, 30px)
+   &__actions
+      display: flex
+      align-items: center
+      flex-direction: column
+   &__button
+      @include skeleton-text(90px, 10px)
+      border-radius: 12px
+
+/* ================= TRANSITIONS =================  */
+.fade-enter-active,
+.fade-leave-active
+   transition: opacity .25s ease
+
+.fade-enter-from,
+.fade-leave-to
+   opacity: 0
+
 /* =================  =================  */
