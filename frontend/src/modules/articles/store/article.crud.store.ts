@@ -11,62 +11,101 @@ import type { Article, CreateArticlePayload, UpdateArticlePayload, UpdateArticle
 import { useApiRequest } from "@/shared/composables/useApiRequest";
 
 export const useArticlesCrudStore = defineStore("articlesCrud", () => {
+   const { request } = useApiRequest()
+
+   /* === STATE === */
    const currentArticle = ref<Article | null>(null);
    const list = ref<Article[]>([])
 
-   const { request } = useApiRequest()
+   /* === UI FLOW STATE === */
+   const isLoading = ref(false)
 
-   /* === CREATE ARTICLE === */
+   /* === ACTIONS === */
+   /* === Create Article === */
    async function create(payload: CreateArticlePayload) {
-
-      const data = await request(() =>
-         articlesApi.crud.create(payload).then(r => r.data),
-         "Failed to create new article"
-      )
-
-      if (data) {
-         currentArticle.value = data
+      isLoading.value = true
+      try {
+         const data = await request(() =>
+            articlesApi.crud.create(payload).then(r => r.data),
+            "Failed to create new article"
+         )
+         if (data) {
+            currentArticle.value = data
+         }
+         return data
+      } catch (err) {
+         return null
+      } finally {
+         isLoading.value = false
       }
-
-      return data
    }
 
-   /* === UPDATE ARTICLE === */
+   /* === Update article === */
    async function update(id: string, payload: UpdateArticlePayload) {
-
-      const data = await request(() =>
-         articlesApi.crud.update(id, payload).then(r => r.data),
-         "Failed to update article"
-      )
-      if (data) {
-         currentArticle.value = data
+      isLoading.value = true
+      try {
+         const data = await request(() =>
+            articlesApi.crud.update(id, payload).then(r => r.data),
+            "Failed to update article"
+         )
+         if (data) {
+            currentArticle.value = data
+         }
+         return data
+      } catch (err) {
+         return null
+      } finally {
+         isLoading.value = false
       }
-      return data
    }
-   /* === UPDATE ARTICLE  STATUS === */
+   /* === Update article status [ADMIN ONLY] === */
    async function updateStatus(id: string, payload: UpdateArticleStatusPayload) {
+      isLoading.value = true
+      try {
+         const data = await request(() =>
+            articlesApi.crud.updateStatus(id, payload).then(r => r.data),
+            "Failed to update article status"
+         )
 
-      const data = await request(() =>
-         articlesApi.crud.updateStatus(id, payload).then(r => r.data),
-         "Failed to update article status"
-      )
-
-      if (data) {
-         currentArticle.value = data
+         if (data) {
+            currentArticle.value = data
+         }
+         return data
+      } catch (err) {
+         return null
+      } finally {
+         isLoading.value = false
       }
-      return data
    }
-   /* === DELETE ARTICLE === */
+   /* === Delete article [ADMIN ONLY] === */
    async function remove(id: string) {
-      const data = await request(() =>
-         articlesApi.crud.delete(id),
-         "Failed to delete article"
-      )
+      isLoading.value = true
+      try {
+         const data = await request(() =>
+            articlesApi.crud.delete(id),
+            "Failed to delete article"
+         )
+         return !!data
 
-      if (!data) return false
-      list.value = list.value.filter((a) => a.id !== id)
+         // if (!data) return false
+         // list.value = list.value.filter((a) => a.id !== id)
 
-      return true
+         // return true
+      } catch (err) {
+         return null
+      } finally {
+         isLoading.value = false
+      }
    }
-   return { create, update, updateStatus, remove, currentArticle, list }
+   return {
+      //state
+      list,
+      currentArticle,
+      isLoading,
+      //actions
+      create,
+      update,
+      updateStatus,
+      remove,
+   }
 })
