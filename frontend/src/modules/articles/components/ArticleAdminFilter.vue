@@ -22,11 +22,13 @@
          <ui-select v-model="localSearch.type" :options="typesOption" />
          <ui-select v-model="localSearch.status" :options="statusOption" />
       </div>
-
    </div>
 </template>
 
 <script setup lang="ts">
+/* VUE */
+import { reactive, watch, computed } from 'vue';
+
 /* COMPONENTS */
 import UiInput from '@/components/ui/form/UiInput.vue';
 import UiSelect from '@/components/ui/form/UiSelect.vue';
@@ -36,26 +38,25 @@ import UiButton from '@/components/ui/UiButton.vue';
 import { ArticleDifficulty, ArcticleType, ArticleCategory, ArticleStatus } from '@/shared/enums/article.enum';
 import type { ArticleAdminFilters } from "../types/index";
 
-import { reactive, watch, computed } from 'vue';
-
-/* PROPS */
+/* === PROPS & EMITS === */
 const props = defineProps<{
    filter: ArticleAdminFilters,
    count: number
 }>()
 
-const localSearch = reactive({ ...props.filter })
-
-/* EMIT */
 const emit = defineEmits<{
    (e: "update:filter", value: ArticleAdminFilters): void
 }>()
 
-/* Active Filters */
+/* === STATE COMPUTED === */
+const localSearch = reactive({ ...props.filter })
+
+/* Active filters */
 const activeFilters = computed(() => {
    return Object.entries(props.filter).filter(([_, value]) => value !== '' && value !== undefined)
 })
 
+/* === EVENT HANDLERS === */
 /* Remove one filter*/
 function removeFilter(key: string) {
    const updated = {
@@ -64,7 +65,7 @@ function removeFilter(key: string) {
    }
    emit('update:filter', updated)
 }
-/* REMOVE ALL */
+/* Remove all filters */
 function onReset() {
    emit('update:filter', {
       search: "",
@@ -74,7 +75,7 @@ function onReset() {
       status: ''
    })
 }
-
+/* === WATCHERS & LIFECYCLE=== */
 /* update filters (props.filter from URL, localSearch from UI) */
 watch(
    localSearch,
@@ -91,7 +92,8 @@ watch(
    },
    { immediate: true }
 )
-/* OPTIONS */
+
+/* === OPTIONS === */
 const typesOption = [
    { label: "All types", value: "" },
    { label: "Article", value: ArcticleType.ARTICLE },

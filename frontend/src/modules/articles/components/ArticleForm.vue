@@ -24,14 +24,15 @@
          <p class="subheading">Admin Controls</p>
          <div class="article-form__section--items">
             <ui-select v-model="localForm.status" :options="statusOptions" label="Article status" />
-            <ui-button type="button" variant="danger" @click="emit('save-status')">save
+            <ui-button :loading="isStatusLoading" :disabled="!isStatusDirty || isStatusLoading" type="button"
+               variant="danger" @click="emit('save-status', localForm.status)">save
                status</ui-button>
          </div>
       </div>
       <p class="subheading">{{ isEdit ? "Update" : "Create" }} article</p>
       <div class="article-form__actions">
          <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
-         <ui-button type="submit" variant="primary" :loading="isLoading" :size="'md'">
+         <ui-button type="submit" variant="primary" :loading="isSubmitting" :disabled="isSubmitting" :size="'md'">
             {{ isEdit ? "update" : "create" }}
          </ui-button>
       </div>
@@ -40,6 +41,11 @@
 </template>
 
 <script setup lang="ts">
+/* VUE */
+import { watch, reactive, computed } from 'vue';
+
+/* COMPOSABLE */
+import { useToast } from '@/shared/composables/useToast';
 
 /* COMPONENTS */
 import UiInput from '@/components/ui/form/UiInput.vue';
@@ -47,45 +53,43 @@ import UiSelect from '@/components/ui/form/UiSelect.vue';
 import MarkdownEditor from '@/components/markdown/MarkdownEditor.vue';
 import UiButton from '@/components/ui/UiButton.vue';
 
-/* VUE */
-import { watch, reactive } from 'vue';
+/* TYPES & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
 import type { CreateArticlePayload, UpdateArticlePayload } from '../types/index';
 
-/* validation */
+/* VALIDATION */
 import type { ArticleFormData } from '../validation/articles.schema';
 import { articleSchema } from '../validation/articles.schema';
 
-
-import { useToast } from '@/shared/composables/useToast';
+/* MAPPERS */
 import { mapFormToUpdatePayload } from '../utils/map-form-to-update';
 import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 
 const toast = useToast()
 
-/* PROPS */
+/* === PROPS ===  */
 const props = defineProps<{
    modelValue: ArticleFormData
    isEdit?: boolean
    canEditStatus?: boolean
-   isLoading?: boolean,
-   isStatusDirty?: boolean
+   isSubmitting?: boolean,
+   isStatusLoading?: boolean,
+   originalStatus?: ArticleStatus
 }>()
 
-/* EMIT */
+/* ===  EMITЫ  === */
 const emit = defineEmits<{
    (e: "update:modelValue", value: ArticleFormData): void
    (e: "submit", payload: CreateArticlePayload | UpdateArticlePayload): void
-   (e: "save-status"): void
+   (e: "save-status", newStatus: ArticleStatus): void
 }>()
 
-/* rwactive errors */
+/* === VARIABLES === */
 const errors = reactive<Partial<Record<keyof ArticleFormData, string>>>({})
-
-/* Local FORM */
 const localForm = reactive<ArticleFormData>({ ...props.modelValue })
+const isStatusDirty = computed(() => localForm.status !== props.originalStatus)
 
-/* update Local FORM */
+/* === WATCH === */
 watch(
    () => props.modelValue,
    (val) => Object.assign(localForm, val),
@@ -98,10 +102,9 @@ watch(
    { deep: true }
 )
 
-/* validate fiels */
+/* === METHODS  === */
 function validateField(field: keyof ArticleFormData) {
    const result = articleSchema.safeParse(localForm)
-
    const issue = result.success ? undefined : result.error.issues.find(i => i.path[0] === field)
 
    if (issue) {
@@ -110,7 +113,6 @@ function validateField(field: keyof ArticleFormData) {
       delete errors[field]
    }
 }
-/* submit */
 function emitSubmit() {
    const result = articleSchema.safeParse(localForm)
 

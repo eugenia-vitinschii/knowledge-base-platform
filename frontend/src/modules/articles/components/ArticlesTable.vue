@@ -10,11 +10,12 @@
          </tr>
       </thead>
       <tbody>
-         <tr v-for="a in items">
+         <tr v-for="a in items" :key="a.id">
             <td>{{ a.title }}</td>
             <td>
                <ui-select v-model="localStatus[a.id]!" :options="statusOptions" :disabled="!canEditStatus" />
                <ui-button v-if="isStatusDirty(a.id)" type="button" variant="primary"
+                  :is-loading="props.statusLoadingId === a.id"
                   @click="$emit('save-status', { id: a.id, status: localStatus[a.id]! })">
                   save
                </ui-button>
@@ -33,47 +34,25 @@
 </template>
 
 <script setup lang="ts">
+/* VUE */
+import { reactive, watch } from 'vue';
+
 /* COMPONENTS */
 import UiSelect from '@/components/ui/form/UiSelect.vue';
 import UiButton from '@/components/ui/UiButton.vue';
-
-/* VUE */
-import { reactive, watch } from 'vue';
 
 /* TYPES */
 import type { ArticleTableRow } from "../types/index";
 import { ArticleStatus } from '@/shared/enums/article.enum';
 
-
-/* PROPS */
+/* PROPS & EMITS */
 const props = defineProps<{
    items: ArticleTableRow[];
    canEditStatus?: boolean;
    isLoading?: boolean;
+   statusLoadingId?: string | null
 }>()
 
-/* LOCAL OBJECT */
-const localStatus = reactive<Record<string, ArticleStatus>>({} as Record<string, ArticleStatus>);
-const originalStatus = reactive<Record<string, ArticleStatus>>({} as Record<string, ArticleStatus>);
-
-/* computed status  */
-const isStatusDirty = (id: string) => {
-   if (!props.canEditStatus) return false
-   return localStatus[id] !== originalStatus[id]
-}
-
-/* init  */
-watch(
-   () => props.items,
-   (items) => {
-      items.forEach((a) => {
-         localStatus[a.id] = a.status
-         originalStatus[a.id] = a.status
-      })
-   }, { immediate: true }
-)
-
-/* EMITS */
 const emit = defineEmits<{
    (e: 'delete', id: string): void;
    (e: 'edit', id: string): void;
@@ -81,6 +60,29 @@ const emit = defineEmits<{
    (e: 'save-status', payload: { id: string; status: ArticleStatus }): void;
 }>();
 
+/* === COMPONENT STATE === */
+const localStatus = reactive<Record<string, ArticleStatus>>({});
+const originalStatus = reactive<Record<string, ArticleStatus>>({});
+
+/* computed status  */
+const isStatusDirty = (id: string) => {
+   if (!props.canEditStatus || !localStatus[id] || !originalStatus[id]) return false
+   return localStatus[id] !== originalStatus[id]
+}
+
+/* === WATCHERS === */
+watch(() => props.items,
+   (newItems) => {
+      Object.keys(localStatus).forEach(key => delete localStatus[key])
+      Object.keys(originalStatus).forEach(key => delete originalStatus[key])
+
+      newItems.forEach((a) => {
+         localStatus[a.id] = a.status
+         originalStatus[a.id] = a.status
+      })
+   },
+   { immediate: true, deep: true }
+)
 /* status options */
 const statusOptions = [
    { label: 'Draft', value: ArticleStatus.DRAFT },

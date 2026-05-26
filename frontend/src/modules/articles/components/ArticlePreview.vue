@@ -8,7 +8,7 @@
                <path
                   d="M291.5-411.5Q280-423 280-440t11.5-28.5Q303-480 320-480t28.5 11.5Q360-457 360-440t-11.5 28.5Q337-400 320-400t-28.5-11.5Zm160 0Q440-423 440-440t11.5-28.5Q463-480 480-480t28.5 11.5Q520-457 520-440t-11.5 28.5Q497-400 480-400t-28.5-11.5Zm160 0Q600-423 600-440t11.5-28.5Q623-480 640-480t28.5 11.5Q680-457 680-440t-11.5 28.5Q657-400 640-400t-28.5-11.5ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z" />
             </svg>
-            <p class="body-text">{{ formatDate(article.updatedAt) }}</p>
+            <p class="body-text">{{ formatArticleDate(article.updatedAt) }}</p>
          </div>
       </div>
       <div class="article-preview__badges">
@@ -50,19 +50,24 @@
 </template>
 
 <script setup lang="ts">
+/* VUE */
+import { computed, onMounted, ref } from 'vue';
+
+/* STORES */
+import { useAuthStore } from '@/stores/auth/auth.store';
+
+/* UTILS  & COMPOSABLES*/
+import { md } from '@/shared/lib/markdown';
+import { useCodeCopy } from '@/shared/composables/useCodeCopy';
+import { formatArticleDate } from "@/shared/lib/formatDate";
+
 /* COMPONENTS */
 import ArticleBadge from '../components/ArticleBadge.vue';
 import UiButton from '@/components/ui/UiButton.vue';
 
-/* MARKED*/
-import { md } from '@/shared/lib/markdown';
-/* VUE  & PINIA*/
-import { useAuthStore } from '@/stores/auth/auth.store';
-import { computed, ref } from 'vue';
-/* TYPES */
+/* TYPES & ENUMS*/
 import type { ArticlePreview } from "../types/index";
 import { categoryColors, difficultyColors, typeColors } from '@/shared/enums/colors';
-import { useCodeCopy } from '@/shared/composables/useCodeCopy';
 
 /* PROPS */
 const props = defineProps<{
@@ -76,27 +81,22 @@ const emit = defineEmits<{
    (e: 'delete', id: string): void;
 }>()
 
-/* Render content */
-const rendered = computed(() => {
-   return md.render(props.article.content || "")
-})
-
-const articleRef = ref<HTMLElement | null>(null)
-useCodeCopy(articleRef)
-
-/* Admin only */
+/* === STORES ===  */
 const auth = useAuthStore();
+
+/* === DOM REFERENCES ===  */
+const articleRef = ref<HTMLElement | null>(null)
+
+/* === STATE COMPUTED === */
+/* Render content */
+const rendered = computed(() => md.render(props.article.content || ""))
 const isAdmin = computed(() => auth.user?.role === 'admin')
 
-/* formated date*/
-function formatDate(dateString: string) {
-   const date = new Date(dateString)
-
-   return new Intl.DateTimeFormat('en-En', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-   }).format(date)
-}
+/* === LIFECYCLE HOOKS ===  */
+onMounted(() => {
+   if (articleRef.value) {
+      useCodeCopy(articleRef)
+   }
+})
 
 </script>

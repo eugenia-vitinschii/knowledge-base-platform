@@ -24,3 +24,10 @@ export function formatCreatedDate(date?: string | Date) {
 
    return dayjs(date).format('D MMM');
 }
+
+//article 
+export function formatArticleDate(date?: string | Date) {
+   if (!date) return '';
+
+   return dayjs(date).format('D MMM YYYY');
+}
