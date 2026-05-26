@@ -7,33 +7,36 @@
             </div>
             <div class="page__content">
                <div class="filter-wrapper">
-                  <article-admin-filter :filter="articlesAdminStore.filters" :count="totalItems"
-                     @update:filter="onFilterChange" />
+                  <article-admin-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
                </div>
                <Transition name="fade" mode="out-in">
                   <div class="articles-table-wrapper" v-if="isLoading" key="loading">
                      <table-skeleton :rows="9" :buttons="3" :columns="5" />
                   </div>
-                  <div class="articles-table-wrapper" v-else-if="hasArticles" key="articles">
-                     <articles-table :items="articlesAdminStore.list" :can-edit-status="isAdmin"
-                        @save-status="handleSaveStatus" @edit="handleEdit" @preview="handlePreview"
-                        @delete="handleDelete" />
+                  <div class="page__info" v-else-if="error" key="error">
+                     <error-state title="Oops! Something went wrong..."
+                        description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page."
+                        buttonText="Try Again" @retry="handleRetry" />
                   </div>
-
+                  <div class="articles-table-wrapper" v-else-if="hasArticles" key="articles">
+                     <articles-table :items="articles" :can-edit-status="isAdmin" :is-loading="isLoading"
+                        :status-loading-id="statusLoadingId" @save-status="handleSaveStatus" @edit="handleEdit"
+                        @preview="handlePreview" @delete="handleDelete" />
+                  </div>
                   <div class="empty-state__wrapper" v-else key="empty">
                      <empty-state v-if="!hasFilters" :variant="'accent'"
                         :title="`${auth.user?.name}, write your first article!`"
-                        :description="'It looks like you haven\'t created anything yet. Time to share some knowledge!'">
+                        description="'It looks like you haven\'t created anything yet. Time to share some knowledge!'">
                         <template #action>
                            <router-link class="body-text" :to="'/admin/articles/create'">Create article</router-link>
                         </template>
                      </empty-state>
-                     <empty-state v-else :variant="'search'" :title="'No results found'"
-                        :description="'Try adjusting your filters or search terms to find what youre looking for'" />
+                     <empty-state v-else variant="search" title="No results found"
+                        description="'Try adjusting your filters or search terms to find what youre looking for'" />
                   </div>
                </Transition>
             </div>
-            <div class="page__footer" v-if="hasArticles">
+            <div class="page__footer" v-if="hasArticles && !isLoading">
                <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
 
@@ -43,64 +46,66 @@
 </template>
 
 <script setup lang="ts">
+/* VUE & ROUTER */
+import { computed, watch, ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+/* STORE & COMPOSABLES */
+import { useAuthStore } from '@/stores/auth/auth.store';
+import { useArticlesCrudStore } from '../store/article.crud.store';
+import { useArticlesAdminStore } from "../store/article.admin.store"
+
+/* COMPOSABLES  */
+import { useToast } from '@/shared/composables/useToast';
+import { useArticleAdminFilter } from '@/modules/articles/composables/useAdminArticleFilter';
+
 /* COMPONENTS */
 import ArticlesTable from '../components/ArticlesTable.vue';
 import ArticleAdminFilter from '../components/ArticleAdminFilter.vue';
 import BasePagination from '@/components/ui/BasePagination.vue';
 import EmptyState from '@/shared/feedback/EmptyState.vue';
 import TableSkeleton from '@/shared/ui/TableSkeleton.vue';
-/* VUE & Router*/
-import { computed, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import ErrorState from "@/shared/feedback/ErrorState.vue"
 
-/*  PINIA  */
-import { useAuthStore } from '@/stores/auth/auth.store';
-import { useArticlesCrudStore } from '../store/article.crud.store';
-import { useArticlesAdminStore } from "../store/article.admin.store"
-
-/* ENUMS  & COMPOSABLE*/
+/* ENUMS & TYPES */
 import { ArticleStatus } from '@/shared/enums/article.enum';
-import { useToast } from '@/shared/composables/useToast';
-import { useArticleAdminFilter } from '@/modules/articles/composables/useAdminArticleFilter';
-
-/*TYOES */
 import type { ArticleAdminFilters, ArticleAdminQueryParams } from '../types/index';
 
-
-/* PINIA  variables */
+/* === VUE & ROUTER  === */
+const router = useRouter();
+const route = useRoute()
 const auth = useAuthStore();
 const articlesCrudStore = useArticlesCrudStore();
 const articlesAdminStore = useArticlesAdminStore();
-const toast = useToast()
 
+/* === COMPOSABLES  === */
+const toast = useToast()
 const { mapQueryToParams } = useArticleAdminFilter()
 
+/* === STATE COMPUTED === */
 /* UI render flow*/
 const isLoading = computed(() => articlesAdminStore.isLoading)
+const error = computed(() => articlesAdminStore.error)
 
-function hasActiveFilter(filters: ArticleAdminFilters): boolean {
-   return Object.values(filters).some(Boolean)
-}
-const hasFilters = computed(() => {
-   return hasActiveFilter(articlesAdminStore.filters)
-})
-const hasArticles = computed(() => {
-   return articlesAdminStore.list.length > 0
-})
-
-/*router  variables */
-const router = useRouter();
-const route = useRoute()
+const articles = computed(() => articlesAdminStore.list)
+const filters = computed(() => articlesAdminStore.filters)
 
 /* check role & fetch data */
 const isAdmin = computed(() => auth.user?.role === 'admin')
-
-/* PAGINATION */
+const hasFilters = computed(() => hasActiveFilter(articlesAdminStore.filters))
+const hasArticles = computed(() => articlesAdminStore.list.length > 0
+)
+/* pagination info */
 const currentPage = computed(() => articlesAdminStore.meta?.page ?? 1)
 const totalPages = computed(() => articlesAdminStore.meta?.pages ?? 1)
 const totalItems = computed(() => articlesAdminStore.meta?.total ?? 1)
 
-/* helpers */
+const statusLoadingId = ref<string | null>(null)
+/* === HELPERS === */
+function hasActiveFilter(filters: ArticleAdminFilters): boolean {
+   return Object.values(filters).some(Boolean)
+}
+
 function extractFilters(params: ArticleAdminQueryParams): ArticleAdminFilters {
    const { page, limit, ...filters } = params
    return filters
@@ -118,22 +123,28 @@ function cleanQuery(filters: ArticleAdminQueryParams) {
 
    return query
 }
+async function loadArticles() {
+   const params = mapQueryToParams(route.query)
 
+   articlesAdminStore.filters = extractFilters(params)
+   await articlesAdminStore.searchArticles(params)
+}
+
+/* === WATCHERS & LIFECYCLE=== */
 /* sync URL /store, fetch filtered */
 watch(
    () => route.query,
-   async (query) => {
-      const params = mapQueryToParams(query)
-
-      articlesAdminStore.filters = extractFilters(params)
-
-      await articlesAdminStore.searchArticles(params)
-
+   async () => {
+      await loadArticles()
    },
    { immediate: true }
 )
 
-
+/* === EVENT HANDLERS === */
+/* retry action  */
+async function handleRetry() {
+   await loadArticles()
+}
 function onPageChange(page: number) {
    const params = mapQueryToParams(route.query)
 
@@ -145,7 +156,6 @@ function onPageChange(page: number) {
       })
    })
 }
-
 
 /* update URL when filters change */
 function onFilterChange(newFilters: ArticleAdminFilters) {
@@ -162,17 +172,22 @@ function onFilterChange(newFilters: ArticleAdminFilters) {
    })
 }
 
-
-
 /* Save Status */
 const handleSaveStatus = async ({ id, status }: { id: string, status: ArticleStatus }) => {
-   await articlesCrudStore.updateStatus(id, { status })
+   statusLoadingId.value = id
 
-   const article = articlesCrudStore.list.find((a) => a.id === id)
-   if (article) {
-      article.status = status
+   const updated = await articlesCrudStore.updateStatus(id, { status })
+
+   if (updated) {
+      const index = articlesAdminStore.list.findIndex((a) => a.id === id)
+      if (index !== -1) {
+         articlesAdminStore.list[index].status = updated.status
+      }
+      toast.success("Status updated successfully")
    }
-   toast.success("Status updated successfully")
+
+   statusLoadingId.value = null
+
 }
 
 /* TABLE ACTIONS (EDIT, PREVIEW, DELETE)*/
@@ -189,7 +204,7 @@ const handleDelete = async (id: string) => {
    if (!confirmed) return
 
    await articlesCrudStore.remove(id)
-   articlesAdminStore.list = articlesAdminStore.list.filter(a => a.id !== id)
+   await loadArticles()
    toast.info("Article has been deleted")
 }
 

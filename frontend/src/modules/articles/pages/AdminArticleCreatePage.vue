@@ -3,10 +3,11 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <p class="heading">Create Article Page</p>
+               <h1 class="heading">Create Article Page</h1>
             </div>
             <div class="page__content">
-               <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading=false :canEditStatus="false" />
+               <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading="isLoading"
+                  :is-submitting="isLoading" :canEditStatus="false" />
             </div>
          </div>
       </div>
@@ -14,26 +15,31 @@
 </template>
 
 <script setup lang="ts">
+/* VUE & ROUTER */
+import { computed, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+
+/* STORE & COMPOSABLE*/
+import { useArticlesCrudStore } from '../store/article.crud.store';
+import { useToast } from '@/shared/composables/useToast';
+
 /* COMPONENTS */
 import ArticleForm from '../components/ArticleForm.vue';
 
-/* TYPES & ENUMS & PAYLOAD */
+/* SCHEMA & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';
-
-/* VUE & PINIA & STORE */
-import { reactive } from 'vue';
-import { useRouter } from 'vue-router';
-import { useArticlesCrudStore } from '../store/article.crud.store';
-
-
-import { useToast } from '@/shared/composables/useToast';
 import type { ArticleFormData } from '../validation/articles.schema';
+
+/* MAPPERS */
 import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 
-/* VARIBALES */
+/* === ROUTER & STORES === */
 const articleCrudStore = useArticlesCrudStore()
 const router = useRouter()
 const toast = useToast()
+
+/* === STATE COMPUTED === */
+const isLoading = computed(() => articleCrudStore.isLoading)
 
 /* from data */
 const form = reactive<ArticleFormData>({
@@ -47,7 +53,7 @@ const form = reactive<ArticleFormData>({
    status: ArticleStatus.DRAFT,
 })
 
-/* submit */
+/* === EVENT HANDLERS === */
 async function onSubmit() {
 
    const updated = await articleCrudStore.create(mapFormToCreatePayload(form))

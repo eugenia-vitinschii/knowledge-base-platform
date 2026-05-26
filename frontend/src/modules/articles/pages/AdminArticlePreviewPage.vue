@@ -10,8 +10,13 @@
                   <div class="article-preview__wrapper" v-if="articleIsLoading" key="loading">
                      <article-preview-skeleton />
                   </div>
+                  <div class="page__info" v-else-if="error" key="error">
+                     <error-state title="Oops! Something went wrong..."
+                        description="Failed to load article. It might be a temporary connection issue. Please check your internet or try refreshing the page."
+                        buttonText="Try Again" @retry="handleRetry" />
+                  </div>
                   <div class="article-preview__wrapper" v-else-if="article" key="content">
-                     <article-preview :article="article" :show-admin-controls=true @edit="handleEdit"
+                     <article-preview :article="article" show-admin-controls @edit="handleEdit"
                         @delete="handleDelete" />
                   </div>
                </Transition>
@@ -22,63 +27,72 @@
 </template>
 
 <script setup lang="ts">
-/* COMPONENTS */
-import ArticlePreview from '../components/ArticlePreview.vue';
-import ArticlePreviewSkeleton from '@/shared/ui/ArticlePreviewSkeleton.vue';
-
-/* PINIA */
-import { useArticlesCrudStore } from '../store/article.crud.store';
-import { useArticlesAdminStore } from '../store/article.admin.store';
-
 /* VUE  & ROUTER */
 import { useRoute, useRouter } from 'vue-router';
 import { computed, watch } from 'vue';
 
+/* STORES & COMPOSABLES*/
+import { useArticlesCrudStore } from '../store/article.crud.store';
+import { useArticlesAdminStore } from '../store/article.admin.store';
 import { useToast } from '@/shared/composables/useToast';
 
-/* PINIA  Variables */
-const articlesCrudStore = useArticlesCrudStore()
-const aticlesAdminStore = useArticlesAdminStore()
+/* COMPONENTS */
+import ArticlePreview from '../components/ArticlePreview.vue';
+import ArticlePreviewSkeleton from '@/shared/ui/ArticlePreviewSkeleton.vue';
+import ErrorState from '@/shared/feedback/ErrorState.vue'
 
-/* Variables */
+/* === STORES & ROUTER  === */
 const route = useRoute()
 const router = useRouter();
+const articlesCrudStore = useArticlesCrudStore()
+const articlesAdminStore = useArticlesAdminStore()
 const toast = useToast()
 
+/* === STATE COMPUTED === */
 /* UI render flow*/
-const articleIsLoading = computed(() => aticlesAdminStore.isLoading)
-const article = computed(() => aticlesAdminStore.currentArticle)
+const articleIsLoading = computed(() => articlesAdminStore.isLoading)
+const article = computed(() => articlesAdminStore.currentArticle)
+const error = computed(() => articlesAdminStore.error)
 
-
+/* === HELPERS === */
 async function loadArticle(id: string) {
-   await aticlesAdminStore.fetchById(id)
+   const data = await articlesAdminStore.fetchById(id)
+
+   if (data) {
+      toast.info("You are viewing a preview")
+   }
 }
-/* EDIT */
-const handleEdit = (id: string) => {
-   router.push(`/admin/articles/${id}/edit`)
-}
-
-/* DELETE */
-const handleDelete = async (id: string) => {
-   const confirmed = confirm('Delete this article?')
-   if (!confirmed) return
-
-   await articlesCrudStore.remove(id)
-
-   aticlesAdminStore.list = aticlesAdminStore.list.filter(a => a.id !== id)
-   toast.info("Article has been deleted")
-   router.push(`/admin/articles`)
-}
-
+/* === WATCHERS & LIFECYCLE=== */
 watch(
    () => route.params.id,
    async (id) => {
       if (!id) return
 
       await loadArticle(id as string)
-      toast.info("You are viewing a preview")
    },
    { immediate: true }
 )
+
+/* === EVENT HANDLERS === */
+/* retry action */
+async function handleRetry() {
+   if (route.params.id) {
+      await loadArticle(route.params.id as string)
+   }
+}
+/* edit article */
+const handleEdit = (id: string) => {
+   router.push(`/admin/articles/${id}/edit`)
+}
+/* delete article */
+const handleDelete = async (id: string) => {
+   const confirmed = confirm('Delete this article?')
+   if (!confirmed) return
+
+   await articlesCrudStore.remove(id)
+
+   toast.info("Article has been deleted")
+   router.push(`/admin/articles`)
+}
 
 </script>
