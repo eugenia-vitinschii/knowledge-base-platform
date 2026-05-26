@@ -16,25 +16,33 @@ export const useComentsStore = defineStore("commemts", () => {
 
    const comments = ref<Comment[]>([])
    const isLoading = ref(false)
-
+   const error = ref<string | null>(null)
+   const DEBUG_API_FAIL = ref(false)
    const { request } = useApiRequest()
 
    /* FETCH COMMPENTS */
    async function fetchByArticle(articleId: string) {
       isLoading.value = true
-
+      error.value = null
       try {
          if (import.meta.env.DEV) {
             await delay(800)
          }
+         // if (import.meta.env.DEV && DEBUG_API_FAIL) {
+         //    throw new Error('Mock error')
+         // }
          const data = await request(() =>
             commentsApi.fetchComments(articleId).then(r => r.data), 'Failed to fetch comments'
          )
-
-         if (data) {
-            comments.value = data
+         if (!data) {
+            error.value = "Failed to fetch comments"
+            return
          }
+
+         comments.value = data
          return data
+      } catch (err) {
+         error.value = "Failed to fetch comments"
       } finally {
          isLoading.value = false
       }
@@ -54,7 +62,7 @@ export const useComentsStore = defineStore("commemts", () => {
    }
 
    return {
-      comments, isLoading, fetchByArticle, create
+      comments, isLoading, fetchByArticle, create, error
    }
 
 })
