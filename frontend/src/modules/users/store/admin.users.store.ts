@@ -6,7 +6,8 @@ import { ref } from "vue";
 import { usersApi } from "@/modules/users/api/users.api";
 
 /* TYPES */
-import type { AdminUpdateUserPayload, AdminCreateUserPayload, UpdateUserRolePayload, User } from "@/modules/users/types";
+import type { AdminUpdateUserPayload, AdminCreateUserPayload, UpdateUserRolePayload, User, UserQueryParams, AdminUserFilters } from "@/modules/users/types";
+import type { PagintionMeta } from "@/shared/types/index"
 
 /* COMPOSABLE & LIBS */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
@@ -17,7 +18,13 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
    /* === STATE === */
    const selectedUser = ref<User | null>(null);
    const list = ref<User[]>([])
-
+   const meta = ref<PagintionMeta | null>(null)
+   const filters = ref<AdminUserFilters>({
+      search: '',
+      role: '',
+      position: '',
+      location: '',
+   })
    /* === UI FLOW STATE === */
    const isLoading = ref(false)
    const error = ref<string | null>(null)
@@ -26,8 +33,8 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
    const DEBUG_API_FAIL = ref(false)
 
    /* === ACTIONS === */
-   /*  Fetch all users  */
-   async function fetchUsers() {
+   /*  Search users  */
+   async function searchUsers(payload?: UserQueryParams) {
       isLoading.value = true
       error.value = null
       try {
@@ -37,13 +44,19 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
          if (import.meta.env.DEV && DEBUG_API_FAIL.value) {
             throw new Error('Mock error')
          }
+         const params: UserQueryParams = payload ?? {
+            ...filters.value,
+            page: meta.value?.page ?? 1,
+            limit: 10
+         }
          const data = await request(() =>
-            usersApi.admin.getAll().then(r => r.data),
-            "Failed to load users"
+            usersApi.admin.searchUsers(params).then(r => r.data),
+            "Failed to load filtered  users"
          )
 
          if (data) {
-            list.value = data
+            list.value = data.data
+            meta.value = data.meta
          }
 
          return data
@@ -86,7 +99,7 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
             "Failed to create new user"
          )
          if (data) {
-            await fetchUsers()
+            await searchUsers()
          }
          return data
       } catch (err) {
@@ -158,6 +171,8 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
       //state
       selectedUser,
       list,
+      filters,
+      meta,
       isLoading,
       error,
       DEBUG_API_FAIL,
@@ -165,7 +180,7 @@ export const useAdminUsersStore = defineStore("adminUsers", () => {
       create,
       updateRole,
       remove,
-      fetchUsers,
+      searchUsers,
       update,
       fetchUserById,
    }

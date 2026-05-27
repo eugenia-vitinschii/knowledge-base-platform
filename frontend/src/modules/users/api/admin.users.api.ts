@@ -1,14 +1,17 @@
 //admin users management
 
-import type { AdminCreateUserPayload, UpdateUserRolePayload, User, AdminUpdateUserPayload } from "../types/index"
+import type { AdminCreateUserPayload, UpdateUserRolePayload, User, AdminUpdateUserPayload, UserQueryParams } from "../types/index"
+import type { PaginatedResponse } from "@/shared/types/pagination.types"
 
 import { api } from "@/api/http"
 
 
 export const adminUsersApi = {
-   /* get all users */
-   getAll() {
-      return api.get<User[]>("/admin/users")
+   /* SEARCH USERS*/
+   searchUsers(params: UserQueryParams) {
+      return api.get<PaginatedResponse<User>>("/admin/users/search", {
+         params
+      })
    },
    /* create user */
    create(data: AdminCreateUserPayload) {
