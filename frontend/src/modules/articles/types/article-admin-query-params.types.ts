@@ -1,8 +1,6 @@
 //query params
+
+import type { QueryParams } from "@/shared/types/index"
 import type { ArticleAdminFilters } from "./article-admin-filters.types"
 
-export type ArticleAdminQueryParams = ArticleAdminFilters & {
-   page?: number
-   limit?: number
-   total?: number
-}
+export type ArticleAdminQueryParams = QueryParams<ArticleAdminFilters> 

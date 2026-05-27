@@ -1,9 +1,6 @@
 //query params
+
 import type { ArticlePublicFilters } from "./article-public-filters.types"
+import type { QueryParams } from "@/shared/types/index"
 
-
-export type ArticleQueryParams = ArticlePublicFilters & {
-   page?: number
-   limit?: number
-   total?: number
-}
+export type ArticleQueryParams = QueryParams<ArticlePublicFilters>
