@@ -21,7 +21,8 @@ router.use(requiredRole(Role.ADMIN))
 router.post("/", validateResource(CreateUserDto), adminUserController.createUser)
 
 /* Get all users  */
-router.get("/", adminUserController.getUsers)
+router.get('/search', adminUserController.searchUsers)
+
 
 router.get("/:id", adminUserController.getUserById)
 /* Update user role */

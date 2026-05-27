@@ -13,11 +13,14 @@ import { UpdateUserDto } from "../dtos/update-user.dto.js";
 /* Errors */
 import { ConflictError } from '@/common/errors/conflict.error.js';
 import { NotFoundError } from '@/common/errors/not-found.error.js';
+import { UserAdminFilterDTO } from '../dtos/user-admin-filter.dto.js';
+import { buildUserQuery } from '@/common/utils/buildUserQuery.js';
 
 const SALT_ROUNDS = 10
 
 type CreateUserInput = z.infer<typeof CreateUserDto>
 type UpdateUserInput = Partial<typeof UpdateUserDto>
+type UserFilter = z.infer<typeof UserAdminFilterDTO>
 
 class AdminUserService {
    /* CREATE USER */
@@ -47,9 +50,30 @@ class AdminUserService {
 
    }
 
-   /* GET ALL USERS */
-   async getAllUsers() {
-      return UserModel.find().select("-password")
+   /* SEARCH & FILTER USERS */
+   async searchUsers(filters: UserFilter, pagination: { page: number; limit: number }) {
+      const query = buildUserQuery(filters)
+
+      const { page, limit } = pagination
+      const skip = (page - 1) * limit
+
+      const [users, total] = await Promise.all([
+         UserModel.find(query)
+            .skip(skip)
+            .limit(limit)
+            .sort({ createdAt: -1 }),
+
+         UserModel.countDocuments(query)
+      ])
+      return {
+         data: users,
+         meta: {
+            total,
+            page,
+            pages: Math.ceil(total / limit)
+         }
+      }
+
    }
 
    /* GET USER BY ID */
@@ -90,7 +114,6 @@ class AdminUserService {
       }
       return user
    }
-
 
    /* DELETE USER  */
    async deleteUser(userId: string) {

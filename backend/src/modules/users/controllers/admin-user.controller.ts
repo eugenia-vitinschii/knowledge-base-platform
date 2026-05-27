@@ -14,10 +14,15 @@ class AdminUserController {
          next(error)
       }
    }
-   /* GET ALL USERS*/
-   getUsers = async (req: Request, res: Response, next: NextFunction) => {
+   /* SEARCH & FILTER USERS */
+   searchUsers = async (req: Request, res: Response, next: NextFunction) => {
       try {
-         const users = await adminUserService.getAllUsers()
+         const { page = "1", limit = "10", ...filters } = req.query
+
+         const users = await adminUserService.searchUsers(
+            filters,
+            { page: Number(page), limit: Number(limit) }
+         )
          res.json(users)
       } catch (error) {
          next(error)
