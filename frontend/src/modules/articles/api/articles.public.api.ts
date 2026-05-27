@@ -6,7 +6,8 @@ import type { ArticleQueryParams } from "../types/article-query-params.types"
 import { api } from "@/api/http"
 
 //types
-import type { ArticleListItem, ArticlePreview, PaginatedResponse } from "@/modules/articles/types"
+import type { ArticleListItem, ArticlePreview } from "@/modules/articles/types"
+import type { PaginatedResponse } from "@/shared/types/pagination.types"
 
 export const articlesPublicApi = {
 

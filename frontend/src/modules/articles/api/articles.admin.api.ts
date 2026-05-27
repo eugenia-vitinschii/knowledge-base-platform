@@ -3,7 +3,8 @@
 //api
 import { api } from "@/api/http"
 //types
-import type { Article, ArticleAdminQueryParams, PaginatedResponse } from "../types/index"
+import type { Article, ArticleAdminQueryParams } from "../types/index"
+import type { PaginatedResponse } from "@/shared/types/pagination.types"
 
 export const articlesAdminApi = {
    /* GET BY ID */

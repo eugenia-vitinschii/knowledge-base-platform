@@ -11,6 +11,7 @@ import type { Article, ArticleAdminFilters, ArticleAdminQueryParams } from "../t
 /* COMPOSABLE  & LIBS */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
 import { delay } from "@/shared/lib/delay"
+import type { PagintionMeta } from "@/shared/types/pagination.types";
 
 export const useArticlesAdminStore = defineStore("articlesAdmin", () => {
    const { request } = useApiRequest()
@@ -18,7 +19,7 @@ export const useArticlesAdminStore = defineStore("articlesAdmin", () => {
    /* === STATE === */
    const list = ref<Article[]>([])
    const currentArticle = ref<Article | null>(null);
-   const meta = ref<{ page: number; pages: number; total: number } | null>(null)
+   const meta = ref<PagintionMeta | null>(null)
    const filters = ref<ArticleAdminFilters>({
       search: '',
       type: "",

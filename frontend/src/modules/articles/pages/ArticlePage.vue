@@ -126,6 +126,4 @@ async function onSubmit(payload: CreateCommentPayload) {
    toast.success("Comment was created")
 }
 
-
-
 </script>

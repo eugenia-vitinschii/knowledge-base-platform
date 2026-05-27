@@ -7,10 +7,12 @@ import { articlesApi } from "@/modules/articles/api/articles.api";
 
 /* TYPES */
 import type { ArticlePreview, ArticleListItem, ArticlePublicFilters, ArticleQueryParams } from "../types/index";
+import type { PagintionMeta } from "@/shared/types/pagination.types";
 
 /* COMPOSABLE & LIBS */
 import { useApiRequest } from "@/shared/composables/useApiRequest";
 import { delay } from "@/shared/lib/delay"
+
 
 export const useArticlesPublicStore = defineStore("articlePublic", () => {
    const { request } = useApiRequest()
@@ -18,7 +20,7 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
    /* === STATE === */
    const list = ref<ArticleListItem[]>([])
    const currentPreview = ref<ArticlePreview | null>(null);
-   const meta = ref<{ page: number; pages: number; total: number } | null>(null)
+   const meta = ref<PagintionMeta | null>(null)
    const filters = ref<ArticlePublicFilters>({
       search: '',
       type: "",
