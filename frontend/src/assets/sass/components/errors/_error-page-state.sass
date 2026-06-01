@@ -1,0 +1,20 @@
+//eror component
+@use '../../abstracts/_mixins' as *
+
+.error-page-wrapper
+   height: 100vh
+   display: flex
+   align-items: center
+   flex-direction: column
+   justify-content: center
+
+.error-page
+   @include block-element()
+   &__content
+      display: flex
+      align-items: center
+      flex-direction: column
+   &__actions
+      display: flex
+      align-items: center
+      flex-direction: column
