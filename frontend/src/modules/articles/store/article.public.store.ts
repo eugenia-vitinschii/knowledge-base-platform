@@ -6,7 +6,7 @@ import { ref } from "vue";
 import { articlesApi } from "@/modules/articles/api/articles.api";
 
 /* TYPES */
-import type { ArticlePreview, ArticleListItem, ArticlePublicFilters, ArticleQueryParams } from "../types/index";
+import type { ArticlePreview, ArticleListItem, ArticlePublicFilters, ArticleQueryParams, ArticleSearchParams, ArticlePublicSearch } from "../types/index";
 import type { PagintionMeta } from "@/shared/types/pagination.types";
 
 /* COMPOSABLE & LIBS */
@@ -21,6 +21,9 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
    const list = ref<ArticleListItem[]>([])
    const currentPreview = ref<ArticlePreview | null>(null);
    const meta = ref<PagintionMeta | null>(null)
+   const search = ref<ArticlePublicSearch>({
+      search: ''
+   })
    const filters = ref<ArticlePublicFilters>({
       search: '',
       type: "",
@@ -64,7 +67,7 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
 
    }
    /*=== Get Articles (by author) === */
-   async function fetchByAuthor(id: string) {
+   async function fetchByAuthor(id: string, params: ArticleSearchParams) {
       isLoading.value = true
       error.value = null
       try {
@@ -75,15 +78,17 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
             throw new Error('Mock error')
          }
          const data = await request(() =>
-            articlesApi.public.getByAuthor(id).then(r => r.data),
+            articlesApi.public.getByAuthor(id, params).then(r => r.data),
             "Failed to fetch article by author"
          )
          if (data) {
-            list.value = data
+            list.value = data.data
+            meta.value = data.meta
          }
          return data
       } catch (err) {
          error.value = "Failed to fetch articles"
+         meta.value = null
       } finally {
          isLoading.value = false
       }
@@ -132,6 +137,7 @@ export const useArticlesPublicStore = defineStore("articlePublic", () => {
       list,
       currentPreview,
       filters,
+      search,
       meta,
       isLoading,
       error,
