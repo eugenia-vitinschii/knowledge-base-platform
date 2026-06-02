@@ -1,7 +1,7 @@
 // PUBLIC API (/public)
 
 //api
-import type { ArticleQueryParams } from "../types/article-query-params.types"
+import type { ArticleQueryParams, ArticleSearchParams } from "../types/article-query-params.types"
 
 import { api } from "@/api/http"
 
@@ -17,8 +17,8 @@ export const articlesPublicApi = {
    },
 
    /* GET BY AUTHOR */
-   getByAuthor(id: string) {
-      return api.get<ArticleListItem[]>(`/articles/public/user/${id}`)
+   getByAuthor(id: string, params: ArticleSearchParams) {
+      return api.get<PaginatedResponse<ArticleListItem>>(`/articles/public/user/${id}`, { params })
    },
 
    /* INCREMENT VIEWS */
