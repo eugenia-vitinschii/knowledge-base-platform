@@ -3,10 +3,13 @@
 import z from "zod";
 
 /* FILTERS */
-import { ArticlePublicFilterDto } from "@/modules/articles/dtos/article-public-filter.dto.js";
+import { ArticlePublicFilterDto, ArticlePublicSearchDto } from "@/modules/articles/dtos/article-public-filter.dto.js";
 import { ArticleAdminFilterDto } from "@/modules/articles/dtos/article-admin-filter.dto.js";
 
-type ArticleFilter = z.infer<typeof ArticlePublicFilterDto> | z.infer<typeof ArticleAdminFilterDto>
+type ArticleFilter =
+   z.infer<typeof ArticlePublicFilterDto> |
+   z.infer<typeof ArticlePublicSearchDto> |
+   z.infer<typeof ArticleAdminFilterDto>
 
 export function buidArticleQuery(filters: ArticleFilter) {
    const query: any = {}
