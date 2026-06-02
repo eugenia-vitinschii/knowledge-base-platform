@@ -6,11 +6,12 @@ import { ArticleModel } from "@/modules/articles/models/article.model.js";
 /* ENUMS */
 import { ArticleStatus } from "@/common/enums/article.enums.js";
 /* DTO's*/
-import { ArticlePublicFilterDto } from "../dtos/article-public-filter.dto.js";
+import { ArticlePublicFilterDto, ArticlePublicSearchDto } from "../dtos/article-public-filter.dto.js";
 /* */
 import { buidArticleQuery } from "@/common/utils/buildArticleQuery.js";
 
 type ArticleFilter = z.infer<typeof ArticlePublicFilterDto>
+type ArticleSearch = z.infer<typeof ArticlePublicSearchDto>
 
 class ArticlePublicService {
 
@@ -54,12 +55,34 @@ class ArticlePublicService {
          { new: true, timestamps: false }
       )
    }
-   /* FETCH  ARTICLES BY AUTHOR */
-   async fetchByAuthor(userId: string) {
-      return ArticleModel.find({ author: userId, status: ArticleStatus.PUBLISHED })
-         .populate('author', 'name')
-   }
+   /* SEARCH ARTICLES BY AUTHOR */
+   async searchByAuthor(search: ArticleSearch, userId: string, pagination: { page: number; limit: number }) {
+      const query = buidArticleQuery(search)
 
+      query.status = ArticleStatus.PUBLISHED
+      query.author = userId
+
+      const { page, limit } = pagination
+      const skip = (page - 1) * limit
+
+      const [articles, total] = await Promise.all([
+         ArticleModel.find(query)
+            .populate('author', 'name')
+            .skip(skip).limit(limit)
+            .sort({ createdAt: -1 }),
+
+         ArticleModel.countDocuments(query)
+      ])
+      return {
+         data: articles,
+         meta: {
+            total,
+            page,
+            pages: Math.ceil(total / limit)
+         }
+      }
+
+   }
 }
 
 export const articlePublicService = new ArticlePublicService()

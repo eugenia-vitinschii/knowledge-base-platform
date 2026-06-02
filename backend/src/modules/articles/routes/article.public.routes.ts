@@ -6,7 +6,6 @@ import { articlePublicController } from "../controllers/article.public.controlle
 
 const router = Router()
 
-
 /* GET PUBLIC ARTICLES (STATUS PUBLISHED) */
 router.get('/search', articlePublicController.getPublicArticles)
 
@@ -14,7 +13,7 @@ router.get('/search', articlePublicController.getPublicArticles)
 router.patch('/:slug/views', articlePublicController.incrementViews)
 
 /* GET ARTICLES BY AUTHOR */
-router.get('/user/:id', articlePublicController.fetchByAuthor)
+router.get('/user/:id', articlePublicController.searchByAuthor)
 
 /* GET ARTICLE BY SLUG */
 router.get('/:slug', articlePublicController.getBySlug)

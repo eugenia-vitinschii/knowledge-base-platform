@@ -16,13 +16,18 @@ class ArticlePublicController {
          next(error)
       }
    }
-   /* FETCH ARTICLES BY AUTHOR */
-   fetchByAuthor = async (req: Request, res: Response, next: NextFunction) => {
+   /* SEARCH ARTICLES BY AUTHOR */
+   searchByAuthor = async (req: Request, res: Response, next: NextFunction) => {
       try {
          const id = req.params.id as string
-         const article = await articlePublicService.fetchByAuthor(id)
+         const { page = "1", limit = "10", ...search } = req.query
 
-         res.json(article)
+         const articles = await articlePublicService.searchByAuthor(
+            search,
+            id,
+            { page: Number(page), limit: Number(limit) }
+         )
+         res.json(articles)
       } catch (error) {
          console.log("error", error)
          next(error)
@@ -57,6 +62,7 @@ class ArticlePublicController {
 
       }
    }
+
 
 }
 
