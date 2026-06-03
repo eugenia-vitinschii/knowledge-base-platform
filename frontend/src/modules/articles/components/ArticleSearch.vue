@@ -18,8 +18,8 @@
 import { reactive, watch, computed } from 'vue';
 
 /* COMPONENTS */
-import UiInput from '@/components/ui/form/UiInput.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiInput from '@/shared/ui/form/UiInput.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* TYPES */
 import type { ArticlePublicSearch } from "../types/index";

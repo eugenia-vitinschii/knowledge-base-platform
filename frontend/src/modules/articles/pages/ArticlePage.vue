@@ -51,11 +51,11 @@ import { useToast } from '@/shared/composables/useToast';
 
 /* COMPONENTS */
 import ArticlePreview from '../components/ArticlePreview.vue';
-import ErrorState from "@/shared/feedback/ErrorState.vue"
-import ArticlePreviewSkeleton from '@/shared/ui/ArticlePreviewSkeleton.vue';
+import ErrorState from "@/shared/ui/feedback/ErrorState.vue"
+import ArticlePreviewSkeleton from '@/shared/ui/skeletons/ArticlePreviewSkeleton.vue';
 import CommentForm from '@/modules/comments/components/CommentForm.vue';
 import CommentList from '@/modules/comments/components/CommentList.vue';
-import CommentListSkeleton from '@/shared/ui/CommentListSkeleton.vue';
+import CommentListSkeleton from '@/shared/ui/skeletons/CommentListSkeleton.vue';
 
 /* === TYPES === */
 import type { CreateCommentPayload } from '@/modules/comments/types';

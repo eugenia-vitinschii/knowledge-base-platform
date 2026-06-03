@@ -33,9 +33,9 @@
 import { reactive, watch, computed } from 'vue';
 
 /* === COMPONENTS === */
-import UiInput from '@/components/ui/form/UiInput.vue';
-import UiSelect from '@/components/ui/form/UiSelect.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiInput from '@/shared/ui/form/UiInput.vue';
+import UiSelect from '@/shared/ui/form/UiSelect.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* === TYPES === */
 import type { AdminUserFilters } from '../types/index';

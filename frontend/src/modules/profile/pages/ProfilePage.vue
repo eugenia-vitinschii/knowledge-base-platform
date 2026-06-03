@@ -37,7 +37,7 @@ import { useProfileStore } from "../store/profile.store";
 
 /* COMPONENTS */
 import ProfileDetails from "../components/ProfileDetails.vue"
-import ErrorState from "@/shared/feedback/ErrorState.vue";
+import ErrorState from "@/shared/ui/feedback/ErrorState.vue";
 /* === ROUTER, STORES === */
 const router = useRouter();
 const route = useRoute()

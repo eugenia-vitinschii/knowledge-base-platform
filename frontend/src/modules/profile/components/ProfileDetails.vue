@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiButton from "@/components/ui/UiButton.vue"
+import UiButton from "@/shared/ui/buttons/UiButton.vue"
 
 import { formatJoinedDate, formatBirthday } from "@/shared/lib/formatDate";
 import type { Profile } from "../types/index";

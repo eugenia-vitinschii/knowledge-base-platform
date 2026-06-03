@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiIconButton from '@/components/ui/UiIconButton.vue';
+import UiIconButton from '@/shared/ui/buttons/UiIconButton.vue';
 
 import type { Comment } from '../types/index';
 

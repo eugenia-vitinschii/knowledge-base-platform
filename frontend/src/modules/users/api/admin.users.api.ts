@@ -3,7 +3,7 @@
 import type { AdminCreateUserPayload, UpdateUserRolePayload, User, AdminUpdateUserPayload, UserQueryParams } from "../types/index"
 import type { PaginatedResponse } from "@/shared/types/pagination.types"
 
-import { api } from "@/api/http"
+import { api } from "@/shared/api/http"
 
 
 export const adminUsersApi = {

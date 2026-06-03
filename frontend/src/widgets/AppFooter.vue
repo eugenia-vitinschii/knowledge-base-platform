@@ -16,5 +16,5 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import ThemeToggle from '@/components/layout/ThemeToggle.vue';
+import ThemeToggle from '@/shared/ui/buttons/ThemeToggle.vue';
 </script>

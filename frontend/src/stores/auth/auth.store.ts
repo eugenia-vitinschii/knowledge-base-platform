@@ -2,7 +2,7 @@
 
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { api } from "@/api/http";
+import { api } from "@/shared/api/http";
 
 interface UserData {
    id: string,

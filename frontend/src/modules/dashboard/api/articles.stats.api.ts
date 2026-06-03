@@ -1,7 +1,7 @@
 //article stats api
 
 //api
-import { api } from "@/api/http"
+import { api } from "@/shared/api/http"
 
 import type { ArticleStatsOverview, ArticleStatsSummary } from "@/modules/dashboard/types"
 

@@ -22,9 +22,9 @@ import { useRoute } from 'vue-router';
 
 
 /* COMPONENTS */
-import AppHeader from './components/layout/AppHeader.vue';
-import AppFooter from './components/layout/AppFooter.vue';
-import UiToastContainer from './components/ui/toast/UiToastContainer.vue';
+import AppHeader from './widgets/AppHeader.vue';
+import AppFooter from './widgets/AppFooter.vue';
+import UiToastContainer from './shared/ui/feedback/UiToastContainer.vue';
 
 const route = useRoute()
 

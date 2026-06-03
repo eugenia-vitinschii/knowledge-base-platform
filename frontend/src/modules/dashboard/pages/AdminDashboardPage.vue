@@ -28,9 +28,7 @@
                </div>
             </div>
             <div class="page__info" v-else>
-               <empty-state 
-                  :variant="'accent'" 
-                  :title="'Welcome to Admin Dashboard'"
+               <empty-state :variant="'accent'" :title="'Welcome to Admin Dashboard'"
                   :description="'Here you can find insights about your articles'">
                   <template #action>
                      <router-link class="body-text" :to="'/admin/articles/create'">
@@ -48,7 +46,7 @@
 /* Components */
 import BaseChart from '../components/BaseChart.vue';
 import SummaryCard from '../components/SummaryCard.vue';
-import EmptyState from '@/shared/feedback/EmptyState.vue';
+import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
 
 /* Mappers */
 import { mapAuthorStats } from '@/modules/dashboard/utils/map-author-stats';
@@ -57,7 +55,7 @@ import { mapSummaryToCards } from '@/modules/dashboard/utils/map-summary-to-card
 
 /* store & vue */
 import { useArticlesStatsStore } from '@/modules/dashboard/store/article.stats.store';
-import type {  AuthorStat, StatItem, StatsCardItem } from '@/modules/dashboard/types/index';
+import type { AuthorStat, StatItem, StatsCardItem } from '@/modules/dashboard/types/index';
 import { onMounted, computed } from 'vue';
 
 const statsStore = useArticlesStatsStore()
@@ -111,8 +109,8 @@ const typeChartData = computed(() => {
 const chartData = [
    difficultyChartData,
    categoryChartData,
-   statusChartData, 
-   typeChartData, 
+   statusChartData,
+   typeChartData,
    authorsChartData
 ]
 const hasAnyCharts = computed(() => {

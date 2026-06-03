@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiButton from '@/components/ui/UiButton.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* === PROPS & EMITS === */
 const props = defineProps<{

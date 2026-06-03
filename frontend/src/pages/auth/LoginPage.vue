@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 /*COMPONENTS */
-import UiInput from '@/components/ui/form/UiInput.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiInput from '@/shared/ui/form/UiInput.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 /* VUE */
 import { ref } from 'vue';
 /* PINIA */

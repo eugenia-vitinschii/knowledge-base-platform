@@ -25,8 +25,8 @@
 import { ref } from 'vue';
 
 /* COMPONETS */
-import UiTextarea from '@/components/ui/form/UiTextarea.vue';
-import UiIconButton from '@/components/ui/UiIconButton.vue';
+import UiTextarea from '@/shared/ui/form/UiTextarea.vue';
+import UiIconButton from '@/shared/ui/buttons/UiIconButton.vue';
 
 /* TYPES */
 import type { CreateCommentPayload } from '../types/index';

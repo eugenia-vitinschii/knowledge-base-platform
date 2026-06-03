@@ -43,11 +43,11 @@ import { useRouter } from 'vue-router';
 
 /* COMPONNETS */
 import ArticleListItem from '../components/ArticleListItem.vue';
-import ArticleListItemSkeleton from '@/shared/ui/ArticleListItemSkeleton.vue';
+import ArticleListItemSkeleton from '@/shared/ui/skeletons/ArticleListItemSkeleton.vue';
 import ArticlesPublicFilter from '../components/ArticlesPublicFilter.vue';
-import BasePagination from '@/components/ui/BasePagination.vue';
-import EmptyState from '@/shared/feedback/EmptyState.vue';
-import ErrorState from '@/shared/feedback/ErrorState.vue';
+import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
+import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
+import ErrorState from '@/shared/ui/feedback/ErrorState.vue';
 
 /* Pinia */
 import { useArticlesPublicStore } from '../store/article.public.store';

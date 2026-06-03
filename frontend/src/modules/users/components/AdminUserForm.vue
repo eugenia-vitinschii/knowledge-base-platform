@@ -52,10 +52,10 @@
 import { reactive, watch } from 'vue';
 
 /* COMPONENTS */
-import UiInput from '@/components/ui/form/UiInput.vue';
-import UiSelect from '@/components/ui/form/UiSelect.vue';
-import UiTextarea from '@/components/ui/form/UiTextarea.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiInput from '@/shared/ui/form/UiInput.vue';
+import UiSelect from '@/shared/ui/form/UiSelect.vue';
+import UiTextarea from '@/shared/ui/form/UiTextarea.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* TYPES & ENUMS*/
 import type { AdminUserFormModel, AdminUpdateUserPayload, AdminCreateUserPayload } from '@/modules/users/types/index';

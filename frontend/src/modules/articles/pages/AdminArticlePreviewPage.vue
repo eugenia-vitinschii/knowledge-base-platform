@@ -38,8 +38,8 @@ import { useToast } from '@/shared/composables/useToast';
 
 /* COMPONENTS */
 import ArticlePreview from '../components/ArticlePreview.vue';
-import ArticlePreviewSkeleton from '@/shared/ui/ArticlePreviewSkeleton.vue';
-import ErrorState from '@/shared/feedback/ErrorState.vue'
+import ArticlePreviewSkeleton from '@/shared/ui/skeletons/ArticlePreviewSkeleton.vue';
+import ErrorState from '@/shared/ui/feedback/ErrorState.vue'
 
 /* === STORES & ROUTER  === */
 const route = useRoute()

@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiToast from './UiToast.vue';
+import UiToast from '../../../shared/ui/feedback/UiToast.vue';
 
 /* PINIA*/
 import { useToastStore } from '@/stores/ui/toast.store';

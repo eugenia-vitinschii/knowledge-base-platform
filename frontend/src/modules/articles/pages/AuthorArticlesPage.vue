@@ -42,11 +42,11 @@ import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 /* COMPONENTS */
 import ArticleListItem from '../components/ArticleListItem.vue';
-import ArticleListItemSkeleton from '@/shared/ui/ArticleListItemSkeleton.vue';
-import EmptyState from '@/shared/feedback/EmptyState.vue';
-import ErrorState from "@/shared/feedback/ErrorState.vue"
+import ArticleListItemSkeleton from '@/shared/ui/skeletons/ArticleListItemSkeleton.vue';
+import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
+import ErrorState from "@/shared/ui/feedback/ErrorState.vue"
 import ArticleSearch from '../components/ArticleSearch.vue';
-import BasePagination from '@/components/ui/BasePagination.vue';
+import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
 
 /* STORES  */
 import { useArticlesPublicStore } from '../store/article.public.store';

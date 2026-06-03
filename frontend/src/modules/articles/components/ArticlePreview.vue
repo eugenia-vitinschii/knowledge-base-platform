@@ -13,11 +13,11 @@
       </div>
       <div class="article-preview__badges">
          <article-badge :variant="'category'" :color="categoryColors[article.category]">{{ article.category
-         }}</article-badge>
+            }}</article-badge>
          <article-badge :variant="'type'" :color="typeColors[article.type]">{{ article.type }}</article-badge>
          <article-badge :variant="'difficulty'" :color="difficultyColors[article.difficulty]">{{
             article.difficulty
-            }}</article-badge>
+         }}</article-badge>
       </div>
       <div class="article-preview__content" ref="articleRef" v-html="rendered">
       </div>
@@ -63,7 +63,7 @@ import { formatArticleDate } from "@/shared/lib/formatDate";
 
 /* COMPONENTS */
 import ArticleBadge from '../components/ArticleBadge.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* TYPES & ENUMS*/
 import type { ArticlePreview } from "../types/index";

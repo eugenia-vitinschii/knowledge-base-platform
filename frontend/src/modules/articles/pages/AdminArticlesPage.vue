@@ -62,10 +62,10 @@ import { useArticleAdminFilter } from '@/modules/articles/composables/useAdminAr
 /* COMPONENTS */
 import ArticlesTable from '../components/ArticlesTable.vue';
 import ArticleAdminFilter from '../components/ArticleAdminFilter.vue';
-import BasePagination from '@/components/ui/BasePagination.vue';
-import EmptyState from '@/shared/feedback/EmptyState.vue';
-import TableSkeleton from '@/shared/ui/TableSkeleton.vue';
-import ErrorState from "@/shared/feedback/ErrorState.vue"
+import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
+import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
+import TableSkeleton from '@/shared/ui/skeletons/TableSkeleton.vue';
+import ErrorState from "@/shared/ui/feedback/ErrorState.vue"
 
 /* ENUMS & TYPES */
 import { ArticleStatus } from '@/shared/enums/article.enum';

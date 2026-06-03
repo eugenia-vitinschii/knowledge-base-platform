@@ -26,9 +26,9 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiInput from '@/components/ui/form/UiInput.vue';
-import UiSelect from '@/components/ui/form/UiSelect.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiInput from '@/shared/ui/form/UiInput.vue';
+import UiSelect from '@/shared/ui/form/UiSelect.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* ENUMS & TYPES */
 import { ArticleDifficulty, ArcticleType, ArticleCategory } from '@/shared/enums/article.enum';

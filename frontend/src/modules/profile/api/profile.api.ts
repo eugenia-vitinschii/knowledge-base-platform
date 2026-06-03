@@ -1,5 +1,5 @@
 
-import { api } from "@/api/http"
+import { api } from "@/shared/api/http"
 
 import type { Profile, ProfileUpdatePayload } from "../types/index"
 

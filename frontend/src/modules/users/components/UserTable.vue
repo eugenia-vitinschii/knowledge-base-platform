@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiButton from '@/components/ui/UiButton.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* TYPES */
 import type { UserTableRow } from '@/modules/users/types';

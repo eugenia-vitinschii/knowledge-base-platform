@@ -38,8 +38,8 @@
 import { reactive, watch } from 'vue';
 
 /* COMPONENTS */
-import UiSelect from '@/components/ui/form/UiSelect.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiSelect from '@/shared/ui/form/UiSelect.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* TYPES */
 import type { ArticleTableRow } from "../types/index";

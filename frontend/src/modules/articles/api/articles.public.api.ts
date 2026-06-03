@@ -3,7 +3,7 @@
 //api
 import type { ArticleQueryParams, ArticleSearchParams } from "../types/article-query-params.types"
 
-import { api } from "@/api/http"
+import { api } from "@/shared/api/http"
 
 //types
 import type { ArticleListItem, ArticlePreview } from "@/modules/articles/types"

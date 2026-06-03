@@ -1,6 +1,6 @@
 /* COMMENT API */
 
-import { api } from "@/api/http"
+import { api } from "@/shared/api/http"
 
 /* TYPES */
 import type { CreateCommentPayload, Comment } from "../types/index"

@@ -48,10 +48,10 @@ import { watch, reactive, computed } from 'vue';
 import { useToast } from '@/shared/composables/useToast';
 
 /* COMPONENTS */
-import UiInput from '@/components/ui/form/UiInput.vue';
-import UiSelect from '@/components/ui/form/UiSelect.vue';
-import MarkdownEditor from '@/components/markdown/MarkdownEditor.vue';
-import UiButton from '@/components/ui/UiButton.vue';
+import UiInput from '@/shared/ui/form/UiInput.vue';
+import UiSelect from '@/shared/ui/form/UiSelect.vue';
+import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* TYPES & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';

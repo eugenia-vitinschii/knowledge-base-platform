@@ -1,7 +1,7 @@
 // CRUD LOGIC (/admin)
 
 //api
-import { api } from "@/api/http"
+import { api } from "@/shared/api/http"
 //type
 import type { Article, CreateArticlePayload, UpdateArticlePayload, UpdateArticleStatusPayload } from "@/modules/articles/types"
 

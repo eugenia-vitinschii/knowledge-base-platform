@@ -45,11 +45,11 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiInput from '@/components/ui/form/UiInput.vue';
-import UiSelect from '@/components/ui/form/UiSelect.vue';
-import UiTextarea from '@/components/ui/form/UiTextarea.vue';
-import UiButton from '@/components/ui/UiButton.vue';
-import UiCheckbox from '@/components/ui/form/UiCheckbox.vue';
+import UiInput from '@/shared/ui/form/UiInput.vue';
+import UiSelect from '@/shared/ui/form/UiSelect.vue';
+import UiTextarea from '@/shared/ui/form/UiTextarea.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import UiCheckbox from '@/shared/ui/form/UiCheckbox.vue';
 
 /*VUE */
 import { watch, reactive } from 'vue';

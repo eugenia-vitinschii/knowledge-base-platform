@@ -52,10 +52,10 @@ import type { UserQueryParams, AdminUserFilters } from '../types/index.ts';
 /* COMPONENTS */
 import AdminUserFilter from '../components/AdminUserFilter.vue';
 import UserTable from '@/modules/users/components/UserTable.vue';
-import TableSkeleton from '@/shared/ui/TableSkeleton.vue';
-import EmptyState from '@/shared/feedback/EmptyState.vue';
-import ErrorState from '@/shared/feedback/ErrorState.vue'
-import BasePagination from '@/components/ui/BasePagination.vue';
+import TableSkeleton from '@/shared/ui/skeletons/TableSkeleton.vue';
+import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
+import ErrorState from '@/shared/ui/feedback/ErrorState.vue'
+import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
 
 /* === ROUTER & STORES === */
 const userStore = useAdminUsersStore();

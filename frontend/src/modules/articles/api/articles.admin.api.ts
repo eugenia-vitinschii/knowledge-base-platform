@@ -1,7 +1,7 @@
 // ADMIN API (/admin)
 
 //api
-import { api } from "@/api/http"
+import { api } from "@/shared/api/http"
 //types
 import type { Article, ArticleAdminQueryParams } from "../types/index"
 import type { PaginatedResponse } from "@/shared/types/pagination.types"
