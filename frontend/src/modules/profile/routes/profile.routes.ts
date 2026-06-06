@@ -1,20 +1,23 @@
+/* MY PROFILE  */
 
 import type { RouteRecordRaw } from "vue-router";
 
 export const profileRoutes: RouteRecordRaw[] = [
    {
       path: "/profile",
-      name: "my-profile",
-      component: () => import('../pages/ProfilePage.vue')
-   }, {
-      path: "/users/:id",
-      name: "public.profile",
-      component: () => import('../pages/ProfilePage.vue'),
-      props: true
-   },
-   {
-      path: "/profile/edit",
-      name: "profile.edit",
-      component: () => import('../pages/EditProfilePage.vue')
+      meta: { title: "My Profile" },
+      children: [
+         {
+            path: '',
+            name: "my-profile",
+            component: () => import('../pages/ProfilePage.vue')
+         },
+         {
+            path: "edit",
+            name: "profile-edit",
+            meta: { title: "Edit Profile" },
+            component: () => import('../pages/EditProfilePage.vue')
+         }
+      ]
    }
 ]

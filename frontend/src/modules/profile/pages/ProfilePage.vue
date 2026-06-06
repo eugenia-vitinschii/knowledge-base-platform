@@ -16,7 +16,7 @@
                         buttonText="Try Again" @retry="handleRetry" />
                   </div>
                   <div class="profile-details__wrapper" v-else-if="profile" key="my-profile">
-                     <profile-details :profile="profile" @edit="handleEdit" :public="isPublic" />
+                     <profile-details :profile="profile" @edit="handleEdit" @logout="handleLogout" :public="isPublic" />
                   </div>
                </Transition>
             </div>
@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 /*  Vue & ROUTER */
-import { computed, onMounted, watch } from "vue";
+import { computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 
@@ -84,4 +84,8 @@ const handleEdit = () => {
    router.push('/profile/edit')
 }
 
+const handleLogout = () => {
+   auth.logout()
+   router.push({ name: 'login' })
+}
 </script>

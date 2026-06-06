@@ -14,6 +14,7 @@
          <div class="profile-details__side">
             <div class="profile-details__actions" v-if="!public">
                <ui-button @click="$emit('edit')">Edit Profile</ui-button>
+               <ui-button @click="$emit('logout')" variant="ghost">logout</ui-button>
             </div>
             <div class="profile__details__list">
                <div class="profile-details__list-item">
@@ -55,7 +56,7 @@
          </div>
       </div>
       <div class="profile-details__about">
-         <router-link :to="`/articles/users/${profile.id}`" class="body-text">
+         <router-link :to="`/articles/users/${profile.id}/list`" class="body-text">
             View all articles
          </router-link>
          <h2 class="subheading">BIO</h2>
@@ -79,6 +80,7 @@ defineProps<{
 
 const emit = defineEmits<{
    (e: 'edit'): void;
+   (e: 'logout'): void
 }>();
 
 </script>
