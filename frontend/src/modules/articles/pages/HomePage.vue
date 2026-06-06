@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Home Page</h1>
+               <h1 class="heading">Articles Page</h1>
             </div>
             <div class="page__content">
                <div class="filter-wrapper">

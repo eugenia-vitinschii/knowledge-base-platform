@@ -13,11 +13,11 @@
       </div>
       <div class="article-preview__badges">
          <article-badge :variant="'category'" :color="categoryColors[article.category]">{{ article.category
-            }}</article-badge>
+         }}</article-badge>
          <article-badge :variant="'type'" :color="typeColors[article.type]">{{ article.type }}</article-badge>
          <article-badge :variant="'difficulty'" :color="difficultyColors[article.difficulty]">{{
             article.difficulty
-         }}</article-badge>
+            }}</article-badge>
       </div>
       <div class="article-preview__content" ref="articleRef" v-html="rendered">
       </div>
@@ -29,7 +29,7 @@
          </router-link>
       </div>
       <div class="article-preview__views">
-         <router-link :to="`/users/${article.author.id}`" class="body-text">{{ article.author?.name }}
+         <router-link :to="`/articles/users/${article.author.id}`" class="body-text">{{ article.author?.name }}
          </router-link>
          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
             <path
