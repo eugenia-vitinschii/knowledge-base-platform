@@ -21,8 +21,8 @@
 
 <script setup lang="ts">
 /* Components */
-import UiButton from '../../shared/ui/buttons/UiButton.vue';
-import UiTextarea from '../../shared/ui/form/UiTextarea.vue';
+import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import UiTextarea from '@/shared/ui/form/UiTextarea.vue';
 
 /* vue  & markdown */
 import { ref, computed } from 'vue';
