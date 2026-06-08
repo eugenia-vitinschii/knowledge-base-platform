@@ -1,0 +1,17 @@
+@use '../../abstracts/_mixins' as *
+
+.auth
+   p, h1
+      text-align: center
+
+.auth-form-wrapper
+   display: flex
+   align-items: center
+   justify-content: center
+   flex-direction: column
+
+.auth-form
+   @include block-element()
+   width: 100%
+   &__actions
+      margin-top: 50px
