@@ -150,7 +150,7 @@ async function handleRetry() {
 /* edit user */
 const handleEdit = (id: string) => {
    if (!id) return
-   router.push(`/admin/users/edit/${id}`)
+   router.push(`/admin/users/${id}/edit`)
 }
 /* delete user */
 const handleDeleteUser = async (id: string) => {

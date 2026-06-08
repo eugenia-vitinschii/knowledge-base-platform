@@ -1,8 +1,9 @@
 <template>
    <div class="article-item">
       <div class="article-item__heading">
-         <router-link :to="`/articles/users/${article.author.id}/list/${article.slug}`" class="heading">{{ article.title
-         }}</router-link>
+         <router-link :to="`/articles/users/${article.author.id}/list/${article.slug}`" class="heading">
+            {{ article.title }}
+         </router-link>
 
          <div class="article-item__heading--date">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
@@ -20,7 +21,8 @@
          }}</article-badge>
       </div>
       <div class="article-item__author">
-         <router-link :to="`/articles/users/${article.author.id}`" class="body-text">{{ article.author?.name }}
+         <router-link :to="`/articles/users/${article.author.id}`" class="body-text">
+            {{ article.author?.name }}
          </router-link>
       </div>
    </div>

@@ -19,7 +19,7 @@
                </router-link>
             </div>
             <div class="header__wrapper-admin" v-if="isAdmin || isEditor">
-               <router-link to="/admin/stats">
+               <router-link to="/admin">
                   <svg xmlns=" http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#e3e3e3">
                      <path

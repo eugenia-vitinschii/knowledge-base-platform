@@ -5,14 +5,13 @@ import type { RouteRecordRaw } from "vue-router";
 import { welcomeRoutes } from '@/modules/welcome/routes/welcome.routes';
 
 /* ADMIN ROUTES */
-
-import { adminUsersRoutes } from '@/modules/users/routes/admin.users.routes';
-import { adminArticlesRoutes } from '@/modules/articles/routes/admin.articles.routes';
 import { dashboardRoutes } from '@/modules/dashboard/routes/dashboard.routes';
 
 /* PUBLIC ROUTES */
 import { publicArticlesRoutes } from '@/modules/articles/routes/public.articles.routes';
 import { profileRoutes } from '@/modules/profile/routes/profile.routes';
+
+/* ERROR ROUTES */
 import { errorRoutes } from '@/modules/errors/routes/error.routes';
 
 const routes: RouteRecordRaw[] = [
@@ -20,8 +19,6 @@ const routes: RouteRecordRaw[] = [
   ...publicArticlesRoutes,
   ...profileRoutes,
   ...dashboardRoutes,
-  ...adminUsersRoutes,
-  ...adminArticlesRoutes,
   ...errorRoutes,
 ]
 
