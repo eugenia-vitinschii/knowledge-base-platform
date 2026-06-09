@@ -3,11 +3,11 @@
       <div class="admin-user-form__section">
          <p class="subheading">Main info</p>
          <div class="admin-user-form__section--items">
-            <ui-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
+            <ui-input v-model="localForm.name" label="* Name" type="text" placeholder="name" :error="errors.name"
                @update:model-value="validateField('name')" />
-            <ui-input v-model="localForm.email" label="Email" type="email" placeholder="email" :error="errors.email"
+            <ui-input v-model="localForm.email" label="* Email" type="email" placeholder="email" :error="errors.email"
                @update:model-value="validateField('email')" />
-            <ui-input v-model="localForm.password" label="Password" type="password" placeholder="password"
+            <ui-input v-model="localForm.password" label="* Password" type="password" placeholder="password"
                :disabled="isEdit" :error="errors.password" @update:model-value="validateField('password')" />
             <ui-select v-model="localForm.position" :options="positionOptions" label="Position" />
          </div>
@@ -26,8 +26,7 @@
             <ui-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
             <ui-select v-model="localForm.location" :options="locationOptions" label="Location" />
-            <ui-textarea v-model="localForm.bio" label="Bio" placeholder="Short bio about the user" :error="errors.bio"
-               @update:model-value="validateField('bio')" />
+            <markdown-editor v-model="localForm.bio" :error="errors.bio" @update:model-value="validateField('bio')" />
          </div>
       </div>
       <div class="admin-user-form__section">
@@ -54,9 +53,8 @@ import { reactive, watch } from 'vue';
 /* COMPONENTS */
 import UiInput from '@/shared/ui/form/UiInput.vue';
 import UiSelect from '@/shared/ui/form/UiSelect.vue';
-import UiTextarea from '@/shared/ui/form/UiTextarea.vue';
 import UiButton from '@/shared/ui/buttons/UiButton.vue';
-
+import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
 /* TYPES & ENUMS*/
 import type { AdminUserFormModel, AdminUpdateUserPayload, AdminCreateUserPayload } from '@/modules/users/types/index';
 import { Gender, Position, Location } from "@/shared/enums/user.enum"

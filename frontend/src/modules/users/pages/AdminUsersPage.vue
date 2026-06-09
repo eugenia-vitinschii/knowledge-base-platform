@@ -19,7 +19,8 @@
                         buttonText="Try Again" @retry="handleRetry" />
                   </div>
                   <div class="user-table__wrapper" v-else-if="hasUsers" key="users">
-                     <user-table :items="users" @delete="handleDeleteUser" @edit="handleEdit" />
+                     <user-table :items="users" @delete="handleDeleteUser" @edit="handleEdit"
+                        @preview="handlePreview" />
                   </div>
                   <div class="empty-state__wrapper" v-else-if="!isLoading && !hasUsers && !error" key="empty">
                      <empty-state variant="search" title="No results found"
@@ -165,5 +166,7 @@ const handleDeleteUser = async (id: string) => {
    }
 
 };
-
+const handlePreview = (id: string) => {
+   router.push(`/articles/users/${id}`)
+}
 </script>

@@ -17,6 +17,7 @@
             <td>{{ i.location }}</td>
             <td class="user-table__actions">
                <ui-button type="button" @click="$emit('edit', i.id)">Edit</ui-button>
+               <ui-button type="button" variant="secondary" @click="$emit('preview', i.id)">View</ui-button>
                <ui-button type="button" variant="danger" @click="$emit('delete', i.id)">Delete</ui-button>
             </td>
          </tr>
@@ -40,6 +41,7 @@ const props = defineProps<{
 const emit = defineEmits<{
    (e: 'delete', id: string): void;
    (e: 'edit', id: string): void;
+   (e: 'preview', id: string): void;
 }>();
 
 
