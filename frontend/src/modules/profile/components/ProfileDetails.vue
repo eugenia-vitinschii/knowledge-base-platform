@@ -45,7 +45,7 @@
                   </svg>
                   <p>{{ formatBirthday(profile.birthDate) }}</p>
                </div>
-               <div class="profile-details__list-item">
+               <div class="profile-details__list-item" v-if="profile.hiredDate">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
                      <path
                         d="M480-390Zm-132-53 55 37 77-39 77 39 53-35-40-79H386l-38 77ZM209-160h541L646-369l-83 55-83-41-83 41-85-56-103 210ZM80-80l234-475q10-20 29.5-32.5T386-600h54v-280h280l-40 80 40 80H520v120h50q23 0 42 12t30 32L880-80H80Z" />
@@ -56,24 +56,36 @@
          </div>
       </div>
       <div class="profile-details__about">
-         <router-link :to="`/articles/users/${profile.id}/list`" class="body-text">
-            View all articles
-         </router-link>
-         <h2 class="subheading">BIO</h2>
-         <p class="body-text">{{ profile.bio }}</p>
+         <div class="profile-details__about-details">
+            <h2 class="subheading">{{ profile.name }} </h2>
+            <router-link :to="`/articles/users/${profile.id}/list`" class="body-text"
+               v-if="profile.role === Role.ADMIN || profile.role === Role.EDITOR">
+               View articles
+            </router-link>
+         </div>
+         <div class="profile-details__about--bio">
+            <div class="article-preview__content" v-if="profile.bio && profile.bio.trim()" ref="bioRef"
+               v-html="rendered"></div>
+            <div v-else>
+               <p class="body-text secondary">This profile hasn't added a bio yet</p>
+            </div>
+         </div>
       </div>
    </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from "vue";
+
+
 /* COMPONENTS */
 import UiButton from "@/shared/ui/buttons/UiButton.vue"
-
+import { md } from '@/shared/lib/markdown';
 import { formatJoinedDate, formatBirthday } from "@/shared/lib/formatDate";
 import type { Profile } from "../types/index";
+import { Role } from "@/shared/enums/role.enum";
 
-
-defineProps<{
+const props = defineProps<{
    profile: Profile,
    public: boolean
 }>()
@@ -82,5 +94,11 @@ const emit = defineEmits<{
    (e: 'edit'): void;
    (e: 'logout'): void
 }>();
+/* === DOM REFERENCES ===  */
+const bioRef = ref<HTMLElement | null>(null)
+/* Render content */
+const rendered = computed(() => md.render(props.profile.bio || ""))
+
+
 
 </script>

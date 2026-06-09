@@ -18,8 +18,8 @@
             <ui-checkbox :model-value="localForm.visibility.phone === 'private'"
                @update:model-value="v => localForm.visibility.phone = v ? Visibility.PRIVATE : Visibility.PUBLIC"
                label="Hide phone " class="profile-form__checkbox" />
-            <ui-textarea v-model="localForm.bio" label="Bio" placeholder="Short bio about the user" :error="errors.bio"
-               @update:model-value="validateField('bio')" />
+            <markdown-editor :model-value="localForm.bio ?? ''" :error="errors.bio"
+               @update:model-value="localForm.bio = $event; validateField('bio')" />
          </div>
       </div>
       <div class="profile-form__section">
@@ -47,9 +47,9 @@
 /* COMPONENTS */
 import UiInput from '@/shared/ui/form/UiInput.vue';
 import UiSelect from '@/shared/ui/form/UiSelect.vue';
-import UiTextarea from '@/shared/ui/form/UiTextarea.vue';
 import UiButton from '@/shared/ui/buttons/UiButton.vue';
 import UiCheckbox from '@/shared/ui/form/UiCheckbox.vue';
+import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
 
 /*VUE */
 import { watch, reactive } from 'vue';

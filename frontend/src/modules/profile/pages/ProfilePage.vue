@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="subheading">Profile Page</h1>
+               <h1 class="heading">Profile Page</h1>
             </div>
             <div class="page__content" v-if="profileStore.profile">
                <Transition name="fade" mode="out-in">

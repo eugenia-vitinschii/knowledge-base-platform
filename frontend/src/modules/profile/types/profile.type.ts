@@ -1,5 +1,6 @@
 //profile type
 
+import type { Role } from "@/shared/enums/role.enum"
 import type { Gender, Position } from "@/shared/enums/user.enum"
 import { Visibility } from "@/shared/enums/visibility.enum"
 
@@ -14,6 +15,8 @@ export interface Profile {
 
    gender: Gender
    bio: string
+
+   role: Role
 
    birthDate?: string | undefined
    hiredDate?: string
