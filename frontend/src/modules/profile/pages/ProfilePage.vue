@@ -8,7 +8,7 @@
             <div class="page__content" v-if="profileStore.profile">
                <Transition name="fade" mode="out-in">
                   <div class="profile-details__wrapper" v-if="isLoading" key="loading">
-                     <p class="body-text">skeleton</p>
+                     <profile-skeleton />
                   </div>
                   <div class="page__info" v-else-if="error" key="profile-error">
                      <error-state title="Oops! Something went wrong..."
@@ -38,6 +38,8 @@ import { useProfileStore } from "../store/profile.store";
 /* COMPONENTS */
 import ProfileDetails from "../components/ProfileDetails.vue"
 import ErrorState from "@/shared/ui/feedback/ErrorState.vue";
+import ProfileSkeleton from "@/shared/ui/skeletons/ProfileSkeleton.vue";
+
 /* === ROUTER, STORES === */
 const router = useRouter();
 const route = useRoute()

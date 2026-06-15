@@ -123,6 +123,46 @@
       @include skeleton-text(90px, 10px)
       border-radius: 12px
 
+//profile skeleton
+.profile-skeleton
+   display: flex
+   justify-content: space-between
+   &__main
+      @include block-element()
+      display: flex
+      flex-direction: column
+      align-items: center
+      padding: 20px
+      width: 30%
+   &__main-avatar
+      margin-bottom: 10px
+      width: 200px
+      height: 200px
+   &__main-circle
+      width: 100%
+      height: 100%
+      border-radius: 50%
+   &__main-text
+      @include skeleton-text(90px, 10px)
+   &__about
+      @include block-element()
+      margin-left: 10px
+      width: 70%
+      overflow: hidden
+   &__about-title
+      @include skeleton-text(240px, 10px)
+   &__about-info
+      @include skeleton-text(960px, 40px)
+      height: 300px
+@media (max-width: 700px)
+   .profile-skeleton
+      flex-direction: column
+      &__main
+         width: 100%
+      &__about
+         width: 100%
+         margin: 10px 0px 10px 0px
+
 /* ================= TRANSITIONS =================  */
 .fade-enter-active,
 .fade-leave-active
