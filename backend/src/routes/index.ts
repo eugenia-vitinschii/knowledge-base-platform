@@ -29,11 +29,13 @@ router.use('/auth', authRoutes)
 router.use(authMiddleware)
 
 /* articles management */
-router.use('/articles', articleCrudRoutes)
+router.use('/articles/public', articlePublicRoutes)
 router.use('/articles/admin', articleAdminRoutes)
 router.use('/articles/stats', articleAdminStats)
-router.use('/articles/public', articlePublicRoutes)
+
 router.use('/articles', commentsRoutes)
+router.use('/articles', articleCrudRoutes)
+
 
 /* admin user management */
 router.use('/admin/users', adminUserRoutes)

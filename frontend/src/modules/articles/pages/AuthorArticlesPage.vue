@@ -125,7 +125,7 @@ function onPageChange(page: number) {
    const params = mapQueryToParams(route.query)
 
    router.push({
-      path: '/articles/users/' + userId.value,
+      path: `/articles/users/${userId.value}/list`,
       query: cleanQuery({
          ...params,
          page
@@ -137,7 +137,7 @@ function onSearchChange(newSearch: ArticlePublicSearch) {
    const params = mapQueryToParams(route.query)
 
    router.push({
-      path: '/articles/users/' + userId.value,
+      path: `/articles/users/${userId.value}/list`,
       query: cleanQuery({
          ...params,
          ...newSearch,

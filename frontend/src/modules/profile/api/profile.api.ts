@@ -9,7 +9,7 @@ export const profileApi = {
       return api.get<Profile>(`/me`)
    },
    fetchProfile(id: string) {
-      return api.get<Profile>(`users/${id}`)
+      return api.get<Profile>(`/users/${id}`)
    },
    updateProfile(payload: ProfileUpdatePayload) {
       return api.patch<Profile>(`/me`, payload)

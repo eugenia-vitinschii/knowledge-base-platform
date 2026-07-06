@@ -5,7 +5,7 @@
       </div>
       <div class="comment-item__wrapper">
          <div class="comment-item__info">
-            <router-link :to="`/users/${comment.author.id}`" class="body-text">{{ comment.author?.name }}
+            <router-link :to="`/articles/users/${comment.author?.id}`" class="body-text">{{ comment.author?.name }}
             </router-link>
             <p class="body-text">{{ formatCreatedDate(comment.createdAt) }}</p>
          </div>
