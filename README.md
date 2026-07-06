@@ -36,3 +36,16 @@ MONGO_URI=mongodb+srv://tester:CH2vaGB6mgHoIRWx@knowledge-base.lakfycb.mongodb.n
 ```
 VITE_API_URL=http://localhost:4000/api
 ```
+###  Demo Accounts (for Testing)
+
+You can use the following credentials to test different role behaviors (Admin, Writer, Viewer):
+
+* **Admin Role:**
+  * Email: `admin@email.com`
+  * Password: `admin`
+* **Writer Role:**
+  * Email: `olivia@email.com`
+  * Password: `admin`
+* **Viewer Role:**
+  * Email: `viewer@email.com`
+  * Password: `admin`
