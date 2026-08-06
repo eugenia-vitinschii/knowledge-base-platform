@@ -1,21 +1,21 @@
 <template>
    <form class="profile-form" @submit.prevent="emitSubmit">
       <div class="profile-form__section">
-         <h2 class="subheading">Main info</h2>
+         <base-text :type="'subheading'">Main info</base-text>
          <div class="profile-form__section--items">
-            <ui-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
+            <base-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
                @update:model-value="validateField('name')" />
-            <ui-input v-model="localForm.email" label="Email" type="email" placeholder="email" :error="errors.email"
+            <base-input v-model="localForm.email" label="Email" type="email" placeholder="email" :error="errors.email"
                @update:model-value="validateField('email')" />
-            <ui-select v-model="localForm.position" :options="positionOptions" label="Position" />
+            <base-select v-model="localForm.position" :options="positionOptions" label="Position" />
          </div>
       </div>
       <div class=" profile-form__section">
-         <p class="subheading">Contacts & Bio</p>
+         <base-text :type="'subheading'">Contacts & Bio</base-text>
          <div class="profile-form__section--items">
-            <ui-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
+            <base-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
-            <ui-checkbox :model-value="localForm.visibility.phone === 'private'"
+            <base-checkbox :model-value="localForm.visibility.phone === 'private'"
                @update:model-value="v => localForm.visibility.phone = v ? Visibility.PRIVATE : Visibility.PUBLIC"
                label="Hide phone " class="profile-form__checkbox" />
             <markdown-editor :model-value="localForm.bio ?? ''" :error="errors.bio"
@@ -23,32 +23,31 @@
          </div>
       </div>
       <div class="profile-form__section">
-         <p class="subheading">Personal Details</p>
+         <base-text :type="'subheading'">Personal Details</base-text>
          <div class="profile-form__section--items">
-            <ui-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
-            <ui-input v-model="localForm.birthDate" label="Birth Date" type="date" placeholder="Birthday date"
+            <base-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
+            <base-input v-model="localForm.birthDate" label="Birth Date" type="date" placeholder="Birthday date"
                :error="errors.birthDate" @update:model-value="validateField('birthDate')" />
-            <ui-checkbox :model-value="localForm.visibility.birthDate === 'private'"
+            <base-checkbox :model-value="localForm.visibility.birthDate === 'private'"
                @update:model-value="v => localForm.visibility.birthDate = v ? Visibility.PRIVATE : Visibility.PUBLIC"
                label="Hide Birthday" class="profile-form__checkbox" />
          </div>
       </div>
-      <p class="subheading">Save</p>
+      <base-text :type="'subheading'">Update information</base-text>
       <div class="profile-form__actions">
-         <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
-         <ui-button type="submit" variant="primary" :size="'md'">
-            save
-         </ui-button>
+         <base-button @click="$router.push('/')" :variant="'secondary'">
+            Back
+         </base-button>
+         <base-button :type="'submit'">
+            Save
+         </base-button>
       </div>
    </form>
 </template>
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiInput from '@/shared/ui/form/UiInput.vue';
-import UiSelect from '@/shared/ui/form/UiSelect.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
-import UiCheckbox from '@/shared/ui/form/UiCheckbox.vue';
+import { BaseText, BaseButton, BaseInput, BaseSelect, BaseCheckbox } from 'modular-ui-kit-vue'
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
 
 /*VUE */

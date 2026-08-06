@@ -5,6 +5,8 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/sass/app.sass'
+import 'modular-ui-kit-vue/dist/modular-ui-kit-vue.css'
+
 import "highlight.js/styles/github.css";
 
 import { useThemeStore } from './stores/theme/theme.store'
