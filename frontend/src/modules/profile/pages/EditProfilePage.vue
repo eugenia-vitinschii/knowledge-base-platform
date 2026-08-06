@@ -22,7 +22,7 @@ import { useRouter } from 'vue-router';
 
 /*Pinia */
 import { useProfileStore } from '../store/profile.store';
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 
 /* TYPES & ENUMS */
 import type { ProfileFormData } from '../validation/profile.schema';
@@ -37,7 +37,7 @@ import { Visibility } from '@/shared/enums/visibility.enum';
 const router = useRouter()
 
 const profileStore = useProfileStore()
-const toast = useToast()
+const { addToast } = useToast()
 
 const form = reactive<ProfileFormData>({
    name: '',
@@ -69,9 +69,9 @@ async function onSubmit() {
 
    const updated = await profileStore.updateProfile(mapProfileToUpdatePayload(form))
 
-   if (!updated) return toast.error("Failed to update the user")
+   if (!updated) return addToast("Failed to update the user", 'danger')
 
-   toast.success("User has been updated")
+   addToast("User has been updated", 'success')
 
    router.push('/profile')
 }

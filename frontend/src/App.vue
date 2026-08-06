@@ -8,9 +8,9 @@
       <div class="wrapper" v-else>
          <app-header />
          <div class="content">
-            <the-breadcrumbs />
+            <base-breadcrumbs />
             <router-view />
-            <ui-toast-container />
+            <base-toast-container />
          </div>
          <app-footer />
       </div>
@@ -23,11 +23,10 @@ import { useRoute } from 'vue-router';
 
 
 /* COMPONENTS */
+import { BaseBreadcrumbs, BaseToastContainer } from 'modular-ui-kit-vue'
+
 import AppHeader from './widgets/AppHeader.vue';
 import AppFooter from './widgets/AppFooter.vue';
-import UiToastContainer from './shared/ui/feedback/UiToastContainer.vue';
-import TheBreadcrumbs from '@/shared/ui/navigation/TheBreadcumbs.vue';
-
 
 const route = useRoute()
 

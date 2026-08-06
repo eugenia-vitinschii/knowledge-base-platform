@@ -22,7 +22,7 @@ import { onMounted, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 /* PINIA */
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 import { useAdminUsersStore } from '@/modules/users/store/admin.users.store';
 import { Role } from '@/shared/enums/role.enum';
 
@@ -37,7 +37,7 @@ const route = useRoute()
 const router = useRouter()
 
 /* stores Variables */
-const toast = useToast()
+const { addToast } = useToast()
 const adminUsers = useAdminUsersStore()
 
 const userId = computed(() => String(route.params.id || ''))
@@ -63,7 +63,7 @@ const form = reactive<AdminUserFormModel>({
 /* load user data */
 onMounted(async () => {
    if (!userId.value) {
-      toast.error("User ID is missing")
+      addToast("User ID is missing", 'danger')
       router.push("/admin/users")
       return
    }
@@ -88,7 +88,7 @@ async function saveRole() {
       form.role = updated.role
    }
 
-   toast.success("User role has been updated")
+   addToast("User role has been updated", 'success')
 }
 
 
@@ -97,9 +97,9 @@ async function onSubmit() {
 
    const updated = await adminUsers.update(userId.value, mapFormToUpdatePayload(form))
 
-   if (!updated) return toast.error("Failed to update the user")
+   if (!updated) return addToast("Failed to update the user", 'danger')
 
-   toast.success("User has been updated")
+   addToast("User has been updated", 'success')
 
    router.push(`/admin/users`)
 }

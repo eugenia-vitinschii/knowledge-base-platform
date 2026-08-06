@@ -22,7 +22,7 @@ import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 /* PINIA */
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 import { useAdminUsersStore } from '@/modules/users/store/admin.users.store';
 import { Role } from '@/shared/enums/role.enum';
 
@@ -35,7 +35,7 @@ import { mapFormToCreatePayload } from '@/modules/users/utils/map-form-to-create
 const router = useRouter()
 
 /* stores Variables */
-const toast = useToast()
+const { addToast } = useToast()
 const adminUsers = useAdminUsersStore()
 
 const form = reactive<AdminUserFormModel>({
@@ -59,9 +59,9 @@ async function onSubmit() {
 
    const updated = await adminUsers.create(mapFormToCreatePayload(form))
 
-   if (!updated) return toast.error("Failed to create the user")
+   if (!updated) return addToast("Failed to create the user", 'danger')
 
-   toast.success("User has been created")
+   addToast("User has been created", 'warning')
 
    router.push(`/admin/users`)
 }

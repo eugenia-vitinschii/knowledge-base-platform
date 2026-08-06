@@ -24,7 +24,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from '../store/article.admin.store';
 import { useAuthStore } from '@/stores/auth/auth.store';
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
 import ArticleForm from '../components/ArticleForm.vue';
@@ -43,7 +43,7 @@ const router = useRouter()
 const articleCrudStore = useArticlesCrudStore()
 const auth = useAuthStore()
 const articleAdminStore = useArticlesAdminStore()
-const toast = useToast()
+const { addToast } = useToast()
 
 /* === STATE COMPUTED === */
 const isLoading = computed(() => articleCrudStore.isLoading)
@@ -90,7 +90,7 @@ async function saveStatus(newStatus: ArticleStatus) {
    if (updated) {
       originalStatus.value = updated.status
       form.status = updated.status
-      toast.success("Status has been updated")
+      addToast("Status has been updated", 'success')
    }
 }
 
@@ -99,9 +99,9 @@ async function onSubmit() {
    isStatusAction.value = false
    const updated = await articleCrudStore.update(articleId.value, mapFormToUpdatePayload(form))
 
-   if (!updated) return toast.error("Article wasn't updated")
+   if (!updated) return addToast("Article wasn't updated", 'danger')
 
-   toast.success("Article has been updated")
+   addToast("Article has been updated", 'success')
    router.push(`/admin/articles`)
 }
 

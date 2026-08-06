@@ -45,9 +45,9 @@
 import { watch, reactive, computed } from 'vue';
 
 /* COMPOSABLE */
-import { useToast } from '@/shared/composables/useToast';
 
 /* COMPONENTS */
+import { useToast } from 'modular-ui-kit-vue'
 import UiInput from '@/shared/ui/form/UiInput.vue';
 import UiSelect from '@/shared/ui/form/UiSelect.vue';
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
@@ -65,7 +65,7 @@ import { articleSchema } from '../validation/articles.schema';
 import { mapFormToUpdatePayload } from '../utils/map-form-to-update';
 import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 
-const toast = useToast()
+const { addToast } = useToast()
 
 /* === PROPS ===  */
 const props = defineProps<{
@@ -122,7 +122,7 @@ function emitSubmit() {
          errors[key] = issue.message
       })
 
-      toast.error("Please fix form errors")
+      addToast("Please fix form errors", "danger")
       return
    }
 

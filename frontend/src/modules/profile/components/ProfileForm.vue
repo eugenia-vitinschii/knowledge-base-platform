@@ -48,6 +48,8 @@
 <script setup lang="ts">
 /* COMPONENTS */
 import { BaseText, BaseButton, BaseInput, BaseSelect, BaseCheckbox } from 'modular-ui-kit-vue'
+
+
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
 
 /*VUE */
@@ -62,9 +64,9 @@ import { Visibility } from '@/shared/enums/visibility.enum';
 import type { ProfileFormData } from '../validation/profile.schema';
 import { profileSchema } from '../validation/profile.schema';
 
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 
-const toast = useToast()
+const { addToast } = useToast()
 
 /* PROPS */
 const props = defineProps<{
@@ -133,7 +135,7 @@ function emitSubmit() {
          errors[key] = issue.message
       })
 
-      toast.error("Please fix form errors")
+      addToast("Please fix form errors", 'warning')
       return
    }
 

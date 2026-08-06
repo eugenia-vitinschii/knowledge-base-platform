@@ -56,7 +56,7 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from "../store/article.admin.store"
 
 /* COMPOSABLES  */
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 import { useArticleAdminFilter } from '@/modules/articles/composables/useAdminArticleFilter';
 
 /* COMPONENTS */
@@ -79,7 +79,7 @@ const articlesCrudStore = useArticlesCrudStore();
 const articlesAdminStore = useArticlesAdminStore();
 
 /* === COMPOSABLES  === */
-const toast = useToast()
+const { addToast } = useToast()
 const { mapQueryToParams } = useArticleAdminFilter()
 
 /* === STATE COMPUTED === */
@@ -183,7 +183,7 @@ const handleSaveStatus = async ({ id, status }: { id: string, status: ArticleSta
       if (index !== -1) {
          articlesAdminStore.list[index].status = updated.status
       }
-      toast.success("Status updated successfully")
+      addToast("Status updated successfully", 'success')
    }
 
    statusLoadingId.value = null
@@ -205,7 +205,7 @@ const handleDelete = async (id: string) => {
 
    await articlesCrudStore.remove(id)
    await loadArticles()
-   toast.info("Article has been deleted")
+   addToast("Article has been deleted", 'success')
 }
 
 </script>

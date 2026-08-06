@@ -34,7 +34,7 @@ import { computed, watch } from 'vue';
 /* STORES & COMPOSABLES*/
 import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from '../store/article.admin.store';
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
 import ArticlePreview from '../components/ArticlePreview.vue';
@@ -46,7 +46,7 @@ const route = useRoute()
 const router = useRouter();
 const articlesCrudStore = useArticlesCrudStore()
 const articlesAdminStore = useArticlesAdminStore()
-const toast = useToast()
+const { addToast } = useToast()
 
 /* === STATE COMPUTED === */
 /* UI render flow*/
@@ -59,7 +59,7 @@ async function loadArticle(id: string) {
    const data = await articlesAdminStore.fetchById(id)
 
    if (data) {
-      toast.info("You are viewing a preview")
+      addToast("You are viewing a preview", 'primary', 3000)
    }
 }
 /* === WATCHERS & LIFECYCLE=== */
@@ -91,7 +91,7 @@ const handleDelete = async (id: string) => {
 
    await articlesCrudStore.remove(id)
 
-   toast.info("Article has been deleted")
+   addToast("Article has been deleted", 'primary', 3000)
    router.push(`/admin/articles`)
 }
 

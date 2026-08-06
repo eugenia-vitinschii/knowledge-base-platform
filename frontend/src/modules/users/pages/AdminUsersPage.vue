@@ -44,7 +44,7 @@ import { useRoute } from 'vue-router';
 
 /* STORE & COMPOSABLES */
 import { useAdminUsersStore } from '@/modules/users/store/admin.users.store';
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 import { useUserAdminFilter } from "@/modules/users/composables/UseUsersAdminFilters"
 
 /* TYPES */
@@ -60,7 +60,7 @@ import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
 
 /* === ROUTER & STORES === */
 const userStore = useAdminUsersStore();
-const toast = useToast()
+const { addToast } = useToast()
 const router = useRouter();
 const route = useRoute()
 const { mapQueryToParams } = useUserAdminFilter()
@@ -161,7 +161,7 @@ const handleDeleteUser = async (id: string) => {
    const success = await userStore.remove(id)
 
    if (success) {
-      toast.info("User has been deleted")
+      addToast("User has been deleted", 'success')
       await loadUsers()
    }
 

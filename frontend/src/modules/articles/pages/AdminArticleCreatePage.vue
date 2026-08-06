@@ -21,7 +21,7 @@ import { useRouter } from 'vue-router';
 
 /* STORE & COMPOSABLE*/
 import { useArticlesCrudStore } from '../store/article.crud.store';
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
 import ArticleForm from '../components/ArticleForm.vue';
@@ -36,7 +36,7 @@ import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 /* === ROUTER & STORES === */
 const articleCrudStore = useArticlesCrudStore()
 const router = useRouter()
-const toast = useToast()
+const { addToast } = useToast()
 
 /* === STATE COMPUTED === */
 const isLoading = computed(() => articleCrudStore.isLoading)
@@ -58,9 +58,9 @@ async function onSubmit() {
 
    const updated = await articleCrudStore.create(mapFormToCreatePayload(form))
 
-   if (!updated) return toast.error("Failed to create the article")
+   if (!updated) return addToast("Failed to create the article", 'danger', 3000)
 
-   toast.success("Article has been created")
+   addToast("Article has been created", 'success', 3000)
 
    router.push(`/admin/articles`)
 

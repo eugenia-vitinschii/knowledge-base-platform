@@ -47,7 +47,8 @@ import { watch, computed } from 'vue'
 /* STORES  & COMPOSABLES*/
 import { useArticlesPublicStore } from '../store/article.public.store';
 import { useComentsStore } from '@/modules/comments/store/comment.store';
-import { useToast } from '@/shared/composables/useToast';
+import { useToast } from 'modular-ui-kit-vue'
+
 
 /* COMPONENTS */
 import ArticlePreview from '../components/ArticlePreview.vue';
@@ -61,7 +62,7 @@ import CommentListSkeleton from '@/shared/ui/skeletons/CommentListSkeleton.vue';
 import type { CreateCommentPayload } from '@/modules/comments/types';
 
 /* === ROUTER & STORES === */
-const toast = useToast()
+const { addToast } = useToast()
 const route = useRoute()
 const articlesStore = useArticlesPublicStore()
 const commentsStore = useComentsStore()
@@ -121,9 +122,9 @@ async function onSubmit(payload: CreateCommentPayload) {
 
    const comment = await commentsStore.create(articleId.value, payload)
 
-   if (!comment) return toast.error("Comment wasn't created")
+   if (!comment) return addToast("Comment wasn't created", 'warning')
 
-   toast.success("Comment was created")
+   addToast("Comment was created", 'success')
 }
 
 </script>
