@@ -2,7 +2,7 @@
    <div class="page">
       <div class="container">
          <div class="page__wrapper">
-            <h1 class="heading">EDIT PROFILE</h1>
+            <base-text :type="'heading'" as="h1">Edit profile</base-text>
             <div class="page__container">
                <profile-form v-model="form" @submit="onSubmit" />
             </div>
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 /* COMPONENTS */
 import ProfileForm from '../components/ProfileForm.vue';
+import { BaseText } from 'modular-ui-kit-vue'
 
 /* VUE & ROUTER*/
 import { onMounted, reactive } from 'vue';

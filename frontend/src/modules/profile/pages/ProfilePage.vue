@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Profile Page</h1>
+               <base-text :type="'heading'" as="h1">Profile Page</base-text>
             </div>
             <div class="page__content" v-if="profileStore.profile">
                <Transition name="fade" mode="out-in">
@@ -12,8 +12,11 @@
                   </div>
                   <div class="page__info" v-else-if="error" key="profile-error">
                      <error-state title="Oops! Something went wrong..."
-                        description="Failed to load profile. It might be a temporary connection issue. Please check your internet or try refreshing the page."
-                        buttonText="Try Again" @retry="handleRetry" />
+                        description="Failed to load profile. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
+                        <template #action>
+                           <base-button @click="handleRetry" variant="ghost">Try again</base-button>
+                        </template>
+                     </error-state>
                   </div>
                   <div class="profile-details__wrapper" v-else-if="profile" key="my-profile">
                      <profile-details :profile="profile" @edit="handleEdit" @logout="handleLogout" :public="isPublic" />
@@ -36,8 +39,9 @@ import { useAuthStore } from '@/stores/auth/auth.store';
 import { useProfileStore } from "../store/profile.store";
 
 /* COMPONENTS */
+import { BaseText, ErrorState, BaseButton } from 'modular-ui-kit-vue'
 import ProfileDetails from "../components/ProfileDetails.vue"
-import ErrorState from "@/shared/ui/feedback/ErrorState.vue";
+
 import ProfileSkeleton from "@/shared/ui/skeletons/ProfileSkeleton.vue";
 
 /* === ROUTER, STORES === */
