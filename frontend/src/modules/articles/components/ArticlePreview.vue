@@ -1,14 +1,14 @@
 <template>
    <div class="article-preview">
       <div class="article-preview__heading">
-         <h2 class="heading">{{ article.title }} <span class="heading" v-if="article.subcategory">[{{
-            article.subcategory }}] </span> </h2>
+         <muk-text as="h2" type="muk-heading">{{ article.title }} <muk-text as="span" type="muk-heading"
+               v-if="article.subcategory">[{{ article.subcategory }}] </muk-text> </muk-text>
          <div class="article-preview__heading--date">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                <path
                   d="M291.5-411.5Q280-423 280-440t11.5-28.5Q303-480 320-480t28.5 11.5Q360-457 360-440t-11.5 28.5Q337-400 320-400t-28.5-11.5Zm160 0Q440-423 440-440t11.5-28.5Q463-480 480-480t28.5 11.5Q520-457 520-440t-11.5 28.5Q497-400 480-400t-28.5-11.5Zm160 0Q600-423 600-440t11.5-28.5Q623-480 640-480t28.5 11.5Q680-457 680-440t-11.5 28.5Q657-400 640-400t-28.5-11.5ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z" />
             </svg>
-            <p class="body-text">{{ formatArticleDate(article.updatedAt) }}</p>
+            <muk-text>{{ formatArticleDate(article.updatedAt) }}</muk-text>
          </div>
       </div>
       <div class="article-preview__badges">
@@ -21,30 +21,28 @@
       </div>
       <div class="article-preview__content" ref="articleRef" v-html="rendered">
       </div>
-      <p class="subheading" v-if="article.tags?.length">Tags</p>
+      <muk-text type="muk-subheading" v-if="article.tags?.length">Tags</muk-text>
       <div class="article-preview__tags" v-if="article.tags?.length">
-         <router-link class="article-preview__tags--item" v-for="(tag, index) in article.tags" :key="index"
-            :to="{ path: '/articles', query: { tag: tag } }">
+         <muk-text as="router-link" class="article-preview__tags--item" v-for="(tag, index) in article.tags"
+            :key="index" :to="{ path: '/articles', query: { tag: tag } }">
             #{{ tag }}
-         </router-link>
+         </muk-text>
       </div>
       <div class="article-preview__views">
-         <router-link :to="`/articles/users/${article.author.id}`" class="body-text">
+         <muk-text as="router-link" :to="`/articles/users/${article.author.id}`">
             {{ article.author?.name }}
-         </router-link>
+         </muk-text>
          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
             <path
                d="M607.5-372.5Q660-425 660-500t-52.5-127.5Q555-680 480-680t-127.5 52.5Q300-575 300-500t52.5 127.5Q405-320 480-320t127.5-52.5Zm-204-51Q372-455 372-500t31.5-76.5Q435-608 480-608t76.5 31.5Q588-545 588-500t-31.5 76.5Q525-392 480-392t-76.5-31.5ZM214-281.5Q94-363 40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200q-146 0-266-81.5ZM480-500Zm207.5 160.5Q782-399 832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280q113 0 207.5-59.5Z" />
          </svg>
-         <p class="body-text">
-            {{ article.views }}
-         </p>
+         <muk-text>{{ article.views }}</muk-text>
       </div>
       <div class="article-preview__admin" v-if="isAdmin && showAdminControls">
-         <p class="subheading">Fast actions</p>
+         <muk-text type="muk-subheading">Fast actions</muk-text>
          <div class="article-preview__admin--actions">
-            <ui-button @click="$emit('edit', article.id)">edit</ui-button>
-            <ui-button @click="$emit('delete', article.id)" variant="danger">delete</ui-button>
+            <muk-button @click="$emit('edit', article.id)">edit</muk-button>
+            <muk-button @click="$emit('delete', article.id)" variant="danger">delete</muk-button>
          </div>
       </div>
    </div>
@@ -64,7 +62,7 @@ import { formatArticleDate } from "@/shared/lib/formatDate";
 
 /* COMPONENTS */
 import ArticleBadge from '../components/ArticleBadge.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukText, MukButton } from 'modular-ui-kit-vue';
 
 /* TYPES & ENUMS*/
 import type { ArticlePreview } from "../types/index";

@@ -2,33 +2,31 @@
    <div class="article-filter">
       <div class="article-filter__active" v-if="activeFilters.length">
          <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
-            <span class="body-text">{{ key }} : {{ value }}</span>
-            <button class="filter-chip__button" @click="removeFilter(key)">
+            <muk-text as="span">{{ key }} : {{ value }}</muk-text>
+            <muk-icon-button class="filter-chip__button" @click="removeFilter(key)">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
                   <path
                      d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
                </svg>
-            </button>
+            </muk-icon-button>
          </div>
       </div>
       <div class="article-filter__info" v-if="activeFilters.length">
-         <p class="body-text">Result(s): {{ count }}</p>
-         <ui-button @click="onReset" type="button" variant="danger" v-if="activeFilters.length"> reset</ui-button>
+         <muk-text>Result(s): {{ count }}</muk-text>
+         <muk-button @click="onReset" variant="danger" v-if="activeFilters.length"> reset</muk-button>
       </div>
       <div class="article-filter__filter">
-         <ui-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
-         <ui-select v-model="localSearch.category" :options="categoryOption" />
-         <ui-select v-model="localSearch.difficulty" :options="difficultyOption" />
-         <ui-select v-model="localSearch.type" :options="typesOption" />
+         <muk-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
+         <muk-select v-model="localSearch.category" :options="categoryOption" />
+         <muk-select v-model="localSearch.difficulty" :options="difficultyOption" />
+         <muk-select v-model="localSearch.type" :options="typesOption" />
       </div>
    </div>
 </template>
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiInput from '@/shared/ui/form/UiInput.vue';
-import UiSelect from '@/shared/ui/form/UiSelect.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukIconButton, MukButton, MukSelect, MukInput, MukText } from 'modular-ui-kit-vue';
 
 /* ENUMS & TYPES */
 import { ArticleDifficulty, ArcticleType, ArticleCategory } from '@/shared/enums/article.enum';

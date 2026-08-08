@@ -1,40 +1,39 @@
 <template>
    <form class="article-form" @submit.prevent="emitSubmit">
       <div class="article-form__section">
-         <p class="subheading">Meta</p>
+         <muk-text as="h1" type="muk-subheading">Meta</muk-text>
          <div class="article-form__section--items">
-            <ui-input v-model="localForm.title" type="text" placeholder="title" label="*Article title"
+            <muk-input v-model="localForm.title" type="text" placeholder="title" label="*Article title"
                :error="errors.title" @update:model-value="validateField('title')" />
-            <ui-select v-model="localForm.type" :options="typesOption" label="*Article types" />
-            <ui-select v-model="localForm.difficulty" :options="difficultyOption" label="*Article difficulty" />
-            <ui-select v-model="localForm.category" :options="categoryOption" label="*Article category" />
-            <ui-input v-model="localForm.subcategory" type="text" placeholder="subcategory"
+            <muk-select v-model="localForm.type" :options="typesOption" label="*Article types" />
+            <muk-select v-model="localForm.difficulty" :options="difficultyOption" label="*Article difficulty" />
+            <muk-select v-model="localForm.category" :options="categoryOption" label="*Article category" />
+            <muk-input v-model="localForm.subcategory" type="text" placeholder="subcategory"
                label="Article subcategory" />
-            <ui-input v-model="localForm.tags" type="text" placeholder="tags" label="Article tags" />
+            <muk-input v-model="localForm.tags" type="text" placeholder="tags" label="Article tags" />
          </div>
       </div>
       <div class="article-form__section">
-         <p class="subheading">Content</p>
+         <muk-text type="muk-subheading">Content</muk-text>
          <div class="article-form__section--items">
             <markdown-editor v-model="localForm.content" :error="errors.content"
                @update:model-value="validateField('content')" />
          </div>
       </div>
       <div class="article-form__section" v-if="canEditStatus">
-         <p class="subheading">Admin Controls</p>
+         <muk-text type="muk-subheading">Admin Controls</muk-text>
          <div class="article-form__section--items">
-            <ui-select v-model="localForm.status" :options="statusOptions" label="Article status" />
-            <ui-button :loading="isStatusLoading" :disabled="!isStatusDirty || isStatusLoading" type="button"
-               variant="danger" @click="emit('save-status', localForm.status)">save
-               status</ui-button>
+            <muk-select v-model="localForm.status" :options="statusOptions" label="Article status" />
+            <muk-button :loading="isStatusLoading" :disabled="!isStatusDirty || isStatusLoading" type="button"
+               variant="danger" @click="emit('save-status', localForm.status)">save status</muk-button>
          </div>
       </div>
-      <p class="subheading">{{ isEdit ? "Update" : "Create" }} article</p>
+      <muk-text type="muk-subheading">{{ isEdit ? "Update" : "Create" }} article</muk-text>
       <div class="article-form__actions">
          <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
-         <ui-button type="submit" variant="primary" :loading="isSubmitting" :disabled="isSubmitting" :size="'md'">
+         <muk-button type="submit" variant="primary" :loading="isSubmitting" :disabled="isSubmitting" :size="'md'">
             {{ isEdit ? "update" : "create" }}
-         </ui-button>
+         </muk-button>
       </div>
       <br>
    </form>
@@ -48,10 +47,8 @@ import { watch, reactive, computed } from 'vue';
 
 /* COMPONENTS */
 import { useMukToast } from 'modular-ui-kit-vue'
-import UiInput from '@/shared/ui/form/UiInput.vue';
-import UiSelect from '@/shared/ui/form/UiSelect.vue';
+import { MukText, MukInput, MukSelect, MukButton } from 'modular-ui-kit-vue'
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
 
 /* TYPES & ENUMS */
 import { ArcticleType, ArticleCategory, ArticleDifficulty, ArticleStatus } from '@/shared/enums/article.enum';

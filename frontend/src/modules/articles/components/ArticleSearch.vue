@@ -1,16 +1,15 @@
 <template>
    <div class="article-search">
       <div class="article-search__wrapper">
-         <ui-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
+         <muk-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
       </div>
       <div class="article-search__info" v-if="activeSearch.length">
-         <p class="body-text">Result(s): {{ count }}</p>
-         <ui-button @click="onReset" type="button" variant="danger" v-if="activeSearch.length">
+         <muk-text>Result(s): {{ count }}</muk-text>
+         <muk-button @click="onReset" variant="danger" v-if="activeSearch.length">
             reset
-         </ui-button>
+         </muk-button>
       </div>
    </div>
-
 </template>
 
 <script setup lang="ts">
@@ -18,8 +17,7 @@
 import { reactive, watch, computed } from 'vue';
 
 /* COMPONENTS */
-import UiInput from '@/shared/ui/form/UiInput.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukInput, MukButton, MukText } from 'modular-ui-kit-vue';
 
 /* TYPES */
 import type { ArticlePublicSearch } from "../types/index";

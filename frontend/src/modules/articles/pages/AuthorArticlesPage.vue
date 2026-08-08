@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Articles by {{ profile.profile?.name }}</h1>
+               <muk-text type="muk-heading">Articles by {{ profile.profile?.name }}</muk-text>
             </div>
             <div class="page__content">
                <div class="filter-wrapper">
@@ -14,21 +14,24 @@
                      <article-list-item-skeleton v-for="n in 6" :key="n" />
                   </div>
                   <div class="page__info" v-else-if="error" key="error">
-                     <error-state title="Oops! Something went wrong..."
-                        description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page."
-                        buttonText="Try Again" @retry="handleRetry" />
+                     <muk-error-state title="Oops! Something went wrong..."
+                        description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
+                        <template>
+                           <muk-button @click="handleRetry"> Try Again</muk-button>
+                        </template>
+                     </muk-error-state>
                   </div>
                   <div class="article-list" v-else-if="hasArticles" key="articles">
                      <article-list-item v-for="article in articles.list" :key="article.slug" :article="article" />
                   </div>
                   <div class="page__info" v-else key="empty">
-                     <empty-state :variant="'search'" :title="'No results found'"
+                     <muk-empty-state variant="secondary" :title="'No results found'"
                         :description="'This author hasn\'t published any articles yet'" />
                   </div>
                </Transition>
             </div>
             <div class="page__footer" v-if="hasArticles && !isLoading">
-               <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
+               <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
          </div>
       </div>
@@ -40,13 +43,13 @@
 import { watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
+
 /* COMPONENTS */
+import { MukPagination, MukEmptyState, MukText, MukErrorState, MukButton } from 'modular-ui-kit-vue'
+
 import ArticleListItem from '../components/ArticleListItem.vue';
 import ArticleListItemSkeleton from '@/shared/ui/skeletons/ArticleListItemSkeleton.vue';
-import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
-import ErrorState from "@/shared/ui/feedback/ErrorState.vue"
 import ArticleSearch from '../components/ArticleSearch.vue';
-import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
 
 /* STORES  */
 import { useArticlesPublicStore } from '../store/article.public.store';

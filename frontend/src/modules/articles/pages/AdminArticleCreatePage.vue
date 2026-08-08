@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Create Article Page</h1>
+               <muk-text as="h1" type="muk-heading">Create Article Page</muk-text>
             </div>
             <div class="page__content">
                <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading="isLoading"
@@ -24,6 +24,7 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
+import { MukText } from 'modular-ui-kit-vue';
 import ArticleForm from '../components/ArticleForm.vue';
 
 /* SCHEMA & ENUMS */

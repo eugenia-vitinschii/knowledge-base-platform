@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Admin Articles Page</h1>
+               <muk-text as='h1' type="muk-heading">Admin Articles Page</muk-text>
             </div>
             <div class="page__content">
                <div class="filter-wrapper">
@@ -14,9 +14,12 @@
                      <table-skeleton :rows="9" :buttons="3" :columns="5" />
                   </div>
                   <div class="page__info" v-else-if="error" key="error">
-                     <error-state title="Oops! Something went wrong..."
-                        description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page."
-                        buttonText="Try Again" @retry="handleRetry" />
+                     <muk-error-state title="Oops! Something went wrong..."
+                        description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
+                        <template #action>
+                           <muk-button @click="handleRetry">Try Again</muk-button>
+                        </template>
+                     </muk-error-state>
                   </div>
                   <div class="articles-table-wrapper" v-else-if="hasArticles" key="articles">
                      <articles-table :items="articles" :can-edit-status="isAdmin" :is-loading="isLoading"
@@ -24,14 +27,14 @@
                         @preview="handlePreview" @delete="handleDelete" />
                   </div>
                   <div class="empty-state__wrapper" v-else key="empty">
-                     <empty-state v-if="!hasFilters" :variant="'accent'"
+                     <muk-empty-state v-if="!hasFilters" :variant="'accent'"
                         :title="`${auth.user?.name}, write your first article!`"
                         description="'It looks like you haven\'t created anything yet. Time to share some knowledge!'">
                         <template #action>
-                           <router-link class="body-text" :to="'/admin/articles/create'">Create article</router-link>
+                           <muk-text as="router-link" :to="'/admin/articles/create'">Create article</muk-text>
                         </template>
-                     </empty-state>
-                     <empty-state v-else variant="search" title="No results found"
+                     </muk-empty-state>
+                     <muk-empty-state v-else variant="search" title="No results found"
                         description="'Try adjusting your filters or search terms to find what youre looking for'" />
                   </div>
                </Transition>
@@ -39,7 +42,6 @@
             <div class="page__footer" v-if="hasArticles && !isLoading">
                <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
-
          </div>
       </div>
    </div>
@@ -56,16 +58,13 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from "../store/article.admin.store"
 
 /* COMPOSABLES  */
-import { useMukToast } from 'modular-ui-kit-vue'
+import { useMukToast, MukPagination, MukEmptyState, MukText, MukErrorState, MukButton } from 'modular-ui-kit-vue'
 import { useArticleAdminFilter } from '@/modules/articles/composables/useAdminArticleFilter';
 
 /* COMPONENTS */
 import ArticlesTable from '../components/ArticlesTable.vue';
 import ArticleAdminFilter from '../components/ArticleAdminFilter.vue';
-import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
-import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
 import TableSkeleton from '@/shared/ui/skeletons/TableSkeleton.vue';
-import ErrorState from "@/shared/ui/feedback/ErrorState.vue"
 
 /* ENUMS & TYPES */
 import { ArticleStatus } from '@/shared/enums/article.enum';
@@ -101,6 +100,7 @@ const totalPages = computed(() => articlesAdminStore.meta?.pages ?? 1)
 const totalItems = computed(() => articlesAdminStore.meta?.total ?? 1)
 
 const statusLoadingId = ref<string | null>(null)
+
 /* === HELPERS === */
 function hasActiveFilter(filters: ArticleAdminFilters): boolean {
    return Object.values(filters).some(Boolean)

@@ -13,20 +13,20 @@
          <tr v-for="a in items" :key="a.id">
             <td>{{ a.title }}</td>
             <td>
-               <ui-select v-model="localStatus[a.id]!" :options="statusOptions" :disabled="!canEditStatus" />
-               <ui-button v-if="isStatusDirty(a.id)" type="button" variant="primary"
+               <muk-select v-model="localStatus[a.id]!" :options="statusOptions" :disabled="!canEditStatus" />
+               <muk-button v-if="isStatusDirty(a.id)" type="button" variant="primary"
                   :is-loading="props.statusLoadingId === a.id"
                   @click="$emit('save-status', { id: a.id, status: localStatus[a.id]! })">
                   save
-               </ui-button>
+               </muk-button>
             </td>
             <td>{{ a.type }}</td>
             <td>{{ a.category }}</td>
             <td class="articles-table__actions">
-               <ui-button type="button" variant="primary" @click="$emit('edit', a.id)">edit</ui-button>
-               <ui-button type="button" variant="secondary" @click="$emit('preview', a.id)">preview</ui-button>
-               <ui-button type="button" variant="danger" :disabled="!canEditStatus"
-                  @click="$emit('delete', a.id)">delete</ui-button>
+               <muk-button type="button" variant="primary" @click="$emit('edit', a.id)">edit</muk-button>
+               <muk-button type="button" variant="secondary" @click="$emit('preview', a.id)">preview</muk-button>
+               <muk-button type="button" variant="danger" :disabled="!canEditStatus"
+                  @click="$emit('delete', a.id)">delete</muk-button>
             </td>
          </tr>
       </tbody>
@@ -38,8 +38,7 @@
 import { reactive, watch } from 'vue';
 
 /* COMPONENTS */
-import UiSelect from '@/shared/ui/form/UiSelect.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukButton, MukSelect } from 'modular-ui-kit-vue';
 
 /* TYPES */
 import type { ArticleTableRow } from "../types/index";

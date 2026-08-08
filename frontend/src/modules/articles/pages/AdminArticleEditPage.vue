@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Update Article: {{ form.title }}</h1>
+               <muk-text as="h1" type="muk-heading">Update Article: {{ form.title }}</muk-text>
             </div>
             <div class="page__content">
                <article-form v-model="form" is-edit :can-edit-status="canEditStatus" :original-status="originalStatus"
@@ -27,6 +27,7 @@ import { useAuthStore } from '@/stores/auth/auth.store';
 import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
+import { MukText } from 'modular-ui-kit-vue';
 import ArticleForm from '../components/ArticleForm.vue';
 
 /* TYPES & ENUMS */

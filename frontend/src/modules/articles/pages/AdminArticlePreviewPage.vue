@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Article Preview</h1>
+               <muk-text as="h1" type="muk-heading">Article Preview</muk-text>
             </div>
             <div class="page__content">
                <Transition name="fade" mode="out-in">
@@ -11,9 +11,12 @@
                      <article-preview-skeleton />
                   </div>
                   <div class="page__info" v-else-if="error" key="error">
-                     <error-state title="Oops! Something went wrong..."
-                        description="Failed to load article. It might be a temporary connection issue. Please check your internet or try refreshing the page."
-                        buttonText="Try Again" @retry="handleRetry" />
+                     <muk-error-state title="Oops! Something went wrong..."
+                        description="Failed to load article. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
+                        <template #action>
+                           <muk-button @click="handleRetry">Try Again</muk-button>
+                        </template>
+                     </muk-error-state>
                   </div>
                   <div class="article-preview__wrapper" v-else-if="article" key="content">
                      <article-preview :article="article" show-admin-controls @edit="handleEdit"
@@ -37,9 +40,9 @@ import { useArticlesAdminStore } from '../store/article.admin.store';
 import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
+import { MukText, MukErrorState, MukButton } from 'modular-ui-kit-vue';
 import ArticlePreview from '../components/ArticlePreview.vue';
 import ArticlePreviewSkeleton from '@/shared/ui/skeletons/ArticlePreviewSkeleton.vue';
-import ErrorState from '@/shared/ui/feedback/ErrorState.vue'
 
 /* === STORES & ROUTER  === */
 const route = useRoute()
