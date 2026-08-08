@@ -47,7 +47,7 @@ import { watch, computed } from 'vue'
 /* STORES  & COMPOSABLES*/
 import { useArticlesPublicStore } from '../store/article.public.store';
 import { useComentsStore } from '@/modules/comments/store/comment.store';
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 
 
 /* COMPONENTS */
@@ -62,7 +62,7 @@ import CommentListSkeleton from '@/shared/ui/skeletons/CommentListSkeleton.vue';
 import type { CreateCommentPayload } from '@/modules/comments/types';
 
 /* === ROUTER & STORES === */
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 const route = useRoute()
 const articlesStore = useArticlesPublicStore()
 const commentsStore = useComentsStore()

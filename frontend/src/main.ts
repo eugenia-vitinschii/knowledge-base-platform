@@ -4,8 +4,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-import './assets/sass/app.sass'
 import 'modular-ui-kit-vue/dist/modular-ui-kit-vue.css'
+import './assets/sass/app.sass'
 
 import "highlight.js/styles/github.css";
 

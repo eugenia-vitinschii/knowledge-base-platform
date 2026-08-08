@@ -1,7 +1,7 @@
 <template>
    <form class="profile-form" @submit.prevent="emitSubmit">
       <div class="profile-form__section">
-         <base-text :type="'subheading'">Main info</base-text>
+         <base-text :type="'muk-subheading'">Main info</base-text>
          <div class="profile-form__section--items">
             <base-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
                @update:model-value="validateField('name')" />
@@ -11,7 +11,7 @@
          </div>
       </div>
       <div class=" profile-form__section">
-         <base-text :type="'subheading'">Contacts & Bio</base-text>
+         <base-text :type="'muk-subheading'">Contacts & Bio</base-text>
          <div class="profile-form__section--items">
             <base-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
@@ -23,31 +23,31 @@
          </div>
       </div>
       <div class="profile-form__section">
-         <base-text :type="'subheading'">Personal Details</base-text>
+         <muk-text :type="'muk-subheading'">Personal Details</muk-text>
          <div class="profile-form__section--items">
-            <base-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
-            <base-input v-model="localForm.birthDate" label="Birth Date" type="date" placeholder="Birthday date"
+            <muk-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
+            <muk-input v-model="localForm.birthDate" label="Birth Date" type="date" placeholder="Birthday date"
                :error="errors.birthDate" @update:model-value="validateField('birthDate')" />
-            <base-checkbox :model-value="localForm.visibility.birthDate === 'private'"
+            <muk-checkbox :model-value="localForm.visibility.birthDate === 'private'"
                @update:model-value="v => localForm.visibility.birthDate = v ? Visibility.PRIVATE : Visibility.PUBLIC"
                label="Hide Birthday" class="profile-form__checkbox" />
          </div>
       </div>
-      <base-text :type="'subheading'">Update information</base-text>
+      <base-text :type="'muk-subheading'">Update information</base-text>
       <div class="profile-form__actions">
-         <base-button @click="$router.push('/')" :variant="'secondary'">
+         <muk-button @click="$router.push('/')" :variant="'secondary'">
             Back
-         </base-button>
-         <base-button :type="'submit'">
+         </muk-button>
+         <muk-button :type="'submit'">
             Save
-         </base-button>
+         </muk-button>
       </div>
    </form>
 </template>
 
 <script setup lang="ts">
 /* COMPONENTS */
-import { BaseText, BaseButton, BaseInput, BaseSelect, BaseCheckbox } from 'modular-ui-kit-vue'
+import { MukText, MukButton, MukInput, MukSelect, MukCheckbox } from 'modular-ui-kit-vue'
 
 
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
@@ -64,9 +64,9 @@ import { Visibility } from '@/shared/enums/visibility.enum';
 import type { ProfileFormData } from '../validation/profile.schema';
 import { profileSchema } from '../validation/profile.schema';
 
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 
 /* PROPS */
 const props = defineProps<{

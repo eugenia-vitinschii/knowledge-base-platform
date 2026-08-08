@@ -47,7 +47,7 @@ import { watch, reactive, computed } from 'vue';
 /* COMPOSABLE */
 
 /* COMPONENTS */
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 import UiInput from '@/shared/ui/form/UiInput.vue';
 import UiSelect from '@/shared/ui/form/UiSelect.vue';
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
@@ -65,7 +65,7 @@ import { articleSchema } from '../validation/articles.schema';
 import { mapFormToUpdatePayload } from '../utils/map-form-to-update';
 import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 
 /* === PROPS ===  */
 const props = defineProps<{

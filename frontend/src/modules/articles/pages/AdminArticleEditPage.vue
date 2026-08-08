@@ -24,7 +24,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from '../store/article.admin.store';
 import { useAuthStore } from '@/stores/auth/auth.store';
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
 import ArticleForm from '../components/ArticleForm.vue';
@@ -43,7 +43,7 @@ const router = useRouter()
 const articleCrudStore = useArticlesCrudStore()
 const auth = useAuthStore()
 const articleAdminStore = useArticlesAdminStore()
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 
 /* === STATE COMPUTED === */
 const isLoading = computed(() => articleCrudStore.isLoading)

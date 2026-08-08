@@ -16,9 +16,9 @@
             <td>{{ i.position }}</td>
             <td>{{ i.location }}</td>
             <td class="user-table__actions">
-               <ui-button type="button" @click="$emit('edit', i.id)">Edit</ui-button>
-               <ui-button type="button" variant="secondary" @click="$emit('preview', i.id)">View</ui-button>
-               <ui-button type="button" variant="danger" @click="$emit('delete', i.id)">Delete</ui-button>
+               <muk-button @click="$emit('edit', i.id)">Edit</muk-button>
+               <muk-button variant="secondary" @click="$emit('preview', i.id)">View</muk-button>
+               <muk-button variant="danger" @click="$emit('delete', i.id)">Delete</muk-button>
             </td>
          </tr>
       </tbody>
@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukButton } from 'modular-ui-kit-vue'
 
 /* TYPES */
 import type { UserTableRow } from '@/modules/users/types';

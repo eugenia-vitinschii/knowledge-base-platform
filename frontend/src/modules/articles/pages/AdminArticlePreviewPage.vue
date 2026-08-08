@@ -34,7 +34,7 @@ import { computed, watch } from 'vue';
 /* STORES & COMPOSABLES*/
 import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from '../store/article.admin.store';
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
 import ArticlePreview from '../components/ArticlePreview.vue';
@@ -46,7 +46,7 @@ const route = useRoute()
 const router = useRouter();
 const articlesCrudStore = useArticlesCrudStore()
 const articlesAdminStore = useArticlesAdminStore()
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 
 /* === STATE COMPUTED === */
 /* UI render flow*/

@@ -1,47 +1,46 @@
 <template>
    <form class="admin-user-form" @submit.prevent="emitSubmit">
       <div class="admin-user-form__section">
-         <p class="subheading">Main info</p>
+         <muk-text type="muk-subheading">Main info</muk-text>
          <div class="admin-user-form__section--items">
-            <ui-input v-model="localForm.name" label="* Name" type="text" placeholder="name" :error="errors.name"
+            <muk-input v-model="localForm.name" label="* Name" placeholder="name" :error="errors.name"
                @update:model-value="validateField('name')" />
-            <ui-input v-model="localForm.email" label="* Email" type="email" placeholder="email" :error="errors.email"
+            <muk-input v-model="localForm.email" label="* Email" type="email" placeholder="email" :error="errors.email"
                @update:model-value="validateField('email')" />
-            <ui-input v-model="localForm.password" label="* Password" type="password" placeholder="password"
+            <muk-input v-model="localForm.password" label="* Password" type="password" placeholder="password"
                :disabled="isEdit" :error="errors.password" @update:model-value="validateField('password')" />
-            <ui-select v-model="localForm.position" :options="positionOptions" label="Position" />
+            <muk-select v-model="localForm.position" :options="positionOptions" label="Position" />
          </div>
       </div>
       <div class="admin-user-form__section" v-if="isEdit">
-         <p class="subheading">User Role</p>
+         <muk-text type="muk-subheading">User Role</muk-text>
          <div class="admin-user-form__section--items">
-            <ui-select v-model="localForm.role" :options="roleOptions" label="Role" />
-            <ui-button type="button" variant="danger" @click="emit('save-role')">save
-               role</ui-button>
+            <muk-select v-model="localForm.role" :options="roleOptions" label="Role" />
+            <muk-button type="button" :variant="'warning'" @click="emit('save-role')">Update role</muk-button>
          </div>
       </div>
       <div class=" admin-user-form__section">
-         <p class="subheading">Contacts & Location</p>
+         <muk-text type="muk-subheading">Contacts & Location</muk-text>
          <div class="admin-user-form__section--items">
-            <ui-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
+            <muk-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
-            <ui-select v-model="localForm.location" :options="locationOptions" label="Location" />
+            <muk-select v-model="localForm.location" :options="locationOptions" label="Location" />
             <markdown-editor v-model="localForm.bio" :error="errors.bio" @update:model-value="validateField('bio')" />
          </div>
       </div>
       <div class="admin-user-form__section">
-         <p class="subheading">Personal Details</p>
+         <muk-text type="muk-subheading">Personal Detailsr</muk-text>
          <div class="admin-user-form__section--items">
-            <ui-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
-            <ui-input v-model="localForm.hiredDate" label="Hired Date" type="date" placeholder="Hired date" />
+            <muk-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
+            <muk-input v-model="localForm.hiredDate" label="Hired Date" type="date" placeholder="Hired date" />
          </div>
       </div>
-      <p class="subheading">{{ isEdit ? "Update" : "Create" }} user</p>
+      <muk-text type="muk-subheading">{{ isEdit ? "Update" : "Create" }} user</muk-text>
       <div class="admin-user-form__actions">
-         <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
-         <ui-button type="submit" variant="primary" :size="'md'">
+         <muk-text as="router-link" to="/" class="btn btn--secondary btn--lg"> back </muk-text>
+         <muk-button type="submit" variant="primary" :size="'md'">
             {{ isEdit ? "update" : "create" }}
-         </ui-button>
+         </muk-button>
       </div>
    </form>
 </template>
@@ -51,14 +50,14 @@
 import { reactive, watch } from 'vue';
 
 /* COMPONENTS */
-import UiInput from '@/shared/ui/form/UiInput.vue';
-import UiSelect from '@/shared/ui/form/UiSelect.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukButton, MukText, MukInput, MukSelect } from 'modular-ui-kit-vue'
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
+
 /* TYPES & ENUMS*/
 import type { AdminUserFormModel, AdminUpdateUserPayload, AdminCreateUserPayload } from '@/modules/users/types/index';
 import { Gender, Position, Location } from "@/shared/enums/user.enum"
 import { Role } from "@/shared/enums/role.enum"
+
 /* Validation */
 import { createUserSchema, updateUserSchema } from '../validation/user.schema';
 

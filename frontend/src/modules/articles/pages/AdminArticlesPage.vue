@@ -37,7 +37,7 @@
                </Transition>
             </div>
             <div class="page__footer" v-if="hasArticles && !isLoading">
-               <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
+               <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
 
          </div>
@@ -56,7 +56,7 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useArticlesAdminStore } from "../store/article.admin.store"
 
 /* COMPOSABLES  */
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 import { useArticleAdminFilter } from '@/modules/articles/composables/useAdminArticleFilter';
 
 /* COMPONENTS */
@@ -79,7 +79,7 @@ const articlesCrudStore = useArticlesCrudStore();
 const articlesAdminStore = useArticlesAdminStore();
 
 /* === COMPOSABLES  === */
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 const { mapQueryToParams } = useArticleAdminFilter()
 
 /* === STATE COMPUTED === */

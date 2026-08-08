@@ -44,7 +44,7 @@ import { useRoute } from 'vue-router';
 
 /* STORE & COMPOSABLES */
 import { useAdminUsersStore } from '@/modules/users/store/admin.users.store';
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 import { useUserAdminFilter } from "@/modules/users/composables/UseUsersAdminFilters"
 
 /* TYPES */
@@ -60,7 +60,7 @@ import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
 
 /* === ROUTER & STORES === */
 const userStore = useAdminUsersStore();
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 const router = useRouter();
 const route = useRoute()
 const { mapQueryToParams } = useUserAdminFilter()

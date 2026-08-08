@@ -2,27 +2,27 @@
    <div class="admin-user-filter">
       <div class="admin-user-filter__active">
          <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
-            <base-text as="span">{{ key }} : {{ value }}</base-text>
-            <base-icon-button @click="removeFilter(key)"><svg xmlns="http://www.w3.org/2000/svg"
+            <muk-text as="span">{{ key }} : {{ value }}</muk-text>
+            <muk-icon-button @click="removeFilter(key)"><svg xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 -960 960 960">
                   <path
                      d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
                </svg>
-            </base-icon-button>
+            </muk-icon-button>
          </div>
       </div>
       <div class="admin-user-filter__info" v-if="activeFilters.length">
-         <base-text>Result(s): {{ count }}</base-text>
-         <base-button @click="onReset" :variant="'danger'" v-if="activeFilters.length">Reset</base-button>
+         <muk-text>Result(s): {{ count }}</muk-text>
+         <muk-button @click="onReset" variant="danger" v-if="activeFilters.length">Reset</muk-button>
       </div>
       <div class="admin-user-filter__filter">
-         <base-input v-model="localSearch.search" type="search" placeholder="🔍 search user"
+         <muk-input v-model="localSearch.search" type="search" placeholder="🔍 search user"
             @update:modelValue="updateFilter('search', $event)" />
-         <base-select v-model="localSearch.role" :options="roleOptions"
+         <muk-select v-model="localSearch.role" :options="roleOptions"
             @update:modelValue="updateFilter('role', $event as Role | '')" />
-         <base-select v-model="localSearch.position" :options="positionOptions"
+         <muk-select v-model="localSearch.position" :options="positionOptions"
             @update:modelValue="updateFilter('position', $event as Position | '')" />
-         <base-select v-model="localSearch.location" :options="locationOptions"
+         <muk-select v-model="localSearch.location" :options="locationOptions"
             @update:modelValue="updateFilter('location', $event as Location | '')" />
       </div>
    </div>
@@ -33,7 +33,7 @@
 import { reactive, watch, computed } from 'vue';
 
 /* === COMPONENTS === */
-import { BaseButton, BaseText, BaseInput, BaseSelect, BaseIconButton } from 'modular-ui-kit-vue'
+import { MukButton, MukText, MukInput, MukSelect, MukIconButton } from 'modular-ui-kit-vue'
 
 /* === TYPES === */
 import type { AdminUserFilters } from '../types/index';

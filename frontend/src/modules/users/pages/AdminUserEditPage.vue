@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <p class="heading">Update User {{ form.name }}</p>
+               <muk-text as="h1" type="muk-heading">Update User {{ form.name }}</muk-text>
             </div>
             <div class="page__content">
                <admin-user-form v-model="form" :isEdit="true" @save-role="saveRole" @submit="onSubmit" />
@@ -16,13 +16,14 @@
 <script setup lang="ts">
 /* Components */
 import AdminUserForm from '../components/AdminUserForm.vue';
+import { MukText } from 'modular-ui-kit-vue'
 
 /* VUE & ROUTER*/
 import { onMounted, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 /* PINIA */
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 import { useAdminUsersStore } from '@/modules/users/store/admin.users.store';
 import { Role } from '@/shared/enums/role.enum';
 
@@ -37,7 +38,7 @@ const route = useRoute()
 const router = useRouter()
 
 /* stores Variables */
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 const adminUsers = useAdminUsersStore()
 
 const userId = computed(() => String(route.params.id || ''))
@@ -57,7 +58,6 @@ const form = reactive<AdminUserFormModel>({
    bio: ''
 
 })
-
 
 
 /* load user data */

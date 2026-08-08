@@ -21,7 +21,7 @@ import { useRouter } from 'vue-router';
 
 /* STORE & COMPOSABLE*/
 import { useArticlesCrudStore } from '../store/article.crud.store';
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
 import ArticleForm from '../components/ArticleForm.vue';
@@ -36,7 +36,7 @@ import { mapFormToCreatePayload } from '../utils/map-form-to-create';
 /* === ROUTER & STORES === */
 const articleCrudStore = useArticlesCrudStore()
 const router = useRouter()
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 
 /* === STATE COMPUTED === */
 const isLoading = computed(() => articleCrudStore.isLoading)

@@ -2,7 +2,7 @@
    <div class="page">
       <div class="container">
          <div class="page__wrapper">
-            <base-text :type="'heading'" as="h1">Edit profile</base-text>
+            <muk-text :type="'heading'" as="h1">Edit profile</muk-text>
             <div class="page__container">
                <profile-form v-model="form" @submit="onSubmit" />
             </div>
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 /* COMPONENTS */
 import ProfileForm from '../components/ProfileForm.vue';
-import { BaseText } from 'modular-ui-kit-vue'
+import { MukText } from 'modular-ui-kit-vue'
 
 /* VUE & ROUTER*/
 import { onMounted, reactive } from 'vue';
@@ -22,7 +22,7 @@ import { useRouter } from 'vue-router';
 
 /*Pinia */
 import { useProfileStore } from '../store/profile.store';
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 
 /* TYPES & ENUMS */
 import type { ProfileFormData } from '../validation/profile.schema';
@@ -37,7 +37,7 @@ import { Visibility } from '@/shared/enums/visibility.enum';
 const router = useRouter()
 
 const profileStore = useProfileStore()
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 
 const form = reactive<ProfileFormData>({
    name: '',

@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <p class="heading">Create User {{ form.name }}</p>
+               <muk-text as="h1" type="muk-heading">Create User {{ form.name }}</muk-text>
             </div>
             <div class="page__content">
                <admin-user-form v-model="form" :isEdit="false" @submit="onSubmit" />
@@ -16,13 +16,14 @@
 <script setup lang="ts">
 /* Components */
 import AdminUserForm from '../components/AdminUserForm.vue';
+import { MukText } from 'modular-ui-kit-vue'
 
 /* VUE & ROUTER*/
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 /* PINIA */
-import { useToast } from 'modular-ui-kit-vue'
+import { useMukToast } from 'modular-ui-kit-vue'
 import { useAdminUsersStore } from '@/modules/users/store/admin.users.store';
 import { Role } from '@/shared/enums/role.enum';
 
@@ -35,7 +36,7 @@ import { mapFormToCreatePayload } from '@/modules/users/utils/map-form-to-create
 const router = useRouter()
 
 /* stores Variables */
-const { addToast } = useToast()
+const { addToast } = useMukToast()
 const adminUsers = useAdminUsersStore()
 
 const form = reactive<AdminUserFormModel>({
@@ -61,7 +62,7 @@ async function onSubmit() {
 
    if (!updated) return addToast("Failed to create the user", 'danger')
 
-   addToast("User has been created", 'warning')
+   addToast("User has been created", 'success')
 
    router.push(`/admin/users`)
 }
