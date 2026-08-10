@@ -1,11 +1,14 @@
 <template>
    <div class="summary-card" @click="onClick">
-      <p class="body-text">{{ data?.label }}</p>
-      <p class="subheading">{{ data?.value }}</p>
+      <muk-text>{{ data?.label }}</muk-text>
+      <muk-text type="muk-subheading" align="center">{{ data?.value }}</muk-text>
    </div>
 </template>
 
 <script setup lang="ts">
+/* COMPONENTS */
+import { MukText } from 'modular-ui-kit-vue'
+
 import type { StatsCardItem } from "@/modules/dashboard/types/index"
 
 import { useRouter } from 'vue-router';

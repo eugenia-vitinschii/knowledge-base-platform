@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__title">
-               <h1 class="heading">Admin Dashboard</h1>
+               <muk-text type="muk-heading" as="h1">Admin Dashboard</muk-text>
             </div>
             <div class="page__content" v-if="hasAnyCharts">
                <div class="summary-cards">
@@ -28,14 +28,14 @@
                </div>
             </div>
             <div class="page__info" v-else>
-               <empty-state :variant="'accent'" :title="'Welcome to Admin Dashboard'"
+               <muk-empty-state :variant="'accent'" :title="'Welcome to Admin Dashboard'"
                   :description="'Here you can find insights about your articles'">
                   <template #action>
-                     <router-link class="body-text" :to="'/admin/articles/create'">
+                     <muk-text as="router-link" :to="'/admin/articles/create'">
                         Create article
-                     </router-link>
+                     </muk-text>
                   </template>
-               </empty-state>
+               </muk-empty-state>
             </div>
          </div>
       </div>
@@ -43,10 +43,10 @@
 </template>
 
 <script setup lang="ts">
-/* Components */
+/* COMPONENTS */
+import { MukText, MukEmptyState } from 'modular-ui-kit-vue'
 import BaseChart from '../components/BaseChart.vue';
 import SummaryCard from '../components/SummaryCard.vue';
-import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
 
 /* Mappers */
 import { mapAuthorStats } from '@/modules/dashboard/utils/map-author-stats';

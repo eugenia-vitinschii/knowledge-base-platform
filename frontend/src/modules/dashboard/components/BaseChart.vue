@@ -1,17 +1,16 @@
 <template>
    <div class="admin-chart">
       <div v-if="loading">
-         <p class="body-text">loading...</p>
+         <muk-text>loading...</muk-text>
       </div>
       <div v-else-if="isEmpty">
-         <p class="body-text">{{ emptyText || "No data available" }}</p>
+         <muk-text>{{ emptyText || "No data available" }}</muk-text>
       </div>
       <div v-else>
-         <p class="body-text">{{ title }}</p>
+         <muk-text>{{ title }}</muk-text>
          <div class="admin-chart__wrapper">
             <canvas ref="canvas" class="admin-chart__canvas"></canvas>
          </div>
-
       </div>
    </div>
 </template>
@@ -19,6 +18,9 @@
 <script setup lang="ts">
 /* VUE */
 import { onMounted, ref, watch, computed, onUnmounted } from 'vue'
+
+/* COMPONENTS */
+import { MukText } from 'modular-ui-kit-vue'
 
 /*CHART*/
 import { Chart, registerables } from 'chart.js'
