@@ -1,31 +1,6 @@
 //mixins
 @use './variables' as *
 
-// === FONTS === //
-@mixin font-size($font-size, $line-height)
-   font-size: $font-size
-   line-height: $line-height
-
-@mixin font-style( $color, $padding-top, $text-align)
-   color: $color
-   padding-top: $padding-top
-   text-align: $text-align
-
-@mixin field-text($font-size, $color)
-   font-size: $font-size
-   color: $color
-
-/*=== BUTTONS ===*/
-@mixin button-size($height, $padding, $font-size)
-   height: $height
-   padding: 0 $padding
-   font-size: $font-size
-
-@mixin button-variant($bg, $color, $border-color)
-   background: $bg
-   color: $color
-   border: 1px solid $border-color
-
 /*=== FORM ELEMENT ===*/
 @mixin form-element()
    width: 100%
