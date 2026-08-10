@@ -3,7 +3,7 @@
       <div class="container">
          <div class="page__wrapper">
             <div class="page__header">
-               <h1 class="heading">Admin Users Page</h1>
+               <muk-text as="h1" type="muk-heading">Admin Users Page</muk-text>
             </div>
             <div class="page__content">
                <div class="filter-wrapper">
@@ -14,22 +14,25 @@
                      <table-skeleton :rows="9" :buttons="2" :columns="5" />
                   </div>
                   <div class="page__info" v-else-if="error" key="error">
-                     <error-state title="Oops! Something went wrong..."
-                        description="Failed to load users. It might be a temporary connection issue. Please check your internet or try refreshing the page."
-                        buttonText="Try Again" @retry="handleRetry" />
+                     <muk-error-state title="Oops! Something went wrong..."
+                        description="Failed to load users. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
+                        <template>
+                           <muk-button @click="handleRetry">Try Again</muk-button>
+                        </template>
+                     </muk-error-state>
                   </div>
                   <div class="user-table__wrapper" v-else-if="hasUsers" key="users">
                      <user-table :items="users" @delete="handleDeleteUser" @edit="handleEdit"
                         @preview="handlePreview" />
                   </div>
                   <div class="empty-state__wrapper" v-else-if="!isLoading && !hasUsers && !error" key="empty">
-                     <empty-state variant="search" title="No results found"
+                     <muk-empty-state variant="search" title="No results found"
                         description="Try adjusting your filters or search terms to find what youre looking for" />
                   </div>
                </Transition>
             </div>
             <div class="page__footer" v-if="hasUsers && !isLoading">
-               <base-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
+               <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
          </div>
       </div>
@@ -51,12 +54,10 @@ import { useUserAdminFilter } from "@/modules/users/composables/UseUsersAdminFil
 import type { UserQueryParams, AdminUserFilters } from '../types/index.ts';
 
 /* COMPONENTS */
+import { MukText, MukPagination, MukEmptyState, MukErrorState, MukButton } from 'modular-ui-kit-vue';
 import AdminUserFilter from '../components/AdminUserFilter.vue';
 import UserTable from '@/modules/users/components/UserTable.vue';
 import TableSkeleton from '@/shared/ui/skeletons/TableSkeleton.vue';
-import EmptyState from '@/shared/ui/feedback/EmptyState.vue';
-import ErrorState from '@/shared/ui/feedback/ErrorState.vue'
-import BasePagination from '@/shared/ui/navigation/BasePagination.vue';
 
 /* === ROUTER & STORES === */
 const userStore = useAdminUsersStore();

@@ -1,21 +1,21 @@
 <template>
    <form class="profile-form" @submit.prevent="emitSubmit">
       <div class="profile-form__section">
-         <base-text :type="'muk-subheading'">Main info</base-text>
+         <muk-text type="muk-subheading">Main info</muk-text>
          <div class="profile-form__section--items">
-            <base-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
+            <muk-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
                @update:model-value="validateField('name')" />
-            <base-input v-model="localForm.email" label="Email" type="email" placeholder="email" :error="errors.email"
+            <muk-input v-model="localForm.email" label="Email" type="email" placeholder="email" :error="errors.email"
                @update:model-value="validateField('email')" />
-            <base-select v-model="localForm.position" :options="positionOptions" label="Position" />
+            <muk-select v-model="localForm.position" :options="positionOptions" label="Position" />
          </div>
       </div>
       <div class=" profile-form__section">
-         <base-text :type="'muk-subheading'">Contacts & Bio</base-text>
+         <muk-text :type="'muk-subheading'">Contacts & Bio</muk-text>
          <div class="profile-form__section--items">
-            <base-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
+            <muk-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
-            <base-checkbox :model-value="localForm.visibility.phone === 'private'"
+            <muk-checkbox :model-value="localForm.visibility.phone === 'private'"
                @update:model-value="v => localForm.visibility.phone = v ? Visibility.PRIVATE : Visibility.PUBLIC"
                label="Hide phone " class="profile-form__checkbox" />
             <markdown-editor :model-value="localForm.bio ?? ''" :error="errors.bio"
@@ -48,8 +48,6 @@
 <script setup lang="ts">
 /* COMPONENTS */
 import { MukText, MukButton, MukInput, MukSelect, MukCheckbox } from 'modular-ui-kit-vue'
-
-
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';
 
 /*VUE */

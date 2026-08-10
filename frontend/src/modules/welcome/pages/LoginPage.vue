@@ -3,26 +3,26 @@
       <div class="container">
          <div class="page__wrapper auth">
             <div class="page__header">
-               <h1 class="heading">Corporate Knowledge Base</h1>
-               <p class="subheading">
+               <muk-text as="h1" type="muk-heading">Corporate Knowledge Base</muk-text>
+               <muk-text as="h2" type="muk-subheading">
                   Sign in with your company account to access internal documentation
-               </p>
+               </muk-text>
             </div>
             <div class="page__content">
                <div class="auth-form-wrapper">
                   <form class="auth-form" @submit.prevent="submit">
-                     <ui-input v-model="email" label="Email" type="email" />
-                     <ui-input v-model="password" label="Password" type="password" />
+                     <muk-input v-model="email" label="Email" type="email" />
+                     <muk-input v-model="password" label="Password" type="password" />
                      <div class="auth-form__actions">
-                        <ui-button type="submit">login</ui-button>
+                        <muk-button type="submit">login</muk-button>
                      </div>
                   </form>
                </div>
             </div>
             <div class="page__footer">
-               <p class="body-text">This is a private, restricted corporate knowledge base. If you are not an authorized
+               <muk-text>This is a private, restricted corporate knowledge base. If you are not an authorized
                   employee, please return to your previous location. Unauthorized access or use of this platform is
-                  strictly prohibited and subject to company policies</p>
+                  strictly prohibited and subject to company policies</muk-text>
             </div>
          </div>
       </div>
@@ -39,8 +39,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth/auth.store';
 
 /*COMPONENTS */
-import UiInput from '@/shared/ui/form/UiInput.vue';
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukInput, MukButton, MukText } from 'modular-ui-kit-vue';
 
 /* PINIA & ROUTER */
 const auth = useAuthStore()

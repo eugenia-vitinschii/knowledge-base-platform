@@ -1,21 +1,21 @@
 <template>
    <div class="error-page">
       <div class="error-page__content">
-         <h1 class="heading">{{ code }}</h1>
-         <h2 class="subheading">{{ title }}</h2>
-         <p class="body-text">{{ description }}</p>
+         <muk-text as="h1" type="muk-heading">{{ code }}</muk-text>
+         <muk-text as="h2" type="muk-subheading">{{ title }}</muk-text>
+         <muk-text>{{ description }}</muk-text>
       </div>
       <div class="error-page__actions" v-if="buttonText">
-         <ui-button @click="onAction">
+         <muk-button @click="onAction">
             {{ buttonText }}
-         </ui-button>
+         </muk-button>
       </div>
    </div>
 </template>
 
 <script setup lang="ts">
 /* COMPONENTS */
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
+import { MukText, MukButton } from 'modular-ui-kit-vue';
 
 /* === PROPS & EMITS === */
 const props = defineProps<{

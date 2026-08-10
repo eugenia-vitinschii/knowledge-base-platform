@@ -6,9 +6,8 @@
                <theme-toggle />
             </div>
             <div class="footer__text">
-               <p class="body-text">KBP 2026</p>
+               <muk-text>KBP 2026 [refactored]</muk-text>
             </div>
-
          </div>
       </div>
    </footer>
@@ -16,5 +15,6 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
+import { MukText } from 'modular-ui-kit-vue';
 import ThemeToggle from '@/shared/ui/buttons/ThemeToggle.vue';
 </script>
