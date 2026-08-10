@@ -2,65 +2,6 @@
 @use '../abstracts/variables' as *
 @use '../abstracts/mixins' as *
 
-/* ================= EMPTY STATE =================  */
-.empty-state
-   padding: 10px
-   margin-top: 50px
-   &__text
-      p,h3
-         text-align: center
-   &__actions
-      a
-         text-align: center
-         text-decoration: underline
-
-.empty-state--default
-   border: 1px dotted var(--border)
-
-.empty-state--accent
-   border: 1px dotted var(--success)
-   p, h3, a
-      color: var(--success)
-
-.empty-state--search
-   border: 1px dotted var(--warning)
-   p, h3, a
-      color: var(--warning)
-
-/* ================= ERROR STATE =================  */
-.error-state
-   padding: 10px
-   border: 1px dotted var(--border)
-   &__text
-      p,h3
-         text-align: center
-   &__action
-      display: flex
-      justify-content: center
-
-/* ================= SKELEYONS =================  */
-   //shimmer styles
-.shimmer
-   position: relative
-   overflow: hidden
-
-.shimmer::before
-   content: ''
-   position: absolute
-   top: 0
-   left: -150px
-   height: 100%
-   width: inherit
-   background: linear-gradient(to right, transparent 0%, var(--text-muted) 50%, transparent 100%)
-   animation: loading 2.6s infinite
-
-@keyframes loading
-   0%
-      left: -150px
-
-   100%
-      left: 100%
-
 //article preview compoenmt
 .article-preview-skeleton
    margin: $margin-block
@@ -171,18 +112,3 @@
 .fade-enter-from,
 .fade-leave-to
    opacity: 0
-
-/* =================  BREAD CRUMBS =================  */
-.bread-crumbs
-   &__list
-      display: flex
-      align-items: center
-      list-style: none
-   &__item
-      display: flex
-      align-items: center
-      a, span
-         margin-top: 0px
-         padding-top: 0px
-   &__item-separator
-      margin: 0 8px
