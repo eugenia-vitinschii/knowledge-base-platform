@@ -1,23 +1,7 @@
 /* shared compoents*/
 @use '../abstracts/variables' as *
 @use '../abstracts/mixins' as *
-
-//article preview compoenmt
-.article-preview-skeleton
-   margin: $margin-block
-   padding: $padding-block
-   border: $border
-   &__text
-      @include skeleton-text(200px, 6px)
-   &__line
-      @include skeleton-text(100%, 30px)
-      height: 30px
-   &__content
-      @include skeleton-text(100%, 30px)
-      height: 500px
-      margin: $margin-element
-      padding: 30px
-      border: $border
+@use '../abstracts/tokens' as *
 
 //comment list component
 .comment-list-skeleton
@@ -29,19 +13,6 @@
    &__line
       @include skeleton-text(100%, 30px)
       height: 60px
-
-//article list item component
-.article-list--item-skeleton
-   margin: $margin-block
-   padding: $padding-block
-   border: $border
-   &__text
-      @include skeleton-text(200px, 6px)
-   &__content
-      @include skeleton-text(100%, 30px)
-      height: 40px
-   &__line
-      @include skeleton-text(100px, 30px)
 
 //articles table
 .table-skeleton
@@ -63,46 +34,6 @@
    &__button
       @include skeleton-text(90px, 10px)
       border-radius: 12px
-
-//profile skeleton
-.profile-skeleton
-   display: flex
-   justify-content: space-between
-   &__main
-      @include block-element()
-      display: flex
-      flex-direction: column
-      align-items: center
-      padding: 20px
-      width: 30%
-   &__main-avatar
-      margin-bottom: 10px
-      width: 200px
-      height: 200px
-   &__main-circle
-      width: 100%
-      height: 100%
-      border-radius: 50%
-   &__main-text
-      @include skeleton-text(90px, 10px)
-   &__about
-      @include block-element()
-      margin-left: 10px
-      width: 70%
-      overflow: hidden
-   &__about-title
-      @include skeleton-text(240px, 10px)
-   &__about-info
-      @include skeleton-text(960px, 40px)
-      height: 300px
-@media (max-width: 700px)
-   .profile-skeleton
-      flex-direction: column
-      &__main
-         width: 100%
-      &__about
-         width: 100%
-         margin: 10px 0px 10px 0px
 
 /* ================= TRANSITIONS =================  */
 .fade-enter-active,

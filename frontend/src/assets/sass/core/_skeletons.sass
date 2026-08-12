@@ -1,0 +1,71 @@
+/*  SKELETONS s*/
+@use '../abstracts/variables' as *
+@use '../abstracts/mixins' as *
+@use '../abstracts/tokens' as *
+
+.muk-skeleton
+   margin-top: $muk-space-content-lg
+
+//article list item component
+.article-list-item-skeleton
+   &__header
+      display: flex
+      justify-content: space-between
+      margin-bottom: 40px
+   &__badges
+      display: flex
+      align-items: center
+      justify-content: start
+      flex-direction: row
+      gap: 6px
+   @media (max-width: 500px)
+      &__header
+         flex-direction: column
+         margin-bottom: 20px
+
+//article preview compoenmt
+.article-preview-skeleton
+   &__header
+      display: flex
+      justify-content: space-between
+      margin-bottom: 40px
+   &__badges
+      display: flex
+      align-items: center
+      justify-content: start
+      flex-direction: row
+      gap: 6px
+   @media (max-width: 500px)
+      &__header
+         flex-direction: column
+         margin-bottom: 20px
+
+//profile skeleton
+.profile-skeleton
+   display: flex
+   justify-content: space-between
+   gap: 10px
+   &__main
+      width: 500px
+   &__about
+      width: 100%
+
+@media (max-width: 700px)
+   .profile-skeleton
+      flex-direction: column
+      &__main
+         width: 100%
+         display: flex
+         justify-content: space-between
+         flex-direction: column
+      &__main-top
+         display: flex
+         justify-content: space-between
+         align-items: center
+         flex-direction: row
+
+@media (max-width: 435px)
+   .profile-skeleton
+      &__avatar
+         width: 100px!important
+         height: 100px!important
