@@ -2,8 +2,8 @@
    <div class="article-filter">
       <div class="article-filter__active" v-if="activeFilters.length">
          <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
-            <base-text as="span">{{ key }} : {{ value }}</base-text>
-            <muk-icon-button class="filter-chip__button" @click="removeFilter(key)">
+            <muk-text as="span">{{ key }} : {{ value }}</muk-text>
+            <muk-icon-button @click="removeFilter(key)">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
                   <path
                      d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
@@ -30,7 +30,7 @@
 import { reactive, watch, computed } from 'vue';
 
 /* COMPONENTS */
-import { MukText, MukInput, MukSelect, MukIconButton } from 'modular-ui-kit-vue'
+import { MukText, MukInput, MukSelect, MukIconButton, MukButton } from 'modular-ui-kit-vue'
 
 /* ENUMS & TYPES */
 import { ArticleDifficulty, ArcticleType, ArticleCategory, ArticleStatus } from '@/shared/enums/article.enum';

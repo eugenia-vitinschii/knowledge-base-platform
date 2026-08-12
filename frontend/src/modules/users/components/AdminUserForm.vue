@@ -2,7 +2,7 @@
    <form class="admin-user-form" @submit.prevent="emitSubmit">
       <div class="admin-user-form__section">
          <muk-text type="muk-subheading">Main info</muk-text>
-         <div class="admin-user-form__section--items">
+         <div class="muk-section__item">
             <muk-input v-model="localForm.name" label="* Name" placeholder="name" :error="errors.name"
                @update:model-value="validateField('name')" />
             <muk-input v-model="localForm.email" label="* Email" type="email" placeholder="email" :error="errors.email"
@@ -14,14 +14,14 @@
       </div>
       <div class="admin-user-form__section" v-if="isEdit">
          <muk-text type="muk-subheading">User Role</muk-text>
-         <div class="admin-user-form__section--items">
+         <div class="muk-section__item">
             <muk-select v-model="localForm.role" :options="roleOptions" label="Role" />
             <muk-button type="button" :variant="'warning'" @click="emit('save-role')">Update role</muk-button>
          </div>
       </div>
       <div class=" admin-user-form__section">
          <muk-text type="muk-subheading">Contacts & Location</muk-text>
-         <div class="admin-user-form__section--items">
+         <div class="muk-section__item">
             <muk-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
             <muk-select v-model="localForm.location" :options="locationOptions" label="Location" />
@@ -29,15 +29,15 @@
          </div>
       </div>
       <div class="admin-user-form__section">
-         <muk-text type="muk-subheading">Personal Detailsr</muk-text>
-         <div class="admin-user-form__section--items">
+         <muk-text type="muk-subheading">Personal Details</muk-text>
+         <div class="muk-section__item">
             <muk-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
             <muk-input v-model="localForm.hiredDate" label="Hired Date" type="date" placeholder="Hired date" />
          </div>
       </div>
       <muk-text type="muk-subheading">{{ isEdit ? "Update" : "Create" }} user</muk-text>
-      <div class="admin-user-form__actions">
-         <muk-text as="router-link" to="/" class="btn btn--secondary btn--lg"> back </muk-text>
+      <div class="muk-section__item muk-section__actions">
+         <muk-button variant="ghost" @click="router.push('/')">Back</muk-button>
          <muk-button type="submit" variant="primary" :size="'md'">
             {{ isEdit ? "update" : "create" }}
          </muk-button>
@@ -48,7 +48,7 @@
 <script setup lang="ts">
 /* VUE */
 import { reactive, watch } from 'vue';
-
+import router from '@/router';
 /* COMPONENTS */
 import { MukButton, MukText, MukInput, MukSelect } from 'modular-ui-kit-vue'
 import MarkdownEditor from '@/shared/ui/form/MarkdownEditor.vue';

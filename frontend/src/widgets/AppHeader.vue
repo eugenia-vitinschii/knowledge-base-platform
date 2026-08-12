@@ -53,7 +53,7 @@
                </router-link>
             </div>
             <div class="header__info">
-               <p class="body-text">Hi, {{ auth.user?.name }}! [role: {{ auth.user?.role }}] </p>
+               <muk-text variant="muted">Hi, {{ auth.user?.name }}! [role: {{ auth.user?.role }}] </muk-text>
             </div>
          </div>
       </div>
@@ -61,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+/* COMPONENTS */
+import { MukText } from 'modular-ui-kit-vue';
 /* VUE */
 import { computed } from 'vue';
 

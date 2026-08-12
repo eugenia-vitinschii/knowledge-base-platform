@@ -1,12 +1,14 @@
 <template>
    <div class="muk-page">
-      <div class="container">
+      <div class="muk-container">
          <div class="muk-page__wrapper">
             <div class="muk-page__header">
                <muk-text as="h1" type="muk-heading">Create User {{ form.name }}</muk-text>
             </div>
             <div class="muk-page__content">
-               <admin-user-form v-model="form" :isEdit="false" @submit="onSubmit" />
+               <div class="muk-section">
+                  <admin-user-form v-model="form" :isEdit="false" @submit="onSubmit" />
+               </div>
             </div>
          </div>
       </div>

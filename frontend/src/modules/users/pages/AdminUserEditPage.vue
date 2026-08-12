@@ -1,6 +1,6 @@
 <template>
    <div class="muk-page">
-      <div class="container">
+      <div class="muk-container">
          <div class="muk-page__wrapper">
             <div class="muk-page__header">
                <muk-text as="h1" type="muk-heading">Update User {{ form.name }}</muk-text>
