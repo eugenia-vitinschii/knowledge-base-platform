@@ -1,11 +1,11 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper">
-            <div class="page__title">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
+            <div class="muk-page__title">
                <muk-text type="muk-heading" as="h1">Admin Dashboard</muk-text>
             </div>
-            <div class="page__content" v-if="hasAnyCharts">
+            <div class="muk-page__content" v-if="hasAnyCharts">
                <div class="summary-cards">
                   <summary-card v-for="card in cards" :key="card.label" :data="card" />
                </div>
@@ -27,7 +27,7 @@
                   </div>
                </div>
             </div>
-            <div class="page__info" v-else>
+            <div class="muk-page__info" v-else>
                <muk-empty-state :variant="'accent'" :title="'Welcome to Admin Dashboard'"
                   :description="'Here you can find insights about your articles'">
                   <template #action>

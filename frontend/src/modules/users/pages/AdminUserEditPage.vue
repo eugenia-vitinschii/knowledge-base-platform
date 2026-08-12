@@ -1,11 +1,11 @@
 <template>
-   <div class="page">
+   <div class="muk-page">
       <div class="container">
-         <div class="page__wrapper">
-            <div class="page__header">
+         <div class="muk-page__wrapper">
+            <div class="muk-page__header">
                <muk-text as="h1" type="muk-heading">Update User {{ form.name }}</muk-text>
             </div>
-            <div class="page__content">
+            <div class="muk-page__content">
                <admin-user-form v-model="form" :isEdit="true" @save-role="saveRole" @submit="onSubmit" />
             </div>
          </div>

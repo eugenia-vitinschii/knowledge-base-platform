@@ -1,5 +1,5 @@
 <template>
-   <form class="comment-form" @submit.prevent="emitSubmit">
+   <form class="comment-form muk-section__item" @submit.prevent="emitSubmit">
       <div class="comment-form__avatar">
          <img src="@/assets/img/test-avatar.jpg" alt="Profile Image">
       </div>

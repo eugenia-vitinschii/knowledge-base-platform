@@ -1,16 +1,17 @@
 <template>
    <div class="md-editor">
-      <div class="md-editor__tabs">
-         <ui-button :variant="activeTab === 'edit' ? 'primary' : 'secondary'" @click="activeTab = 'edit'" type="button">
+      <div class="muk-section__actions">
+         <muk-button :variant="activeTab === 'edit' ? 'primary' : 'secondary'" @click="activeTab = 'edit'"
+            type="button">
             edit
-         </ui-button>
-         <ui-button :variant="activeTab === 'preview' ? 'primary' : 'secondary'" @click="activeTab = 'preview'"
+         </muk-button>
+         <muk-button :variant="activeTab === 'preview' ? 'primary' : 'secondary'" @click="activeTab = 'preview'"
             type="button">
             preview
-         </ui-button>
+         </muk-button>
       </div>
       <div class="md-editor__edit" v-if="activeTab === 'edit'">
-         <ui-textarea :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)" :rows=30 />
+         <muk-textarea :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)" :rows=30 />
       </div>
       <div class="md-editor__preview" v-else @click="onPreviewClick">
          <div class="md-editor__preview-content" v-html="rendered">
@@ -21,9 +22,7 @@
 
 <script setup lang="ts">
 /* Components */
-import UiButton from '@/shared/ui/buttons/UiButton.vue';
-import UiTextarea from '@/shared/ui/form/UiTextarea.vue';
-
+import { MukButton, MukTextarea } from 'modular-ui-kit-vue';
 /* vue  & markdown */
 import { ref, computed } from 'vue';
 import { md } from '@/shared/lib/markdown';

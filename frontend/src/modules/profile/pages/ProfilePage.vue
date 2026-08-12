@@ -1,16 +1,16 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper">
-            <div class="page__header">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
+            <div class="muk-page__header">
                <muk-text :type="'heading'" as="h1">Profile Page</muk-text>
             </div>
-            <div class="page__content" v-if="profileStore.profile">
+            <div class="muk-page__content" v-if="profileStore.profile">
                <Transition name="fade" mode="out-in">
-                  <div class="profile-details__wrapper" v-if="isLoading" key="loading">
+                  <div class="muk-section" v-if="isLoading" key="loading">
                      <profile-skeleton />
                   </div>
-                  <div class="page__info" v-else-if="error" key="profile-error">
+                  <div class="muk-page__info" v-else-if="error" key="profile-error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load profile. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template #action>
@@ -18,7 +18,7 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="profile-details__wrapper" v-else-if="profile" key="my-profile">
+                  <div class="muk-section" v-else-if="profile" key="my-profile">
                      <profile-details :profile="profile" @edit="handleEdit" @logout="handleLogout" :public="isPublic" />
                   </div>
                </Transition>

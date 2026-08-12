@@ -1,19 +1,19 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper">
-            <div class="page__header">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
+            <div class="muk-page__header">
                <muk-text type="muk-heading">Articles Page</muk-text>
             </div>
-            <div class="page__content">
+            <div class="muk-page__content">
                <div class="filter-wrapper">
                   <articles-public-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
                </div>
                <Transition name="fade" mode="out-in">
-                  <div class="article-list" v-if="isLoading" key="loading">
+                  <div class="muk-section__item" v-if="isLoading" key="loading">
                      <article-list-item-skeleton v-for="n in 6" :key="n" />
                   </div>
-                  <div class="page__info" v-else-if="error" key="error">
+                  <div class="muk-page__info" v-else-if="error" key="error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template name="action">
@@ -21,16 +21,16 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="article-list" v-else-if="hasArticles" key="articles">
+                  <div class="muk-section" v-else-if="hasArticles" key="articles">
                      <article-list-item v-for="article in articles" :key="article.slug" :article="article" />
                   </div>
-                  <div class="page__info" v-else key="empty">
+                  <div class="muk-page__info" v-else key="empty">
                      <muk-empty-state :variant="'search'" :title="'No results found'"
                         :description="'Try adjusting your filters or search terms to find what you\'re looking for'" />
                   </div>
                </Transition>
             </div>
-            <div class="page__footer" v-if="hasArticles && !isLoading">
+            <div class="muk-page__footer" v-if="hasArticles && !isLoading">
                <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
          </div>

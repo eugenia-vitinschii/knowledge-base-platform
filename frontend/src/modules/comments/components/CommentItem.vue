@@ -1,6 +1,6 @@
 <template>
-   <div class="comment-item">
-      <div class="comment-item__avatar">
+   <div class="comment-item muk-section__item">
+      <div class=" comment-item__avatar">
          <img src="@/assets/img/test-avatar.jpg" alt="Profile Image">
       </div>
       <div class="comment-item__wrapper">

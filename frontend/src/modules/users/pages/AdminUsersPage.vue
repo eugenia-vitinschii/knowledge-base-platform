@@ -1,11 +1,11 @@
 <template>
-   <div class="page">
+   <div class="muk-page">
       <div class="container">
-         <div class="page__wrapper">
-            <div class="page__header">
+         <div class="muk-page__wrapper">
+            <div class="muk-page__header">
                <muk-text as="h1" type="muk-heading">Admin Users Page</muk-text>
             </div>
-            <div class="page__content">
+            <div class="muk-page__content">
                <div class="filter-wrapper">
                   <admin-user-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
                </div>
@@ -13,7 +13,7 @@
                   <div class="user-table__wrapper" v-if="isLoading" key="loading">
                      <table-skeleton :rows="9" :buttons="2" :columns="5" />
                   </div>
-                  <div class="page__info" v-else-if="error" key="error">
+                  <div class="muk-page__info" v-else-if="error" key="error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load users. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template>
@@ -31,7 +31,7 @@
                   </div>
                </Transition>
             </div>
-            <div class="page__footer" v-if="hasUsers && !isLoading">
+            <div class="muk-page__footer" v-if="hasUsers && !isLoading">
                <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
             </div>
          </div>
