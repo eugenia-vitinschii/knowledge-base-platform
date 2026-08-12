@@ -1,11 +1,11 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper">
-            <div class="page__header">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
+            <div class="muk-page__header">
                <muk-text as="h1" type="muk-heading">Create Article Page</muk-text>
             </div>
-            <div class="page__content">
+            <div class="muk-page__content">
                <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading="isLoading"
                   :is-submitting="isLoading" :canEditStatus="false" />
             </div>

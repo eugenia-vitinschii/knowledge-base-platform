@@ -1,16 +1,16 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper">
-            <div class="page__header">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
+            <div class="muk-page__header">
                <muk-text as="h1" type="muk-heading">Article Preview</muk-text>
             </div>
-            <div class="page__content">
+            <div class="muk-page__content">
                <Transition name="fade" mode="out-in">
-                  <div class="article-preview__wrapper" v-if="articleIsLoading" key="loading">
+                  <div class="muk-section__item" v-if="articleIsLoading" key="loading">
                      <article-preview-skeleton />
                   </div>
-                  <div class="page__info" v-else-if="error" key="error">
+                  <div class="muk-section__item" v-else-if="error" key="error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load article. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template #action>
@@ -18,7 +18,7 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="article-preview__wrapper" v-else-if="article" key="content">
+                  <div class="muk-section__item" v-else-if="article" key="content">
                      <article-preview :article="article" show-admin-controls @edit="handleEdit"
                         @delete="handleDelete" />
                   </div>

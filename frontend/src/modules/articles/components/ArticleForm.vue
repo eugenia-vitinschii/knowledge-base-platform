@@ -1,6 +1,6 @@
 <template>
    <form class="article-form" @submit.prevent="emitSubmit">
-      <div class="article-form__section">
+      <div class="muk-section__item">
          <muk-text as="h1" type="muk-subheading">Meta</muk-text>
          <div class="article-form__section--items">
             <muk-input v-model="localForm.title" type="text" placeholder="title" label="*Article title"
@@ -13,27 +13,30 @@
             <muk-input v-model="localForm.tags" type="text" placeholder="tags" label="Article tags" />
          </div>
       </div>
-      <div class="article-form__section">
+      <div class="muk-section__item">
          <muk-text type="muk-subheading">Content</muk-text>
          <div class="article-form__section--items">
             <markdown-editor v-model="localForm.content" :error="errors.content"
                @update:model-value="validateField('content')" />
          </div>
       </div>
-      <div class="article-form__section" v-if="canEditStatus">
+      <div class="muk-section__item" v-if="canEditStatus">
          <muk-text type="muk-subheading">Admin Controls</muk-text>
-         <div class="article-form__section--items">
-            <muk-select v-model="localForm.status" :options="statusOptions" label="Article status" />
+         <muk-select v-model="localForm.status" :options="statusOptions" label="Article status" />
+         <div class="muk-section__actions">
             <muk-button :loading="isStatusLoading" :disabled="!isStatusDirty || isStatusLoading" type="button"
-               variant="danger" @click="emit('save-status', localForm.status)">save status</muk-button>
+               variant="warning" @click="emit('save-status', localForm.status)">save status</muk-button>
          </div>
+
       </div>
-      <muk-text type="muk-subheading">{{ isEdit ? "Update" : "Create" }} article</muk-text>
-      <div class="article-form__actions">
-         <router-link to="/" class="btn btn--secondary btn--lg"> back </router-link>
-         <muk-button type="submit" variant="primary" :loading="isSubmitting" :disabled="isSubmitting" :size="'md'">
-            {{ isEdit ? "update" : "create" }}
-         </muk-button>
+      <div class="muk-section__item">
+         <muk-text type="muk-subheading">{{ isEdit ? "Update" : "Create" }} article</muk-text>
+         <div class="muk-section__actions">
+            <muk-button variant="secondary" @click="$router.push('/')">back</muk-button>
+            <muk-button type="submit" variant="primary" :loading="isSubmitting" :disabled="isSubmitting" :size="'md'">
+               {{ isEdit ? "update" : "create" }}
+            </muk-button>
+         </div>
       </div>
       <br>
    </form>

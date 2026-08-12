@@ -1,32 +1,21 @@
 @use '../../abstracts/_variables' as *
 @use '../../abstracts/_mixins' as *
+@use '../../abstracts/_tokens' as *
 
 .article-preview
-   margin: $margin-block
-   padding: $padding-block
-   border: $border
    &__heading
       display: flex
       flex-direction: row
       justify-content: space-between
    &__heading--date
-      display: flex
-      align-items: center
-      flex-direction: row
-      justify-content: start
-      svg
-         margin: 5px 4px 0px 0px
-         width: 20px
-         height: 20px
-         fill: var(--muk-text-muted)
    &__badges
       display: flex
+      gap: 15px
       width: 100%
    &__content
-      margin: $margin-element
+      margin: $muk-space-content-md 0px
       padding: 30px
       color: var(--muk-text)
-      border: $border
       background: var(--muk-bg-soft)
    &__tags
       display: flex
@@ -41,11 +30,6 @@
       align-items: center
       flex-direction: row
       justify-content: flex-end
-      svg
-         fill: var(--muk-text-muted)
-         width: 15px
-         height: 15px
-         margin: 10px 4px 0px 0px
       a
          margin-right: 4px
    &__admin

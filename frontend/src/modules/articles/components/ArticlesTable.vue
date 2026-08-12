@@ -2,6 +2,7 @@
    <table class="articles-table">
       <thead>
          <tr>
+            <muk-text as="th">title</muk-text>
             <th>title</th>
             <th>status</th>
             <th>type</th>
@@ -38,7 +39,7 @@
 import { reactive, watch } from 'vue';
 
 /* COMPONENTS */
-import { MukButton, MukSelect } from 'modular-ui-kit-vue';
+import { MukButton, MukSelect, MukText } from 'modular-ui-kit-vue';
 
 /* TYPES */
 import type { ArticleTableRow } from "../types/index";
