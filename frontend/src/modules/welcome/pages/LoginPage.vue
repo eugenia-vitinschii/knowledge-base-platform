@@ -1,25 +1,26 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper auth">
-            <div class="page__header">
-               <muk-text as="h1" type="muk-heading">Corporate Knowledge Base</muk-text>
-               <muk-text as="h2" type="muk-subheading">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper auth">
+            <div class="muk-page__header">
+               <muk-text as="h1" :align="'center'" variant="primary" type="muk-heading">Corporate Knowledge
+                  Base</muk-text>
+               <muk-text as="h2" :align="'center'" variant="warning" type="muk-subheading">
                   Sign in with your company account to access internal documentation
                </muk-text>
             </div>
-            <div class="page__content">
-               <div class="auth-form-wrapper">
-                  <form class="auth-form" @submit.prevent="submit">
+            <div class="muk-page__content">
+               <div class="form-wrapper muk-section">
+                  <form class="muk-form" @submit.prevent="submit">
                      <muk-input v-model="email" label="Email" type="email" />
                      <muk-input v-model="password" label="Password" type="password" />
-                     <div class="auth-form__actions">
+                     <div class="muk-section__actions">
                         <muk-button type="submit">login</muk-button>
                      </div>
                   </form>
                </div>
             </div>
-            <div class="page__footer">
+            <div class="muk-page__footer muk-section">
                <muk-text>This is a private, restricted corporate knowledge base. If you are not an authorized
                   employee, please return to your previous location. Unauthorized access or use of this platform is
                   strictly prohibited and subject to company policies</muk-text>
