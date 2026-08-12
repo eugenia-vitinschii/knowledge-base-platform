@@ -1,7 +1,7 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper  error-page-wrapper">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
             <error-page-state code="403" title="Access Denied" button-text="go to home" @action="goHome"
                description="You don't have permission to view this page. If you think this is a mistake, please contact your system administrator" />
          </div>

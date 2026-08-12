@@ -1,7 +1,7 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper  error-page-wrapper">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
             <error-page-state code="404" title="Page Not Found" button-text="back to safety" @action="goBack"
                description="Oops! The page you are looking for doesn't exist or has been moved. Double-check the URL or head back to the dashboard" />
          </div>
