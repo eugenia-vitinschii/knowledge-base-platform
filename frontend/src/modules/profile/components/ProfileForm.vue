@@ -2,7 +2,7 @@
    <form class="profile-form" @submit.prevent="emitSubmit">
       <div class="profile-form__section">
          <muk-text type="muk-subheading">Main info</muk-text>
-         <div class="profile-form__section--items">
+         <div class="profile-form__section--items  muk-section__item">
             <muk-input v-model="localForm.name" label="Name" type="text" placeholder="name" :error="errors.name"
                @update:model-value="validateField('name')" />
             <muk-input v-model="localForm.email" label="Email" type="email" placeholder="email" :error="errors.email"
@@ -10,9 +10,9 @@
             <muk-select v-model="localForm.position" :options="positionOptions" label="Position" />
          </div>
       </div>
-      <div class=" profile-form__section">
+      <div class="profile-form__section">
          <muk-text :type="'muk-subheading'">Contacts & Bio</muk-text>
-         <div class="profile-form__section--items">
+         <div class="muk-section__item">
             <muk-input v-model="localForm.phone" label="Phone" type="tel" placeholder="phone number"
                :error="errors.phone" @update:model-value="validateField('phone')" />
             <muk-checkbox :model-value="localForm.visibility.phone === 'private'"
@@ -24,7 +24,7 @@
       </div>
       <div class="profile-form__section">
          <muk-text :type="'muk-subheading'">Personal Details</muk-text>
-         <div class="profile-form__section--items">
+         <div class="muk-section__item">
             <muk-select v-model="localForm.gender" :options="genderOptions" label="Gender" />
             <muk-input v-model="localForm.birthDate" label="Birth Date" type="date" placeholder="Birthday date"
                :error="errors.birthDate" @update:model-value="validateField('birthDate')" />
@@ -33,8 +33,8 @@
                label="Hide Birthday" class="profile-form__checkbox" />
          </div>
       </div>
-      <base-text :type="'muk-subheading'">Update information</base-text>
-      <div class="profile-form__actions">
+      <muk-text :type="'muk-subheading'">Update information</muk-text>
+      <div class="profile-form__actions muk-section__item  muk-section__actions">
          <muk-button @click="$router.push('/')" :variant="'secondary'">
             Back
          </muk-button>

@@ -1,10 +1,12 @@
 <template>
-   <div class="page">
-      <div class="container">
-         <div class="page__wrapper">
+   <div class="muk-page">
+      <div class="muk-container">
+         <div class="muk-page__wrapper">
             <muk-text :type="'heading'" as="h1">Edit profile</muk-text>
-            <div class="page__container">
-               <profile-form v-model="form" @submit="onSubmit" />
+            <div class="muk-page__container">
+               <div class="muk-section">
+                  <profile-form v-model="form" @submit="onSubmit" />
+               </div>
             </div>
          </div>
       </div>
