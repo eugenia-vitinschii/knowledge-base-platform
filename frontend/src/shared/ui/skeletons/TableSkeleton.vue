@@ -1,19 +1,19 @@
 <template>
-   <table class="table-skeleton">
+   <table class="muk-table table-skeleton">
       <thead>
          <tr>
             <th v-for="n in columns" :key="n">
-               <div class="table-skeleton__th shimmer"></div>
+               <muk-skeleton width="128px" height="25px" />
             </th>
          </tr>
       </thead>
       <tbody>
          <tr v-for="n in rows" :key="n">
             <td v-for="n in (columns - 1)" :key="n">
-               <div class="table-skeleton__td shimmer"></div>
+               <muk-skeleton width="136px" height="20px" />
             </td>
             <td class="table-skeleton__actions">
-               <div class="table-skeleton__button shimmer" v-for="n in buttons" :key="n"></div>
+               <muk-skeleton width="128px" height="25px" v-for="n in buttons" :key="n" />
             </td>
          </tr>
       </tbody>
@@ -21,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+import { MukSkeleton } from 'modular-ui-kit-vue';
 
 const props = defineProps<{
    rows: number

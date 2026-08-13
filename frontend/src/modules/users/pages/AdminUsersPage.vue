@@ -10,10 +10,10 @@
                   <admin-user-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
                </div>
                <Transition name="fade" mode="out-in">
-                  <div class="user-table__wrapper" v-if="isLoading" key="loading">
-                     <table-skeleton :rows="9" :buttons="2" :columns="5" />
+                  <div class="muk-section" v-if="isLoading" key="loading">
+                     <table-skeleton :rows="5" :buttons="3" :columns="5" />
                   </div>
-                  <div class="muk-page__info" v-else-if="error" key="error">
+                  <div class="muk-section" v-else-if="error" key="error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load users. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template>
@@ -21,11 +21,11 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="user-table__wrapper" v-else-if="hasUsers" key="users">
+                  <div class="muk-section muk-table-wrapper" v-else-if="hasUsers" key="users">
                      <user-table :items="users" @delete="handleDeleteUser" @edit="handleEdit"
                         @preview="handlePreview" />
                   </div>
-                  <div class="empty-state__wrapper" v-else-if="!isLoading && !hasUsers && !error" key="empty">
+                  <div class="muk-section" v-else-if="!isLoading && !hasUsers && !error" key="empty">
                      <muk-empty-state variant="search" title="No results found"
                         description="Try adjusting your filters or search terms to find what youre looking for" />
                   </div>

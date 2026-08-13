@@ -1,5 +1,5 @@
 <template>
-   <table class="user-table">
+   <table class="muk-table">
       <thead>
          <tr>
             <th>name</th>
@@ -15,10 +15,12 @@
             <td>{{ i.role }}</td>
             <td>{{ i.position }}</td>
             <td>{{ i.location }}</td>
-            <td class="user-table__actions">
-               <muk-button @click="$emit('edit', i.id)">Edit</muk-button>
-               <muk-button variant="secondary" @click="$emit('preview', i.id)">View</muk-button>
-               <muk-button variant="danger" @click="$emit('delete', i.id)">Delete</muk-button>
+            <td>
+               <div class="muk-table__actions muk-table__actions--column">
+                  <muk-button @click="$emit('edit', i.id)">Edit</muk-button>
+                  <muk-button variant="secondary" @click="$emit('preview', i.id)">View</muk-button>
+                  <muk-button variant="danger" @click="$emit('delete', i.id)">Delete</muk-button>
+               </div>
             </td>
          </tr>
       </tbody>
