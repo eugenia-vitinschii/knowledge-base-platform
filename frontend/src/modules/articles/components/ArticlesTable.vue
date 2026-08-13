@@ -1,8 +1,7 @@
 <template>
-   <table class="articles-table">
+   <table class="muk-table">
       <thead>
          <tr>
-            <muk-text as="th">title</muk-text>
             <th>title</th>
             <th>status</th>
             <th>type</th>
@@ -15,19 +14,23 @@
             <td>{{ a.title }}</td>
             <td>
                <muk-select v-model="localStatus[a.id]!" :options="statusOptions" :disabled="!canEditStatus" />
-               <muk-button v-if="isStatusDirty(a.id)" type="button" variant="primary"
-                  :is-loading="props.statusLoadingId === a.id"
-                  @click="$emit('save-status', { id: a.id, status: localStatus[a.id]! })">
-                  save
-               </muk-button>
+               <div class="muk-section__actions">
+                  <muk-button v-if="isStatusDirty(a.id)" type="button" variant="primary"
+                     :is-loading="props.statusLoadingId === a.id"
+                     @click="$emit('save-status', { id: a.id, status: localStatus[a.id]! })">
+                     save
+                  </muk-button>
+               </div>
             </td>
             <td>{{ a.type }}</td>
             <td>{{ a.category }}</td>
-            <td class="articles-table__actions">
-               <muk-button type="button" variant="primary" @click="$emit('edit', a.id)">edit</muk-button>
-               <muk-button type="button" variant="secondary" @click="$emit('preview', a.id)">preview</muk-button>
-               <muk-button type="button" variant="danger" :disabled="!canEditStatus"
-                  @click="$emit('delete', a.id)">delete</muk-button>
+            <td>
+               <div class="muk-table__actions muk-table__actions--column">
+                  <muk-button type="button" variant="primary" @click="$emit('edit', a.id)">edit</muk-button>
+                  <muk-button type="button" variant="secondary" @click="$emit('preview', a.id)">preview</muk-button>
+                  <muk-button type="button" variant="danger" :disabled="!canEditStatus"
+                     @click="$emit('delete', a.id)">delete</muk-button>
+               </div>
             </td>
          </tr>
       </tbody>

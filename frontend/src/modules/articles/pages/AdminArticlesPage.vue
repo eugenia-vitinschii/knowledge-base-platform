@@ -21,7 +21,7 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="muk-section__item" v-else-if="hasArticles" key="articles">
+                  <div class="muk-section__item muk-table-wrapper" v-else-if="hasArticles" key="articles">
                      <articles-table :items="articles" :can-edit-status="isAdmin" :is-loading="isLoading"
                         :status-loading-id="statusLoadingId" @save-status="handleSaveStatus" @edit="handleEdit"
                         @preview="handlePreview" @delete="handleDelete" />
