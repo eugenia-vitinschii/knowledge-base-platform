@@ -1,9 +1,9 @@
 <template>
    <div class="article-filter">
-      <div class="article-filter__active" v-if="activeFilters.length">
+      <div class="filter-chip-wrapper" v-if="activeFilters.length">
          <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
             <muk-text as="span">{{ key }} : {{ value }}</muk-text>
-            <muk-icon-button class="filter-chip__button" @click="removeFilter(key)">
+            <muk-icon-button @click="removeFilter(key)" size="lg">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
                   <path
                      d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
@@ -16,7 +16,7 @@
          <muk-button @click="onReset" variant="danger" v-if="activeFilters.length"> reset</muk-button>
       </div>
       <div class="article-filter__filter">
-         <muk-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
+         <muk-input v-model="localSearch.search" type="search" placeholder="Search article" />
          <muk-select v-model="localSearch.category" :options="categoryOption" />
          <muk-select v-model="localSearch.difficulty" :options="difficultyOption" />
          <muk-select v-model="localSearch.type" :options="typesOption" />

@@ -35,8 +35,12 @@
                      </muk-error-state>
                   </div>
                   <div class="muk-section__item" v-else-if="article" key="content-comments">
-                     <comment-list :comments="comments" />
-                     <comment-form @submit="onSubmit" />
+                     <div class="muk-comment-wrapper">
+                        <muk-comment-item v-for="comment in comments" :key="comment.id" :name="comment.author.name"
+                           :text="comment.content" :authorProfile="`/articles/users/${comment.author?.id}`"
+                           :created="formatCreatedDate(comment.createdAt)" />
+                     </div>
+                     <muk-comment-form @submit="onSubmit" />
                   </div>
                </Transition>
             </div>
@@ -53,18 +57,17 @@ import { watch, computed } from 'vue'
 /* STORES  & COMPOSABLES*/
 import { useArticlesPublicStore } from '../store/article.public.store';
 import { useComentsStore } from '@/modules/comments/store/comment.store';
-
+import { formatCreatedDate } from '@/shared/lib/formatDate';
 
 /* COMPONENTS */
-import { useMukToast, MukText, MukErrorState, MukButton } from 'modular-ui-kit-vue'
+import { useMukToast, MukText, MukErrorState, MukButton, MukCommentItem, MukCommentForm } from 'modular-ui-kit-vue'
 import ArticlePreview from '../components/ArticlePreview.vue';
 import ArticlePreviewSkeleton from '@/shared/ui/skeletons/ArticlePreviewSkeleton.vue';
-import CommentForm from '@/modules/comments/components/CommentForm.vue';
-import CommentList from '@/modules/comments/components/CommentList.vue';
 import CommentListSkeleton from '@/shared/ui/skeletons/CommentListSkeleton.vue';
 
 /* === TYPES === */
 import type { CreateCommentPayload } from '@/modules/comments/types';
+
 
 /* === ROUTER & STORES === */
 const { addToast } = useMukToast()
