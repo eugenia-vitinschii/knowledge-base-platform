@@ -3,16 +3,6 @@
 @use '../abstracts/mixins' as *
 @use '../abstracts/tokens' as *
 
-//comment list component
-.comment-list-skeleton
-   margin: $margin-block
-   padding: $padding-block
-   &__text
-      @include skeleton-text(200px, 6px)
-   &__line
-      @include skeleton-text(100%, 30px)
-      height: 60px
-
 /* ================= TRANSITIONS =================  */
 .fade-enter-active,
 .fade-leave-active
@@ -21,3 +11,25 @@
 .fade-enter-from,
 .fade-leave-to
    opacity: 0
+
+/* ================= Filter CHIP =================  */
+.filter-chip-wrapper
+   display: flex
+   align-items: start
+   jutify-content: start
+   flex-direction: row
+   overflow: scroll
+
+.filter-chip
+   min-width: 300px
+   max-width: 350px
+   margin: 0px 5px
+   padding: 5px 15px
+   display: flex
+   align-items: center
+   flex-direction: row
+   justify-content: space-between
+   background: $muk-bg-soft
+   transition: $muk-transition
+   &:hover
+      background: $muk-bg-card

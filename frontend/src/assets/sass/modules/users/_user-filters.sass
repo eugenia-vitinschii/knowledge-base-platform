@@ -1,16 +1,9 @@
 
-@use '../../abstracts/_variables' as *
+@use '../../abstracts/_tokens' as *
 @use '../../abstracts/_mixins' as *
 
 .admin-user-filter
    padding: 25px 0px
-   &__active
-      width: 100%
-      display: flex
-      align-items: start
-      justify-content: start
-      flex-direction: row
-      overflow: scroll
    &__filter
       width: 100%
       display: flex
@@ -25,32 +18,3 @@
       width: 350px
    select
       width: 280px
-
-.filter-chip
-   min-width: 300px
-   max-width: 350px
-   display: flex
-   align-items: center
-   flex-direction: row
-   justify-content: space-between
-   background: var(--muk-bg-soft)
-   padding: $padding-element
-   transition: $transition
-   &:hover
-      background: var(--muk-bg-card)
-   span
-      color: var(--muk-text-muted)
-      margin: 0px
-      padding: 0px
-      line-height: 0px
-   &__button
-      height: 100%
-      transition: $transition
-      padding-top: 5px
-      svg
-         fill: var(--muk-text-muted)
-         width: 15px
-         height: 15px
-         padding: 0px
-   &__button svg:hover
-      fill: var(--muk-danger)

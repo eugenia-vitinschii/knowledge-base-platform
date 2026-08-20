@@ -4,13 +4,11 @@
 //md editor 
 .md-editor
    width: 100%
-   margin: $margin-block
    &__tabs
       display: flex
       min-width: 200px
       max-width: 500px
    &__preview-content
-      @include block-element()
       color: var(--muk-text)
       ul li
       list-style: circle !important
@@ -22,7 +20,6 @@
 //code block
 .code-block
    position: relative
-   margin: $margin-block
    button
       white-space: normal
       width: 200px

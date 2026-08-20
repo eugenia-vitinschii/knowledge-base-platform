@@ -1,4 +1,4 @@
-@use '../../abstracts/_variables' as *
+@use '../../abstracts/_tokens' as *
 @use '../../abstracts/_mixins' as *
 
 .article-filter
@@ -15,25 +15,8 @@
       align-items: center
       justify-content: start
       overflow: scroll
-   &__info
-      button
-         margin: 30px 0px
    input
       height: 100%
       width: 350px
    select
       width: 280px
-
-.filter-chip
-   min-width: 300px
-   max-width: 350px
-   display: flex
-   align-items: center
-   flex-direction: row
-   justify-content: space-between
-   background: var(--muk-bg-soft)
-   padding: $padding-element
-   @include form-element()
-   transition: $transition
-   &:hover
-      background: var(--bg-card)

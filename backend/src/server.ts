@@ -9,7 +9,12 @@ const start = async () => {
    await connectDB()
 
    app.listen(PORT, () => {
-      console.log(`Backends running on http://localhost:${PORT}`)
+      console.log(`
+   ┌──────────────────────────────────────────────────┐
+   │  🍀🍀🍀 Server running on port ${PORT} 🍀🍀🍀       │
+   │  UI Kit: npm i modular-ui-kit-vue@latest         │
+   └──────────────────────────────────────────────────┘
+   `)
    })
 }
 start()
