@@ -38,7 +38,9 @@
                      <div class="muk-comment-wrapper">
                         <muk-comment-item v-for="comment in comments" :key="comment.id" :name="comment.author.name"
                            :text="comment.content" :authorProfile="`/articles/users/${comment.author?.id}`"
-                           :created="formatCreatedDate(comment.createdAt)" />
+                           :created="formatCreatedDate(comment.createdAt)">
+
+                        </muk-comment-item>
                      </div>
                      <muk-comment-form @submit="onSubmit" />
                   </div>
