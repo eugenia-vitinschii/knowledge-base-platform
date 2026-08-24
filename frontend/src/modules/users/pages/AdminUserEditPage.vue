@@ -6,7 +6,10 @@
                <muk-text as="h1" type="muk-heading">Update User {{ form.name }}</muk-text>
             </div>
             <div class="muk-page__content">
-               <admin-user-form v-model="form" :isEdit="true" @save-role="saveRole" @submit="onSubmit" />
+               <div class="muk-section">
+                  <admin-user-form v-model="form" :isEdit="true" @save-role="saveRole" @submit="onSubmit" />
+               </div>
+
             </div>
          </div>
       </div>
