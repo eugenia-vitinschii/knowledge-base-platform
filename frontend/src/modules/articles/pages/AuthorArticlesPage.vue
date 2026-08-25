@@ -10,7 +10,7 @@
                   <article-search :search="search" :count="totalItems" @update:search="onSearchChange" />
                </div>
                <Transition name="fade" mode="out-in">
-                  <div class="article-list" v-if="isLoading" key="loading">
+                  <div class="muk-section" v-if="isLoading" key="loading">
                      <article-list-item-skeleton v-for="n in 6" :key="n" />
                   </div>
                   <div class="muk-page__info" v-else-if="error" key="error">
@@ -21,7 +21,7 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="section-item" v-else-if="hasArticles" key="articles">
+                  <div class="muk-section" v-else-if="hasArticles" key="articles">
                      <article-list-item v-for="article in articles.list" :key="article.slug" :article="article" />
                   </div>
                   <div class="muk-page__info" v-else key="empty">

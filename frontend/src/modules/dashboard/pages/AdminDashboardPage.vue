@@ -6,10 +6,10 @@
                <muk-text type="muk-heading" as="h1">Admin Dashboard</muk-text>
             </div>
             <div class="muk-page__content" v-if="hasAnyCharts">
-               <div class="summary-cards">
+               <div class="summary-cards muk-section">
                   <summary-card v-for="card in cards" :key="card.label" :data="card" />
                </div>
-               <div class="chart-wrapper">
+               <div class="chart-wrapper muk-section">
                   <div class="chart-wrapper__item">
                      <base-chart v-if="typeChartData" title="Type" type="bar" :data="typeChartData" />
                   </div>

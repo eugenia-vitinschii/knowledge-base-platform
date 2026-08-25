@@ -10,10 +10,10 @@
                   <article-admin-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
                </div>
                <Transition name="fade" mode="out-in">
-                  <div class="muk-section__item" v-if="isLoading" key="loading">
+                  <div class="muk-section" v-if="isLoading" key="loading">
                      <table-skeleton :rows="9" :buttons="3" :columns="5" />
                   </div>
-                  <div class="muk-section__item" v-else-if="error" key="error">
+                  <div class="muk-section" v-else-if="error" key="error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template #action>
@@ -21,12 +21,12 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="muk-section__item muk-table-wrapper" v-else-if="hasArticles" key="articles">
+                  <div class="muk-section muk-table-wrapper" v-else-if="hasArticles" key="articles">
                      <articles-table :items="articles" :can-edit-status="isAdmin" :is-loading="isLoading"
                         :status-loading-id="statusLoadingId" @save-status="handleSaveStatus" @edit="handleEdit"
                         @preview="handlePreview" @delete="handleDelete" />
                   </div>
-                  <div class="muk-section__item" v-else key="empty">
+                  <div class="muk-section" v-else key="empty">
                      <muk-empty-state v-if="!hasFilters" :variant="'accent'"
                         :title="`${auth.user?.name}, write your first article!`"
                         description="'It looks like you haven\'t created anything yet. Time to share some knowledge!'">

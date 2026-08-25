@@ -6,9 +6,11 @@
                <muk-text as="h1" type="muk-heading">Update Article: {{ form.title }}</muk-text>
             </div>
             <div class="muk-page__content">
-               <article-form v-model="form" is-edit :can-edit-status="canEditStatus" :original-status="originalStatus"
-                  :is-submitting="isLoading && !isStatusAction" :is-status-loading="isLoading && isStatusAction"
-                  @save-status="saveStatus" @submit="onSubmit" />
+               <div class="muk-section">
+                  <article-form v-model="form" is-edit :can-edit-status="canEditStatus"
+                     :original-status="originalStatus" :is-submitting="isLoading && !isStatusAction"
+                     :is-status-loading="isLoading && isStatusAction" @save-status="saveStatus" @submit="onSubmit" />
+               </div>
             </div>
          </div>
       </div>

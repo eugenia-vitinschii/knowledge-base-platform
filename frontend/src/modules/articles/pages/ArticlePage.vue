@@ -7,10 +7,10 @@
             </div>
             <div class="muk-page__content">
                <Transition name="fade" mode="out-in">
-                  <div class="muk-section__item" v-if="articleIsLoading" key="loading">
+                  <div class="muk-section" v-if="articleIsLoading" key="loading">
                      <article-preview-skeleton />
                   </div>
-                  <div class="muk-section__item" v-else-if="articleError" key="article-error">
+                  <div class="muk-page__info" v-else-if="articleError" key="article-error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load article. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template #action>
@@ -18,15 +18,15 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="muk-section__item" v-else-if="article" key="content">
+                  <div class="muk-section" v-else-if="article" key="content">
                      <article-preview :article="article" :show-admin-controls=false />
                   </div>
                </Transition>
                <Transition name="fade" mode="out-in">
-                  <div class="comment-list__wrapper" v-if="commentsIsLoading" key="loading-comments">
-                     <comment-list-skeleton v-for="n in 6" :key="n" />
+                  <div class="muk-section" v-if="commentsIsLoading" key="loading-comments">
+                     <comment-item-skeleton v-for="n in 6" :key="n" />
                   </div>
-                  <div class="muk-section__item" v-else-if="commentsError" key="comment-error">
+                  <div class="muk-page__info" v-else-if="commentsError" key="comment-error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load article comments. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template #action>
@@ -34,7 +34,7 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="muk-section__item" v-else-if="article" key="content-comments">
+                  <div class="muk-section" v-else-if="article" key="content-comments">
                      <div class="muk-comment-wrapper">
                         <muk-comment-item v-for="comment in comments" :key="comment.id" :name="comment.author.name"
                            :text="comment.content" :authorProfile="`/articles/users/${comment.author?.id}`"
@@ -65,7 +65,7 @@ import { formatCreatedDate } from '@/shared/lib/formatDate';
 import { useMukToast, MukText, MukErrorState, MukButton, MukCommentItem, MukCommentForm } from 'modular-ui-kit-vue'
 import ArticlePreview from '../components/ArticlePreview.vue';
 import ArticlePreviewSkeleton from '@/shared/ui/skeletons/ArticlePreviewSkeleton.vue';
-import CommentListSkeleton from '@/shared/ui/skeletons/CommentListSkeleton.vue';
+import CommentItemSkeleton from '@/shared/ui/skeletons/CommentItemSkeleton.vue';
 
 /* === TYPES === */
 import type { CreateCommentPayload } from '@/modules/comments/types';

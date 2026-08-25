@@ -7,10 +7,10 @@
             </div>
             <div class="muk-page__content">
                <Transition name="fade" mode="out-in">
-                  <div class="muk-section__item" v-if="articleIsLoading" key="loading">
+                  <div class="muk-section" v-if="articleIsLoading" key="loading">
                      <article-preview-skeleton />
                   </div>
-                  <div class="muk-section__item" v-else-if="error" key="error">
+                  <div class="muk-section" v-else-if="error" key="error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load article. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
                         <template #action>
@@ -18,7 +18,7 @@
                         </template>
                      </muk-error-state>
                   </div>
-                  <div class="muk-section__item" v-else-if="article" key="content">
+                  <div class="muk-section" v-else-if="article" key="content">
                      <article-preview :article="article" show-admin-controls @edit="handleEdit"
                         @delete="handleDelete" />
                   </div>

@@ -1,6 +1,6 @@
 <template>
    <header class="header">
-      <div class="container">
+      <div class="muk-container">
          <div class="header__wrapper">
             <div class="header__wrapper-public">
                <router-link to="/articles">

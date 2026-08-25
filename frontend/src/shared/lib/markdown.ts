@@ -19,7 +19,7 @@ export const md = new MarkdownIt({
       <div class="code-block">
          <button 
             type="button" 
-            class="code-block__copy btn btn--secondary btn--lg"
+            class="code-block__copy muk-btn muk-btn--secondary muk-btn--sm"
          >
          copy
          </button>

@@ -10,7 +10,7 @@
                   <articles-public-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
                </div>
                <Transition name="fade" mode="out-in">
-                  <div class="muk-section__item" v-if="isLoading" key="loading">
+                  <div class="muk-section" v-if="isLoading" key="loading">
                      <article-list-item-skeleton v-for="n in 6" :key="n" />
                   </div>
                   <div class="muk-page__info" v-else-if="error" key="error">
