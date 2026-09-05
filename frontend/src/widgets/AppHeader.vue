@@ -53,7 +53,7 @@
                </router-link>
             </div>
             <div class="header__info">
-               <muk-text variant="muted">Hi, {{ auth.user?.name }}! [role: {{ auth.user?.role }}] </muk-text>
+               <muk-text variant="primary">Hi, {{ auth.user?.name }}! [role: {{ auth.user?.role }}] </muk-text>
             </div>
          </div>
       </div>

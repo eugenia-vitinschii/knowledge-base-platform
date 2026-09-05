@@ -3,7 +3,7 @@
       <div class="muk-container">
          <div class="muk-page__wrapper">
             <div class="muk-page__header">
-               <muk-text type="muk-heading">Articles Page</muk-text>
+               <muk-text as="h1" type="muk-heading">Articles Page</muk-text>
             </div>
             <div class="muk-page__content">
                <div class="filter-wrapper">
@@ -16,7 +16,7 @@
                   <div class="muk-page__info" v-else-if="error" key="error">
                      <muk-error-state title="Oops! Something went wrong..."
                         description="Failed to load articles. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
-                        <template name="action">
+                        <template #action>
                            <muk-button @click="handleRetry">Try Again</muk-button>
                         </template>
                      </muk-error-state>
