@@ -9,22 +9,14 @@
                <div class="summary-cards muk-section">
                   <summary-card v-for="card in cards" :key="card.label" :data="card" />
                </div>
-               <div class="chart-wrapper muk-section">
-                  <div class="chart-wrapper__item">
-                     <base-chart v-if="typeChartData" title="Type" type="bar" :data="typeChartData" />
-                  </div>
-                  <div class="chart-wrapper__item--two">
-                     <base-chart v-if="statusChartData" title="Status" :showLegend="true" type="doughnut"
-                        :data="statusChartData" />
-                     <base-chart v-if="difficultyChartData" title="Difficulty" :showLegend="true" type="pie"
-                        :data="difficultyChartData" />
-                  </div>
-                  <div class="chart-wrapper__item">
-                     <base-chart v-if="authorsChartData" title="Authors" type="line" :data="authorsChartData" />
-                  </div>
-                  <div class="chart-wrapper__item">
-                     <base-chart v-if="categoryChartData" title="Category" type="bar" :data="categoryChartData" />
-                  </div>
+               <div class="muk-section muk-chart__wrapper">
+                  <muk-chart v-if="typeChartData" title="Type" type="bar" :data="typeChartData" />
+                  <muk-chart v-if="statusChartData" title="Status" :showLegend="true" type="doughnut"
+                     :data="statusChartData" />
+                  <muk-chart v-if="difficultyChartData" title="Difficulty" :showLegend="true" type="pie"
+                     :data="difficultyChartData" />
+                  <muk-chart v-if="authorsChartData" title="Authors" type="line" :data="authorsChartData" />
+                  <muk-chart v-if="categoryChartData" title="Category" type="bar" :data="categoryChartData"></muk-chart>
                </div>
             </div>
             <div class="muk-page__info" v-else>
@@ -44,8 +36,7 @@
 
 <script setup lang="ts">
 /* COMPONENTS */
-import { MukText, MukEmptyState } from 'modular-ui-kit-vue'
-import BaseChart from '../components/BaseChart.vue';
+import { MukText, MukEmptyState, MukChart } from 'modular-ui-kit-vue'
 import SummaryCard from '../components/SummaryCard.vue';
 
 /* Mappers */
