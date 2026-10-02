@@ -8,7 +8,7 @@ import { adminUsersRoutes } from "@/modules/users/routes/admin.users.routes.ts";
 export const dashboardRoutes: RouteRecordRaw[] = [
    {
       path: '/admin',
-      meta: { title: "Dashboard" },
+      meta: { layout: 'admin', title: "Dashboard" },
       children: [
          {
             path: '',
