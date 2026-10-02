@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 
 import 'modular-ui-kit-vue/dist/modular-ui-kit-vue.css'
+import 'vue-saas-kit/style.css'
 import './assets/sass/app.sass'
 
 import "highlight.js/styles/github.css";
