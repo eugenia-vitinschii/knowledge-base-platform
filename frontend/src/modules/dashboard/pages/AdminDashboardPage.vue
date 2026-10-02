@@ -1,43 +1,26 @@
 <template>
-   <div class="muk-page">
-      <div class="muk-container">
-         <div class="muk-page__wrapper">
-            <div class="muk-page__title">
-               <muk-text type="muk-heading" as="h1">Admin Dashboard</muk-text>
-            </div>
-            <div class="muk-page__content" v-if="hasAnyCharts">
-               <div class="summary-cards muk-section">
-                  <summary-card v-for="card in cards" :key="card.label" :data="card" />
-               </div>
-               <div class="muk-section muk-chart__wrapper">
-                  <muk-chart v-if="typeChartData" title="Type" type="bar" :data="typeChartData" />
-                  <muk-chart v-if="statusChartData" title="Status" :showLegend="true" type="doughnut"
-                     :data="statusChartData" />
-                  <muk-chart v-if="difficultyChartData" title="Difficulty" :showLegend="true" type="pie"
-                     :data="difficultyChartData" />
-                  <muk-chart v-if="authorsChartData" title="Authors" type="line" :data="authorsChartData" />
-                  <muk-chart v-if="categoryChartData" title="Category" type="bar" :data="categoryChartData"></muk-chart>
-               </div>
-            </div>
-            <div class="muk-page__info" v-else>
-               <muk-empty-state :variant="'accent'" :title="'Welcome to Admin Dashboard'"
-                  :description="'Here you can find insights about your articles'">
-                  <template #action>
-                     <muk-text as="router-link" :to="'/admin/articles/create'">
-                        Create article
-                     </muk-text>
-                  </template>
-               </muk-empty-state>
-            </div>
-         </div>
-      </div>
+   <div>
+      <page-header title="Dashboard" description="Overview of your store performance, sales metrics, and key activity.">
+      </page-header>
+      <template v-if="hasAnyCharts">
+         <stats-grid v-if="cards.length" :items="cards" />
+         <charts-grid :items="chartsData" />
+      </template>
+      <muk-empty-state v-else :variant="'accent'" :title="'Welcome to Admin Dashboard'"
+         :description="'Here you can find insights about your articles'">
+         <template #action>
+            <muk-text as="router-link" :to="'/admin/articles/create'">
+               Create article
+            </muk-text>
+         </template>
+      </muk-empty-state>
    </div>
 </template>
 
 <script setup lang="ts">
 /* COMPONENTS */
-import { MukText, MukEmptyState, MukChart } from 'modular-ui-kit-vue'
-import SummaryCard from '../components/SummaryCard.vue';
+import { MukText, MukEmptyState } from 'modular-ui-kit-vue'
+import { PageHeader, StatsGrid, ChartsGrid } from 'vue-saas-kit';
 
 /* Mappers */
 import { mapAuthorStats } from '@/modules/dashboard/utils/map-author-stats';
@@ -95,18 +78,30 @@ const statusChartData = computed(() => {
 const typeChartData = computed(() => {
    return createStatsChartData(statsStore.overview?.type)
 })
+const chartsData = computed(() => {
+   const items = []
 
-/* has any charts */
-const chartData = [
-   difficultyChartData,
-   categoryChartData,
-   statusChartData,
-   typeChartData,
-   authorsChartData
-]
-const hasAnyCharts = computed(() => {
-   return chartData.some(chart => chart.value)
+   if (typeChartData.value) {
+      items.push({ id: 'type', title: 'Type', type: 'bar', data: typeChartData.value })
+   }
+   if (statusChartData.value) {
+      items.push({ id: 'status', title: 'Status', type: 'doughnut', showLegend: true, data: statusChartData.value })
+   }
+   if (difficultyChartData.value) {
+      items.push({ id: 'difficulty', title: 'Difficulty', type: 'pie', showLegend: true, data: difficultyChartData.value })
+   }
+   if (authorsChartData.value) {
+      items.push({ id: 'authors', title: 'Authors', type: 'line', data: authorsChartData.value })
+   }
+   if (categoryChartData.value) {
+      items.push({ id: 'category', title: 'Category', type: 'bar', data: categoryChartData.value })
+   }
+
+   return items
 })
+
+/* Check if any chart has data */
+const hasAnyCharts = computed(() => chartsData.value.length > 0)
 
 onMounted(() => {
    statsStore.fetchOverview()
