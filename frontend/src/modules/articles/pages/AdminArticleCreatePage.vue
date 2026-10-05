@@ -1,17 +1,10 @@
 <template>
-   <div class="muk-page">
-      <div class="muk-container">
-         <div class="muk-page__wrapper">
-            <div class="muk-page__header">
-               <muk-text as="h1" type="muk-heading">Create Article Page</muk-text>
-            </div>
-            <div class="muk-page__content">
-               <div class="muk-section">
-                  <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading="isLoading"
-                     :is-submitting="isLoading" :canEditStatus="false" />
-               </div>
-            </div>
-         </div>
+   <div>
+      <page-header title="Create Article Page">
+      </page-header>
+      <div class="muk-section">
+         <article-form v-model="form" @submit="onSubmit" :isEdit=false :is-loading="isLoading"
+            :is-submitting="isLoading" :canEditStatus="false" />
       </div>
    </div>
 </template>
@@ -26,7 +19,7 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
-import { MukText } from 'modular-ui-kit-vue';
+import { PageHeader, DataWrapper } from 'vue-saas-kit';
 import ArticleForm from '../components/ArticleForm.vue';
 
 /* SCHEMA & ENUMS */
