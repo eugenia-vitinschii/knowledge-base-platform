@@ -1,19 +1,11 @@
 <template>
-   <div class="muk-page">
-      <div class="muk-container">
-         <div class="muk-page__wrapper">
-            <div class="muk-page__header">
-               <muk-text as="h1" type="muk-heading">Update Article: {{ form.title }}</muk-text>
-            </div>
-            <div class="muk-page__content">
-               <div class="muk-section">
-                  <article-form v-model="form" is-edit :can-edit-status="canEditStatus"
-                     :original-status="originalStatus" :is-submitting="isLoading && !isStatusAction"
-                     :is-status-loading="isLoading && isStatusAction" @save-status="saveStatus" @submit="onSubmit" />
-               </div>
-            </div>
-         </div>
-      </div>
+   <div>
+      <page-header :title="`Update Article: ${form?.title || '...'}`" />
+      <data-wrapper :loading="isFetching" :error="!!fetchError" :items="[form]">
+         <article-form v-model="form" is-edit :can-edit-status="canEditStatus" :original-status="originalStatus"
+            :is-submitting="isLoading && !isStatusAction" :is-status-loading="isLoading && isStatusAction"
+            @save-status="saveStatus" @submit="onSubmit" />
+      </data-wrapper>
    </div>
 </template>
 
@@ -29,7 +21,7 @@ import { useAuthStore } from '@/stores/auth/auth.store';
 import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
-import { MukText } from 'modular-ui-kit-vue';
+import { PageHeader, DataWrapper } from 'vue-saas-kit';
 import ArticleForm from '../components/ArticleForm.vue';
 
 /* TYPES & ENUMS */
@@ -52,6 +44,11 @@ const { addToast } = useMukToast()
 const isLoading = computed(() => articleCrudStore.isLoading)
 const articleId = computed(() => String(route.params.id || ''))
 const canEditStatus = computed(() => auth.user?.role === 'admin')
+
+//data wrapper 
+const isFetching = computed(() => articleAdminStore.isLoading)
+const fetchError = computed(() => articleAdminStore.error)
+
 
 const isStatusAction = ref(false)
 const originalStatus = ref<ArticleStatus>(ArticleStatus.DRAFT)
