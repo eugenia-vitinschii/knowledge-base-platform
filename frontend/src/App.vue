@@ -9,6 +9,7 @@
       <!-- admin -->
       <admin-layout v-else-if="route.meta.layout === 'admin'" :menu="adminMenuItems" :user="currentUser">
          <router-view />
+         <muk-toast-container />
       </admin-layout>
       <!-- public -->
       <div class="wrapper" v-else>
