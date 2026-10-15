@@ -1,6 +1,13 @@
 ## Internal Knowledge Platform (Fullstack)
 [![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://gist.githubusercontent.com/eugenia-vitinschii/60078f25e19e239f3ca4d2e380b05a35/raw/clone.json&logo=github)](https://github.com/MShawon/github-clone-count-badge)
 
+
+> 🚧 **Work in Progress / Active Refactoring**
+> This repository is currently undergoing a major refactoring to migrate its UI architecture to two custom component libraries:
+> - **Modular UI Kit (`modular-ui-kit-vue`)**: Base UI primitives and design system components used across the entire application.
+> - **SaaS Kit (`vue-saas-kit`)**: Advanced admin patterns, tables (`DataTable`), filters (`FilterBar`), and layout containers specifically built for the admin dashboard.
+
+
 A high-performance internal platform for corporate knowledge management with Role-Based Access Control (RBAC).
 
 #### Tech Stack:
