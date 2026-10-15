@@ -19,7 +19,7 @@ import { useArticlesCrudStore } from '../store/article.crud.store';
 import { useMukToast } from 'modular-ui-kit-vue'
 
 /* COMPONENTS */
-import { PageHeader, DataWrapper } from 'vue-saas-kit';
+import { PageHeader } from 'vue-saas-kit';
 import ArticleForm from '../components/ArticleForm.vue';
 
 /* SCHEMA & ENUMS */

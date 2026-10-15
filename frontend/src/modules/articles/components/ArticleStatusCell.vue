@@ -26,7 +26,7 @@
 import { ref, computed, watch } from 'vue'
 
 /* COMPONENTS */
-import { MukButton, MukSelect, MukBadge } from 'modular-ui-kit-vue';
+import { MukButton, MukSelect, MukBadge, MukText } from 'modular-ui-kit-vue';
 
 import { ArticleStatus } from '@/shared/enums/article.enum';
 
