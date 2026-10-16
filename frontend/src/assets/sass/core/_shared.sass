@@ -13,26 +13,18 @@
    opacity: 0
 
 /* ================= Filter CHIP =================  */
-.filter-wrapper
-   margin-top: 20px
-
-.filter-chip-wrapper
-   display: flex
-   align-items: start
-   jutify-content: start
-   flex-direction: row
-   overflow: scroll
-
 .filter-chip
-   min-width: 300px
-   max-width: 350px
    margin: 0px 5px
-   padding: 5px 15px
+   padding: 5px 0px 5px 15px
    display: flex
    align-items: center
    flex-direction: row
    justify-content: space-between
    background: $muk-bg-soft
    transition: $muk-transition
+   border: $muk-border-width solid $muk-bg
+   border-radius: $muk-border-radius
    &:hover
       background: $muk-bg-card
+   button
+      margin-left: 10px
