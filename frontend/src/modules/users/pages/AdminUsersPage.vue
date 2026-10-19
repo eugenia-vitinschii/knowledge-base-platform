@@ -1,7 +1,30 @@
 <template>
    <div>
       <page-header title="Admin Users Page" />
-      <data-wrapper>
+      <filter-bar :show-reset="isFilterActive" @reset="onReset">
+         <template #chips v-if="activeFilters.length">
+            <TransitionGroup name="fade">
+               <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
+                  <muk-text as="span">{{ key }} : {{ value }}</muk-text>
+                  <muk-icon-button @click="removeFilter(key)" size="sm" variant="danger">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                        <path
+                           d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
+                     </svg>
+                  </muk-icon-button>
+               </div>
+            </TransitionGroup>
+         </template>
+         <template #search>
+            <muk-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
+         </template>
+         <template #filters>
+            <muk-select v-model="localSearch.role" :options="roleOptions" />
+            <muk-select v-model="localSearch.position" :options="positionOptions" />
+            <muk-select v-model="localSearch.location" :options="locationOptions" />
+         </template>
+      </filter-bar>
+      <data-wrapper :loading="isLoading" :error="!!error" :items="users">
          <template #skeleton>
             <data-table-skeleton :rows="9" :buttons="3" :columns="5" />
          </template>
@@ -25,24 +48,18 @@
                   <muk-button variant="danger" @click="handleDeleteUser(item.id)">Delete</muk-button>
                </div>
             </template>
+            <template v-if="hasUsers && !isLoading" #pagination>
+               <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
+            </template>
          </data-table>
       </data-wrapper>
    </div>
-   <div class="muk-page">
-      <div class="muk-container">
-         <div class="filter-wrapper">
-            <admin-user-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
-         </div>
-      </div>
-      <div class="muk-page__footer" v-if="hasUsers && !isLoading">
-         <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
-      </div>
-   </div>
+
 </template>
 
 <script setup lang="ts">
 /* VUE & ROUTER */
-import { computed, watch } from 'vue';
+import { computed, watch, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
 
@@ -51,14 +68,13 @@ import { useAdminUsersStore } from '@/modules/users/store/admin.users.store';
 import { useMukToast } from 'modular-ui-kit-vue'
 import { useUserAdminFilter } from "@/modules/users/composables/UseUsersAdminFilters"
 
-/* TYPES */
+/* TYPES & ENUMS */
 import type { UserQueryParams, AdminUserFilters } from '../types/index.ts';
+import { Role } from '@/shared/enums/role.enum';
+import { Location, Position } from '@/shared/enums/user.enum';
 
 /* COMPONENTS */
-import { MukText, MukPagination, MukEmptyState, MukErrorState, MukButton } from 'modular-ui-kit-vue';
-import AdminUserFilter from '../components/AdminUserFilter.vue';
-import UserTable from '@/modules/users/components/UserTable.vue';
-import TableSkeleton from '@/shared/ui/skeletons/TableSkeleton.vue';
+import { MukText, MukPagination, MukEmptyState, MukErrorState, MukButton, MukSelect, MukInput, MukIconButton } from 'modular-ui-kit-vue';
 import { PageHeader, DataWrapper, DataTableSkeleton, DataTable, FilterBar } from 'vue-saas-kit';
 
 /* === ROUTER & STORES === */
@@ -76,6 +92,39 @@ const hasUsers = computed(() => userStore.list.length > 0)
 const error = computed(() => userStore.error)
 const users = computed(() => userStore.list)
 
+/* ==============================  FILTER BAR  ===========================*/
+//init local state
+const localSearch = reactive<AdminUserFilters>({
+   search: userStore.filters.search ?? '',
+   role: userStore.filters.role ?? '',
+   position: userStore.filters.position ?? '',
+   location: userStore.filters.location ?? '',
+})
+
+const isFilterActive = computed(() => {
+   return Object.values(localSearch).some(Boolean)
+})
+const activeFilters = computed(() => {
+   return (Object.entries(localSearch) as [keyof AdminUserFilters, any][]).filter(([_, val]) => Boolean(val))
+})
+//form watcher
+watch(
+   localSearch,
+   (newFilters) => {
+      const cleaned = cleanQuery(newFilters) as AdminUserFilters
+      userStore.searchUsers(cleaned)
+   },
+   { deep: true }
+)
+const removeFilter = (key: keyof AdminUserFilters) => {
+   localSearch[key] = ''
+}
+
+const onReset = () => {
+   (Object.keys(localSearch) as (keyof AdminUserFilters)[]).forEach((key) => {
+      localSearch[key] = ''
+   })
+}
 /* filter */
 const filters = computed(() => userStore.filters)
 
@@ -180,5 +229,32 @@ const columns = [
    { key: 'position', label: 'Position' },
    { key: 'location', label: 'Location' },
    { key: 'actions', label: 'Actions' }
+]
+/* === OPTIONS  === */
+const roleOptions = [
+   { label: "All roles", value: '' },
+   { label: "Admin", value: Role.ADMIN },
+   { label: "Editor", value: Role.EDITOR },
+   { label: "Viewer", value: Role.VIEWER },
+]
+
+const positionOptions = [
+   { label: "All positions", value: '' },
+   { label: 'Frontend Developer', value: Position.FRONTEND },
+   { label: 'Backend Developer', value: Position.BACKEND },
+   { label: 'Fullstack Developer', value: Position.FULLSTACK },
+   { label: 'DevOps Engineer', value: Position.DEVOPS },
+   { label: 'QA Engineer', value: Position.QA },
+   { label: 'UI/UX Designer', value: Position.UI_UX },
+   { label: 'Data Scientist', value: Position.DATA_SCIENTIST },
+   { label: 'Product Manager', value: Position.PRODUCT_MANAGER },
+   { label: 'Other', value: Position.OTHER }
+]
+
+const locationOptions = [
+   { label: "All locations", value: '' },
+   { label: 'Remote', value: Location.REMOTE },
+   { label: 'Onsite', value: Location.ONSITE },
+   { label: 'Hybrid', value: Location.HYBRID },
 ]
 </script>

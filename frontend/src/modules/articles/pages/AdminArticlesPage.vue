@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 /* VUE & ROUTER */
-import { computed, watch, ref, reactive } from 'vue';
+import { computed, watch, ref, reactive, Transition } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 /* STORE & COMPOSABLES */
