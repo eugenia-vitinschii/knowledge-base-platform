@@ -3,15 +3,17 @@
       <page-header title="Admin Articles Page" />
       <filter-bar :show-reset="isFilterActive" @reset="onReset">
          <template #chips v-if="activeFilters.length">
-            <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
-               <muk-text as="span">{{ key }} : {{ value }}</muk-text>
-               <muk-icon-button @click="removeFilter(key)" size="sm" variant="danger">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-                     <path
-                        d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
-                  </svg>
-               </muk-icon-button>
-            </div>
+            <TransitionGroup name="fade">
+               <div class="filter-chip" v-for="[key, value] in activeFilters" :key="key">
+                  <muk-text as="span">{{ key }} : {{ value }}</muk-text>
+                  <muk-icon-button @click="removeFilter(key)" size="sm" variant="danger">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                        <path
+                           d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" />
+                     </svg>
+                  </muk-icon-button>
+               </div>
+            </TransitionGroup>
          </template>
          <template #search>
             <muk-input v-model="localSearch.search" type="search" placeholder="🔍 search article" />
