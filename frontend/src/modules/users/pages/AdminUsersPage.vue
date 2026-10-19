@@ -1,40 +1,41 @@
 <template>
+   <div>
+      <page-header title="Admin Users Page" />
+      <data-wrapper>
+         <template #skeleton>
+            <data-table-skeleton :rows="9" :buttons="3" :columns="5" />
+         </template>
+         <template #error>
+            <muk-error-state title="Oops! Something went wrong..."
+               description="Failed to load users. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
+               <template>
+                  <muk-button @click="handleRetry">Try Again</muk-button>
+               </template>
+            </muk-error-state>
+         </template>
+         <template #empty>
+            <muk-empty-state variant="search" title="No results found"
+               description="Try adjusting your filters or search terms to find what youre looking for" />
+         </template>
+         <data-table :items="users" :columns="columns">
+            <template #cell-actions="{ item }">
+               <div class="muk-table__actions">
+                  <muk-button variant="primary" @click="handleEdit(item.id)">Edit</muk-button>
+                  <muk-button variant="secondary" @click="handlePreview(item.id)">Preview</muk-button>
+                  <muk-button variant="danger" @click="handleDeleteUser(item.id)">Delete</muk-button>
+               </div>
+            </template>
+         </data-table>
+      </data-wrapper>
+   </div>
    <div class="muk-page">
       <div class="muk-container">
-         <div class="muk-page__wrapper">
-            <div class="muk-page__header">
-               <muk-text as="h1" type="muk-heading">Admin Users Page</muk-text>
-            </div>
-            <div class="muk-page__content">
-               <div class="filter-wrapper">
-                  <admin-user-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
-               </div>
-               <Transition name="fade" mode="out-in">
-                  <div class="muk-section" v-if="isLoading" key="loading">
-                     <table-skeleton :rows="5" :buttons="3" :columns="5" />
-                  </div>
-                  <div class="muk-section" v-else-if="error" key="error">
-                     <muk-error-state title="Oops! Something went wrong..."
-                        description="Failed to load users. It might be a temporary connection issue. Please check your internet or try refreshing the page.">
-                        <template>
-                           <muk-button @click="handleRetry">Try Again</muk-button>
-                        </template>
-                     </muk-error-state>
-                  </div>
-                  <div class="muk-section muk-table-wrapper" v-else-if="hasUsers" key="users">
-                     <user-table :items="users" @delete="handleDeleteUser" @edit="handleEdit"
-                        @preview="handlePreview" />
-                  </div>
-                  <div class="muk-section" v-else-if="!isLoading && !hasUsers && !error" key="empty">
-                     <muk-empty-state variant="search" title="No results found"
-                        description="Try adjusting your filters or search terms to find what youre looking for" />
-                  </div>
-               </Transition>
-            </div>
-            <div class="muk-page__footer" v-if="hasUsers && !isLoading">
-               <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
-            </div>
+         <div class="filter-wrapper">
+            <admin-user-filter :filter="filters" :count="totalItems" @update:filter="onFilterChange" />
          </div>
+      </div>
+      <div class="muk-page__footer" v-if="hasUsers && !isLoading">
+         <muk-pagination :page="currentPage" :total-pages="totalPages" @change="onPageChange" />
       </div>
    </div>
 </template>
@@ -58,6 +59,7 @@ import { MukText, MukPagination, MukEmptyState, MukErrorState, MukButton } from 
 import AdminUserFilter from '../components/AdminUserFilter.vue';
 import UserTable from '@/modules/users/components/UserTable.vue';
 import TableSkeleton from '@/shared/ui/skeletons/TableSkeleton.vue';
+import { PageHeader, DataWrapper, DataTableSkeleton, DataTable, FilterBar } from 'vue-saas-kit';
 
 /* === ROUTER & STORES === */
 const userStore = useAdminUsersStore();
@@ -170,4 +172,13 @@ const handleDeleteUser = async (id: string) => {
 const handlePreview = (id: string) => {
    router.push(`/articles/users/${id}`)
 }
+
+
+const columns = [
+   { key: 'name', label: 'Name' },
+   { key: 'role', label: 'Role' },
+   { key: 'position', label: 'Position' },
+   { key: 'location', label: 'Location' },
+   { key: 'actions', label: 'Actions' }
+]
 </script>
