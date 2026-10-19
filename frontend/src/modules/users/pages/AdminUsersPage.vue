@@ -167,21 +167,6 @@ watch(
    },
    { immediate: true }
 )
-/* === URL SYNC HANDLERS === */
-/*update URL query when filters change */
-function onFilterChange(newFilters: AdminUserFilters) {
-   const params = mapQueryToParams(route.query)
-
-   router.push({
-      path: '/admin/users',
-      query: cleanQuery({
-         ...params,
-         ...newFilters,
-         page: 1,
-         limit: 10
-      })
-   })
-}
 /* pagination  click*/
 function onPageChange(page: number) {
    const params = mapQueryToParams(route.query)
