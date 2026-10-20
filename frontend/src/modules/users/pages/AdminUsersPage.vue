@@ -43,9 +43,21 @@
          <data-table :items="users" :columns="columns">
             <template #cell-actions="{ item }">
                <div class="muk-table__actions">
-                  <muk-button variant="primary" @click="handleEdit(item.id)">Edit</muk-button>
-                  <muk-button variant="secondary" @click="handlePreview(item.id)">Preview</muk-button>
-                  <muk-button variant="danger" @click="handleDeleteUser(item.id)">Delete</muk-button>
+                  <muk-icon-button variant="primary" @click="handleEdit(item.id)"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                        <path
+                           d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+                     </svg></muk-icon-button>
+                  <muk-icon-button variant="secondary" @click="handlePreview(item.id)"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                        <path
+                           d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-480H200v480Zm133.5-124.5Q269-369 240-440q29-71 93.5-115.5T480-600q82 0 146.5 44.5T720-440q-29 71-93.5 115.5T480-280q-82 0-146.5-44.5Zm248.5-42q46-26.5 72-73.5-26-47-72-73.5T480-540q-56 0-102 26.5T306-440q26 47 72 73.5T480-340q56 0 102-26.5ZM480-440Zm42.5 42.5Q540-415 540-440t-17.5-42.5Q505-500 480-500t-42.5 17.5Q420-465 420-440t17.5 42.5Q455-380 480-380t42.5-17.5Z" />
+                     </svg></muk-icon-button>
+                  <muk-icon-button variant="danger" @click="handleDeleteUser(item.id)"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                        <path
+                           d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z" />
+                     </svg></muk-icon-button>
                </div>
             </template>
             <template v-if="hasUsers && !isLoading" #pagination>
@@ -54,7 +66,6 @@
          </data-table>
       </data-wrapper>
    </div>
-
 </template>
 
 <script setup lang="ts">
